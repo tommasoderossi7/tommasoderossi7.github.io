@@ -6,7 +6,6 @@
     <meta name="keywords" content="data science, applied research, machine learning, bayesian modeling, LLMs, data visualization, recommendation systems">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <title>Luca Baroni </title> -->
 
     <!-- Inter font from Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -65,7 +64,7 @@
             font-family: 'Inter', sans-serif;
         }
 
-        #tsparticles {
+        #particles-canvas {
             position: fixed;
             top: 0;
             left: 0;
@@ -626,7 +625,7 @@
     </style>
 </head>
 <body>
-    <div id="tsparticles"></div>
+    <canvas id="particles-canvas"></canvas>
     
     <div class="container">
         <header>
@@ -647,7 +646,6 @@
                 <!-- <h2>About me</h2> -->
                 <div class="profile-section">
                     <div class="profile-image">
-                        <!-- Replace src with your actual photo path -->
                         <img src="profile_pic.jpg" alt="Tommaso Derossi" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="profile-placeholder" style="display:none;">TD</div>
                     </div>
@@ -655,9 +653,6 @@
                         <p style="font-size:1.5rem;">Hi, I'm Tommaso!</p>
                         <p>I am working as an industrial PhD student, building bridges between cutting-edge technologies and industrial adoption.</p>
                         <p>I like to work on composable systems and pipelines involving classical machine learning, statistical (Bayesian) modeling, LLMs, and data visualizations.</p>
-                        <!-- <p>Some time ago, I was studying theoretical physics.</p> -->
-                        <!-- <p>I have a background in physics and I am completing a PhD in <strong>computational neuroscience</strong>, where I study the visual cortex and neurostimulation approaches for vision restoration in blind subjects.</p>
-                        <p>Alongside my PhD, I do research in <strong>technical AI safety</strong>. I am interested in model introspection, CoT unfaithfullness, and practical applications of mechanistic interpretability and model organisms.</p> -->
                     </div>
                     </div>
 
@@ -746,29 +741,6 @@
                     </div>
                 </div>
             </section>
-
-            <!-- <section id="thoughts" class="section">
-                <h2>Personal Thoughts</h2>
-                
-                <div class="blog-post">
-                    <div class="blog-date">March 15, 2024</div>
-                    <a href="#" class="blog-title">The Convergence of Neuroscience and AI Safety</a>
-                    <p class="blog-excerpt">Recent advances in understanding neural computation are providing crucial insights for building safer AI systems. In this post, I explore how principles from neuroscience can inform alignment research...</p>
-                </div>
-
-                <div class="blog-post">
-                    <div class="blog-date">February 1, 2024</div>
-                    <a href="#" class="blog-title">Interpretability Through the Lens of Biology</a>
-                    <p class="blog-excerpt">What can we learn about neural network interpretability from biological neural systems? This post examines parallels between neuroscience methods and AI interpretability research...</p>
-                </div>
-
-                <div class="blog-post">
-                    <div class="blog-date">December 10, 2023</div>
-                    <a href="#" class="blog-title">Reflections on My PhD Journey</a>
-                    <p class="blog-excerpt">As I near the completion of my doctoral studies, I wanted to share some thoughts on the research process, challenges faced, and lessons learned along the way...</p>
-                </div>
-            </section> -->
-
             <section id="contact" class="section">
                 <!-- <h2>Contact</h2> -->
                 <div class="contact-info">
@@ -793,7 +765,6 @@
         </main>
     </div>
 
-    <script src="tsparticles.bundle.min.js"></script>
     <script>
         // Navigation functionality
         const navLinks = document.querySelectorAll('.nav-link');
@@ -823,7 +794,7 @@
             "autoPlay": true,
             "background": {
                 "color": {
-                    "value": "#32026b"
+                    "value": "#4D1701"//"#822801"
                 },
                 "image": "",
                 "position": "",
@@ -1097,7 +1068,7 @@
                     },
                     "random": false,
                     "size": false,
-                    "speed": 2,
+                    "speed": 1,
                     "spin": {
                         "acceleration": 0,
                         "enable": false
@@ -1335,18 +1306,233 @@
             }
         };
 
-        function loadParticles() {
-            if (!window.tsParticles) {
-                console.warn('tsParticles not loaded.');
-                return;
-            }
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        const config = particlesConfig;
 
-            tsParticles.load('tsparticles', particlesConfig).catch((error) => {
-                console.error('Unable to load particles:', error);
-            });
+        let width = 0;
+        let height = 0;
+        let dpr = 1;
+        let particles = [];
+        let mouse = { x: 0, y: 0, active: false };
+
+        function getColorValue(color) {
+            if (!color) return '#ffffff';
+            if (typeof color === 'string') return color;
+            if (typeof color === 'object' && color.value) return color.value;
+            return '#ffffff';
         }
 
-        window.addEventListener('load', loadParticles);
+        function hexToRgb(hex) {
+            if (!hex) return { r: 255, g: 255, b: 255 };
+            let value = hex.replace('#', '').trim();
+            if (value.length === 3) {
+                value = value.split('').map((char) => char + char).join('');
+            }
+            if (value.length !== 6) {
+                return { r: 255, g: 255, b: 255 };
+            }
+            const intValue = parseInt(value, 16);
+            return {
+                r: (intValue >> 16) & 255,
+                g: (intValue >> 8) & 255,
+                b: intValue & 255
+            };
+        }
+
+        function randomBetween(min, max) {
+            return min + Math.random() * (max - min);
+        }
+
+        function resizeCanvas() {
+            dpr = window.devicePixelRatio || 1;
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = Math.floor(width * dpr);
+            canvas.height = Math.floor(height * dpr);
+            canvas.style.width = `${width}px`;
+            canvas.style.height = `${height}px`;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+
+        function createParticle(x, y) {
+            const speed = config.particles?.move?.speed ?? 2;
+            const sizeConfig = config.particles?.size?.value ?? { min: 1, max: 3 };
+            const sizeMin = typeof sizeConfig === 'number' ? sizeConfig : (sizeConfig.min ?? 1);
+            const sizeMax = typeof sizeConfig === 'number' ? sizeConfig : (sizeConfig.max ?? sizeMin);
+            const opacityConfig = config.particles?.opacity?.value ?? { min: 0.1, max: 0.5 };
+            const opacityMin = typeof opacityConfig === 'number' ? opacityConfig : (opacityConfig.min ?? 0.1);
+            const opacityMax = typeof opacityConfig === 'number' ? opacityConfig : (opacityConfig.max ?? opacityMin);
+            const angle = Math.random() * Math.PI * 2;
+            const velocity = randomBetween(0.3, 1) * speed;
+
+            return {
+                x: x ?? Math.random() * width,
+                y: y ?? Math.random() * height,
+                vx: Math.cos(angle) * velocity,
+                vy: Math.sin(angle) * velocity,
+                size: randomBetween(sizeMin, sizeMax),
+                opacity: randomBetween(opacityMin, opacityMax)
+            };
+        }
+
+        function initializeParticles() {
+            const count = config.particles?.number?.value ?? 100;
+            particles = Array.from({ length: count }, () => createParticle());
+        }
+
+        function drawBackground() {
+            const bgColor = getColorValue(config.background?.color);
+            if (bgColor && bgColor !== 'transparent') {
+                ctx.fillStyle = bgColor;
+                ctx.fillRect(0, 0, width, height);
+            } else {
+                ctx.clearRect(0, 0, width, height);
+            }
+        }
+
+        function updateParticles() {
+            const repulseDistance = config.interactivity?.modes?.repulse?.distance ?? 200;
+            const repulseFactor = config.interactivity?.modes?.repulse?.factor ?? 100;
+            const maxSpeed = (config.particles?.move?.speed ?? 2) * 2;
+
+            for (const particle of particles) {
+                if (mouse.active) {
+                    const dx = particle.x - mouse.x;
+                    const dy = particle.y - mouse.y;
+                    const dist = Math.hypot(dx, dy);
+                    if (dist > 0 && dist < repulseDistance) {
+                        const strength = (1 - dist / repulseDistance) * (repulseFactor / 600);
+                        particle.vx += (dx / dist) * strength;
+                        particle.vy += (dy / dist) * strength;
+                    }
+                }
+
+                const speed = Math.hypot(particle.vx, particle.vy);
+                if (speed > maxSpeed) {
+                    particle.vx = (particle.vx / speed) * maxSpeed;
+                    particle.vy = (particle.vy / speed) * maxSpeed;
+                }
+
+                particle.x += particle.vx;
+                particle.y += particle.vy;
+
+                if (particle.x < 0) particle.x = width;
+                if (particle.x > width) particle.x = 0;
+                if (particle.y < 0) particle.y = height;
+                if (particle.y > height) particle.y = 0;
+            }
+        }
+
+        function drawLinks() {
+            const linkConfig = config.particles?.links ?? {};
+            if (!linkConfig.enable) return;
+
+            const linkDistance = linkConfig.distance ?? 150;
+            const linkOpacity = linkConfig.opacity ?? 0.4;
+            const linkWidth = linkConfig.width ?? 1;
+            const linkColor = hexToRgb(getColorValue(linkConfig.color));
+
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.hypot(dx, dy);
+                    if (dist <= linkDistance) {
+                        const alpha = linkOpacity * (1 - dist / linkDistance);
+                        ctx.strokeStyle = `rgba(${linkColor.r}, ${linkColor.g}, ${linkColor.b}, ${alpha})`;
+                        ctx.lineWidth = linkWidth;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function drawGrabLines() {
+            if (!mouse.active) return;
+
+            const grabDistance = config.interactivity?.modes?.grab?.distance ?? 200;
+            const grabOpacity = config.interactivity?.modes?.grab?.links?.opacity ?? 0.2;
+            const linkColor = hexToRgb(getColorValue(config.particles?.links?.color));
+            const grabWidth = (config.particles?.links?.width ?? 1) * 0.5;
+
+            for (const particle of particles) {
+                const dx = particle.x - mouse.x;
+                const dy = particle.y - mouse.y;
+                const dist = Math.hypot(dx, dy);
+                if (dist <= grabDistance) {
+                    const alpha = grabOpacity * (1 - dist / grabDistance);
+                    ctx.strokeStyle = `rgba(${linkColor.r}, ${linkColor.g}, ${linkColor.b}, ${alpha})`;
+                    ctx.lineWidth = grabWidth;
+                    ctx.beginPath();
+                    ctx.moveTo(particle.x, particle.y);
+                    ctx.lineTo(mouse.x, mouse.y);
+                    ctx.stroke();
+                }
+            }
+        }
+
+        function drawParticles() {
+            const particleColor = hexToRgb(getColorValue(config.particles?.color));
+            for (const particle of particles) {
+                ctx.fillStyle = `rgba(${particleColor.r}, ${particleColor.g}, ${particleColor.b}, ${particle.opacity})`;
+                ctx.beginPath();
+                ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function animate() {
+            drawBackground();
+            updateParticles();
+            drawLinks();
+            drawGrabLines();
+            drawParticles();
+            requestAnimationFrame(animate);
+        }
+
+        function handleClick(event) {
+            const onClick = config.interactivity?.events?.onClick;
+            if (!onClick?.enable) return;
+
+            const modes = Array.isArray(onClick.mode) ? onClick.mode : [onClick.mode];
+            if (!modes.includes('push')) return;
+
+            const quantity = config.interactivity?.modes?.push?.quantity ?? 4;
+            for (let i = 0; i < quantity; i++) {
+                particles.push(createParticle(event.clientX, event.clientY));
+            }
+        }
+
+        function handleMouseMove(event) {
+            const onHover = config.interactivity?.events?.onHover;
+            if (!onHover?.enable) return;
+            mouse.x = event.clientX;
+            mouse.y = event.clientY;
+            mouse.active = true;
+        }
+
+        function handleMouseLeave() {
+            mouse.active = false;
+        }
+
+        function startParticles() {
+            resizeCanvas();
+            initializeParticles();
+            animate();
+        }
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+        });
+
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mouseleave', handleMouseLeave);
+        window.addEventListener('click', handleClick);
+        window.addEventListener('load', startParticles);
     </script>
 </body>
 </html>
