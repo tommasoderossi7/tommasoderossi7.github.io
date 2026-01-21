@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Tommaso Derossi - Data Scientist &amp; Applied Researcher</title>
+    <meta name="description" content="Tommaso Derossi, data scientist and applied researcher building composable ML systems, Bayesian modeling, LLMs, and data visualization for industrial adoption.">
+    <meta name="keywords" content="data science, applied research, machine learning, bayesian modeling, LLMs, data visualization, recommendation systems">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <title>Luca Baroni </title> -->
+
+    <!-- Inter font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Raleway font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #1a1a1a;
+            --secondary-color: #4a4a4a;
+            --accent-color: #0066cc;
+            --background: #ffffff;
+            --surface: #f8f9fa;
+            --border: #e5e7eb;
+            --text-primary: #1a1a1a;
+            --text-secondary: #6b7280;
+            --max-width: 800px;
+            --particle-color: rgba(0, 0, 0, 1)
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --primary-color: #ffffff;
+                --secondary-color: #b8b8b8;
+                --accent-color: #e2c6f7;
+                --background: #0a0a0a;
+                --surface: #1a1a1a;
+                --border: #2a2a2a;
+                --text-primary: #ffffff;
+                --text-secondary: #9ca3af;
+                --particle-color: rgb(255, 255, 255);
+            }
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--background);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Ensure Inter font is used everywhere */
+        *, *::before, *::after {
+            font-family: 'Inter', sans-serif;
+        }
+
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.7;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 1.2rem 1.2rem 0.5rem 1.2rem;
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px) saturate(120%);
+            -webkit-backdrop-filter: blur(12px) saturate(120%);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .container {
+                background: rgba(26, 26, 26, 0.6);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+        }
+
+        header {
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-family: 'Raleway', sans-serif;
+            font-size: 4rem;
+            font-weight: 400;
+            /* font-style: italic; */
+            margin-bottom: -1rem;
+            letter-spacing: -0.05em;
+
+        }
+
+        .subtitle {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.44em;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav {
+            display: flex;
+            gap: 1.2rem;
+            margin-top: 1.2rem;
+        }
+
+        nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 300;
+            position: relative;
+            transition: color 0.3s ease;
+            font-size: 1.25rem;
+            text-transform: lowercase;
+            letter-spacing: -0.0em;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: var(--accent-color);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: scaleX(0);
+            }
+            to {
+                transform: scaleX(1);
+            }
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+            margin-bottom: 0.7rem;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 1.2rem;
+            font-weight: 300;
+            color: var(--text-primary);
+        }
+
+        h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            margin-top: 1.2rem;
+            margin-bottom: 0.7rem;
+            font-weight: 400;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+            font-weight: 200;
+            text-align: justify;
+        }
+
+        .publication {
+            line-height: 1.2;
+            background-color: var(--surface);
+            padding: 0.7rem 1.3rem 0.5rem 1rem;
+            margin-bottom: 0.4rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .publication::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 102, 204, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .publication:hover::before {
+            left: 100%;
+        }
+
+        .publication:hover {
+            transform: translateY(-2px);
+        }
+
+        .publication[onclick] {
+            cursor: pointer;
+        }
+
+        .publication[onclick]:hover {
+            transform: translateY(-3px);
+        }
+
+        .publication-title {
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .publication-authors {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 200;
+            margin-bottom: 0.5rem;
+        }
+
+        .publication-venue {
+            color: var(--accent-color);
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            font-weight: 200;
+            letter-spacing: 0.00em;
+            font-style: italic;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .publication-links {
+            margin-top: 1rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .publication-links a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 0.35rem 1rem;
+            border: 1px solid var(--accent-color);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .publication-links a:hover {
+            background-color: var(--accent-color);
+            color: var(--background);
+            transform: translateY(-1px);
+        }
+
+        .cv-section {
+            margin-bottom: 0.7rem;
+        }
+
+        .cv-item {
+            margin-bottom: 0.4rem;
+            padding-left: 1rem;
+            border-left: 3px solid var(--accent-color);
+            transition: border-color 0.3s ease;
+        }
+
+        .cv-item:hover {
+            border-left-color: var(--text-primary);
+        }
+
+        .cv-date {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+            font-weight: 200;
+            letter-spacing: 0.03em;
+        }
+
+        .cv-title {
+            font-family: 'Inter', sans-serif;
+            font-weight: 200;
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .cv-location {
+            color: var(--text-secondary);
+            font-weight: 200;
+            font-style: italic;
+        }
+
+        .profile-section {
+            display: flex;
+            gap: 1.2rem;
+            align-items: center;
+            margin-bottom: 0.7rem;
+        }
+
+        .profile-image {
+            flex-shrink: 0;
+            width: 220px;
+            height: 220px;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            overflow: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .profile-image {
+                border: 3px solid rgba(255, 255, 255, 0.15);
+            }
+        }
+
+        .profile-image:hover {
+            border-color: var(--accent-color);
+            transform: scale(1.02);
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .profile-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .profile-content {
+            flex: 1;
+            line-height: 0.2;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+        }
+
+        .blog-post {
+            margin-bottom: 0.6rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .blog-post:hover {
+            padding-left: 1rem;
+        }
+
+        .blog-post:last-child {
+            border-bottom: none;
+        }
+
+        .blog-date {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+        }
+
+        .blog-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .blog-title:hover {
+            color: var(--accent-color);
+        }
+
+        .blog-excerpt {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        .contact-info {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(8px) saturate(110%);
+            -webkit-backdrop-filter: blur(8px) saturate(110%);
+            padding: 1.2rem 1.2rem 0.6rem 1.2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            padding-bottom: 0.6rem;
+            box-shadow: 
+                0 4px 16px rgba(0, 0, 0, 0.08),
+                0 1px 2px rgba(255, 255, 255, 0.1) inset;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .contact-info {
+                background: rgba(26, 26, 26, 0.4);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                box-shadow: 
+                    0 4px 16px rgba(0, 0, 0, 0.25),
+                    0 1px 2px rgba(255, 255, 255, 0.03) inset;
+            }
+        }
+
+        .contact-section {
+            display: flex;
+            gap: 1.2rem;
+            align-items: center;
+        }
+
+        .contact-image {
+            flex-shrink: 0;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .contact-image {
+                border: 3px solid rgba(255, 255, 255, 0.15);
+            }
+        }
+
+        .contact-image:hover {
+            border-color: var(--accent-color);
+            transform: scale(1.05);
+        }
+
+        .contact-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .contact-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .contact-details {
+            flex: 1;
+        }
+
+        .contact-details p {
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-info a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+            padding-left: 0.5rem;
+        }
+
+        ul {
+            margin-top: 1rem;
+            margin-left: 2rem;
+            color: var(--text-secondary);
+        }
+
+        ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0.7rem 0.7rem 0.3rem 0.7rem;
+            }
+            header {
+                margin-bottom: 0.7rem;
+                padding-bottom: 0.3rem;
+            }
+            .section {
+                margin-bottom: 0.3rem;
+            }
+            .publication {
+                margin-bottom: 0.2rem;
+                padding-bottom: 0.2rem;
+            }
+            .cv-section {
+                margin-bottom: 0.3rem;
+            }
+            .cv-item {
+                margin-bottom: 0.2rem;
+            }
+            .blog-post {
+                margin-bottom: 0.3rem;
+                padding-bottom: 0.3rem;
+            }
+            .contact-info {
+                padding-bottom: 0.3rem;
+            }
+            .profile-section, .contact-section {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 0.7rem;
+                margin-bottom: 0.3rem;
+            }
+            .profile-image, .contact-image {
+                width: 100px;
+                height: 100px;
+                margin-bottom: 0.7rem;
+            }
+            h1 {
+                font-size: 2.5rem;
+            }
+            h2 {
+                font-size: 1rem;
+            }
+            nav {
+                gap: 0.7rem;
+            }
+            .publication-links {
+                flex-wrap: wrap;
+            }
+            /* Change "curriculum_vitae" to "cv" on mobile */
+            nav a[href="#cv"] {
+                font-size: 0;
+            }
+            nav a[href="#cv"]::before {
+                content: "cv";
+                font-size: 1.25rem;
+                font-weight: 300;
+                letter-spacing: -0.0em;
+                font-family: 'Raleway', sans-serif;
+            }
+        }
+
+        .publication-venue-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+        }
+        .publication-equal-note {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 200;
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-top: 0;
+            white-space: nowrap;
+        }
+
+        #publications-list {
+            transition: opacity 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particles-canvas"></canvas>
+    
+    <div class="container">
+        <header>
+            <h1>Tommaso Derossi</h1>
+            <p class="subtitle">Data Scientist &amp; Applied Researcher</p>
+            <nav>
+                <a href="#about" class="nav-link active">about</a>
+                <a href="#portfolio" class="nav-link">portfolio</a>
+                <a href="#cv" class="nav-link">curriculum vitae</a>
+                <!-- <a href="#thoughts" class="nav-link">Thoughts</a> -->
+                <a href="#contact" class="nav-link">contact</a>
+                <!-- <a href="#birds" class="nav-link" style="margin-left:auto;">hide me</a> -->
+            </nav>
+        </header>
+
+        <main>
+            <section id="about" class="section active">
+                <!-- <h2>About me</h2> -->
+                <div class="profile-section">
+                    <div class="profile-image">
+                        <!-- Replace src with your actual photo path -->
+                        <img src="profile_pic.jpg" alt="Tommaso Derossi" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="profile-placeholder" style="display:none;">TD</div>
+                    </div>
+                    <div class="profile-content">
+                        <p style="font-size:1.5rem;">Hi, I'm Tommaso!</p>
+                        <p>I am working as an industrial PhD student, building bridges between cutting-edge technologies and industrial adoption.</p>
+                        <p>I like to work on composable systems and pipelines involving classical machine learning, statistical (Bayesian) modeling, LLMs, and data visualizations.</p>
+                        <!-- <p>Some time ago, I was studying theoretical physics.</p> -->
+                        <!-- <p>I have a background in physics and I am completing a PhD in <strong>computational neuroscience</strong>, where I study the visual cortex and neurostimulation approaches for vision restoration in blind subjects.</p>
+                        <p>Alongside my PhD, I do research in <strong>technical AI safety</strong>. I am interested in model introspection, CoT unfaithfullness, and practical applications of mechanistic interpretability and model organisms.</p> -->
+                    </div>
+                    </div>
+
+            </section>
+
+            <section id="portfolio" class="section">
+                <h2>Portfolio</h2>
+            </section>
+
+            <section id="cv" class="section">
+                <div class="cv-section">
+                    <h2>Education</h2>
+                    <div class="cv-item">
+                        <div class="cv-title">PhD Student, Deep Learning</div>
+                        <div class="cv-location">Università degli studi di Parma</div>
+                        <div class="cv-date">November 2024 - Present</div>
+                        <div class="cv-summary"><ul><li><p>Currenlty doing research on Artificial Neural Networks <strong>safety and interpretability </strong>with a focus on<strong> Large Language Models </strong>working on combinations of <strong>bottom-up (mechanistic interpetability) </strong>and <strong>top-down (behavioral experiments) </strong>approaches<strong>.</strong></p></li></ul></div>
+                    </div>
+                    <div class="cv-item">
+                        <div class="cv-title">Master Degree in Stochastics and Data Science</div>
+                        <div class="cv-location">Università degli studi di Torino</div>
+                        <div class="cv-date">September 2019 - April 2023</div>
+                        <div class="cv-summary"><ul><li><p>Degree course in <strong>Mathematics</strong> fully taught in <strong>English</strong></p><p><strong>Thesis</strong>: "<em>Modelling the discourse around nature in Twitter in presence of highly imbalanced data.</em>"</p><p><strong>Thesis</strong> <strong>topics: </strong>Natural Language Processing, Transformers models, Network Science, Filtering Techniques, Sentiment Classification, Semantic Clustering, Topic Modeling</p></li></ul></div>
+                    </div>
+                    <div class="cv-item">
+                        <div class="cv-title">1 year exchange programme in Statistics</div>
+                        <div class="cv-location">KU Leuven</div>
+                        <div class="cv-date">September 2020 - July 2021</div>
+                        <div class="cv-summary"><ul><li><p>Second year of master's degree spent in Belgium at KU Leuven. Some of the main courses attended (10 courses in total): <strong>Optimization and Numerical Methods</strong> (17/20), <strong>Concepts of Bayesian Data Analysis</strong> (16/20), <strong>Data Mining and Neural Networks</strong> (15/20), and <strong>Modern Data Analytics</strong> (15/20)</p></li><li><p>Participated in <strong>Data4Good</strong> Challenge (<strong>Emergent Leuven</strong>)</p></li></ul></div>
+                    </div>
+                    <div class="cv-item">
+                        <div class="cv-title">Bachelor Degree in Physics</div>
+                        <div class="cv-location">Università degli studi di Parma</div>
+                        <div class="cv-date">September 2016 - September 2019</div>
+                        <div class="cv-summary"><ul><li><p><strong>Awarded </strong>for being the<strong> top-ranked student in credits earned relative to grade point average </strong>during the second academic year</p><p><strong>Thesis</strong>: "<em>Methodological aspects of neural networks integrated within an application for the classification of relational database columns.</em>"</p><p><strong>Thesis topics: </strong>Artificial Neural Networks, Deep Recurrent Neural Networks (LSTM), Distributed Model Training </p></li></ul></div>
+                    </div>
+                    <div class="cv-item">
+                        <div class="cv-title">High School (Scientific Oriented)</div>
+                        <div class="cv-location">Liceo Scientifico "Giacomo Ulivi"</div>
+                        <div class="cv-date">2011 - 2016</div>
+                    </div>
+                    <div class="cv-item">
+                        <div class="cv-title">English School Attendance, 3 months</div>
+                        <div class="cv-location">South African College High School</div>
+                        <div class="cv-date">2012</div>
+                    </div>
+                </div>
+
+                <div class="cv-section">
+                    <h2>Work/Research experience</h2>
+                    <div class="cv-item">
+                        <div class="cv-title">Research Fellow</div>
+                        <div class="cv-location">Supervised Program for Alignment Research | Remote</div>
+                        <div class="cv-date">September 2025 - Present</div>
+                        <div class="cv-summary"><ul><li><p>Alignment research via SPAR: <strong>CoT monitoring</strong>, decomposition techniques, and attribution methods to analyze LLM reasoning traces.</p></li><li><p>Reproducible analysis workflows (<strong>Docker</strong>).</p></li></ul></div>
+                    </div>
+                    <div class="cv-item">
+                        <div class="cv-title">Industrial PhD</div>
+                        <div class="cv-location">GEA Procomac SPA</div>
+                        <div class="cv-date">November 2024 - Present</div>
+                        <div class="cv-summary"><ul><li><p>Industrial PhD within GEA: designing and developing an embedding-based <strong>recommendation system</strong> for <strong>troubleshooting industrial plant machinery</strong> (patented project).</p></li><li><p>Tech: embeddings, vector databases, clustering, local language models; reproducible packaging (<strong>Docker</strong>) and scalable processing (<strong>Spark/PySpark</strong>) when needed.</p></li></ul></div>
+                    </div>
+                    <div class="cv-item">
+                        <div class="cv-title">Data Scientist / ML Engineer</div>
+                        <div class="cv-location">Freelance</div>
+                        <div class="cv-date">September 2024 - Present</div>
+                        <div class="cv-summary"><ul><li><p>Developing a <strong>job–candidate matching</strong> system with a focus on ranking/recommendation, offline evaluation, and production-friendly implementation.</p></li><li><p>Packaging with <strong>Docker</strong>; exploring cloud deployment patterns on <strong>AWS</strong> (S3/EC2/Lambda) for prototypes.</p></li></ul></div>
+                    </div>
+                    <div class="cv-item">
+                        <div class="cv-title">Data Scientist</div>
+                        <div class="cv-location">Tomorrow S.R.L.</div>
+                        <div class="cv-date">February 2023 - July 2024</div>
+                        <div class="cv-summary"><ul><li><p>Built data transformation pipelines integrated with ML models (Bayesian hierarchical, random forest, gradient boosting) for <strong>IoT analytics</strong>: predictive maintenance, KPI optimization, forecasting.</p></li><li><p>Designed an AI conversational agent for purchasing assistance using <strong>LLMs</strong> (prompting/finetuning, RAG, LlamaIndex, LangChain).</p></li><li><p>Dashboards and stakeholder-ready reporting; reproducible packaging (<strong>Docker</strong>); scalable patterns (<strong>Spark/PySpark</strong>) when needed.</p></li></ul></div>
+                    </div>
+                    <div class="cv-item">
+                        <div class="cv-title">Data Scientist</div>
+                        <div class="cv-location">WATERONMARS S.R.L.</div>
+                        <div class="cv-date">March 2022 - February 2023</div>
+                        <div class="cv-summary"><ul><li><p>Built <strong>ETL pipelines</strong> (web scraping, APIs) and analyzed social media data (text, images, video, geospatial/temporal).</p></li><li><p>Integrated predictive models for NLP and computer vision; delivered customized dashboards.</p></li><li><p>Scalable processing patterns (<strong>Spark/PySpark</strong>) when needed.</p></li></ul></div>
+                    </div>
+                    <div class="cv-item">
+                        <div class="cv-title">Machine Learning engineer</div>
+                        <div class="cv-location">OMIGRADE S.R.L.</div>
+                        <div class="cv-date">March 2019 - October 2020</div>
+                        <div class="cv-summary"><ul><li><p>Designed and optimized an LSTM model (TensorFlow) for interactive classification of relational database columns (60 classes).</p></li><li><p>Engineered distributed workflows on Hadoop using Spark RDDs and <strong>PySpark</strong>-style processing; automated retraining, monitoring, and performance analysis.</p></li><li><p><strong>Performance</strong>: Top-1 89.0 ± 1.5%, Top-5 94.1 ± 0.3%.</p></li></ul></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- <section id="thoughts" class="section">
+                <h2>Personal Thoughts</h2>
+                
+                <div class="blog-post">
+                    <div class="blog-date">March 15, 2024</div>
+                    <a href="#" class="blog-title">The Convergence of Neuroscience and AI Safety</a>
+                    <p class="blog-excerpt">Recent advances in understanding neural computation are providing crucial insights for building safer AI systems. In this post, I explore how principles from neuroscience can inform alignment research...</p>
+                </div>
+
+                <div class="blog-post">
+                    <div class="blog-date">February 1, 2024</div>
+                    <a href="#" class="blog-title">Interpretability Through the Lens of Biology</a>
+                    <p class="blog-excerpt">What can we learn about neural network interpretability from biological neural systems? This post examines parallels between neuroscience methods and AI interpretability research...</p>
+                </div>
+
+                <div class="blog-post">
+                    <div class="blog-date">December 10, 2023</div>
+                    <a href="#" class="blog-title">Reflections on My PhD Journey</a>
+                    <p class="blog-excerpt">As I near the completion of my doctoral studies, I wanted to share some thoughts on the research process, challenges faced, and lessons learned along the way...</p>
+                </div>
+            </section> -->
+
+            <section id="contact" class="section">
+                <!-- <h2>Contact</h2> -->
+                <div class="contact-info">
+                    <div class="contact-section">
+                        <div class="contact-image">
+                            <!-- Replace src with your actual photo path -->
+                            <img src="profile_pic.jpg" alt="Tommaso Derossi" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="contact-placeholder" style="display:none;">TD</div>
+                        </div>
+                        <div class="contact-details">
+
+                    <p><strong>Email:</strong> <a href="mailto:tommasoderossi7@gmail.com">tommasoderossi7@gmail.com</a></p>
+                    <p><strong>Phone:</strong> <a href="tel:+393486612907">+39 3486612907</a></p>
+                    <p><strong>Location:</strong> Via I. Campioni 20, Langhirano (PR), Italy</p>
+                    <p><strong>GitHub:</strong> <a href="https://github.com/tommasoderossi7">GitHub Profile</a></p>
+                    <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/tommaso-derossi-707741205/">LinkedIn Profile</a></p>
+                            <!-- <a href="https://github.com/yourusername">GitHub</a></p>  <a href="https://linkedin.com/in/yourusername">LinkedIn</a></p> -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Navigation functionality
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('.section');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                
+                // Update active nav
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+                
+                // Show target section
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                    if (section.id === targetId) {
+                        section.classList.add('active');
+                        
+                    }
+                });
+            });
+        });
+
+        // Bird flocking simulation
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let birds = [];
+        const numBirds = 300;
+        let mouseX = 0;
+        let mouseY = 0;
+        
+        // Click attraction variables
+        let attractionPoint = null;
+        let attractionStartTime = 0;
+        const attractionDuration = 1000; // 1 second in milliseconds
+
+        // Set canvas size
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Track mouse position
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        // Track clicks for bird attraction
+        document.addEventListener('click', (e) => {
+            // Set attraction point to click location
+            attractionPoint = { x: e.clientX, y: e.clientY };
+            attractionStartTime = Date.now();
+        });
+
+        // Bird class
+        class Bird {
+            constructor() {
+                // this.x = (Math.random()-0.5) + canvas.width/2;
+                // this.y =(Math.random()-0.5) * canvas.height/5 + canvas.height/5;
+                // this.vx = (Math.random() - 0.5) * 2 + 20;
+                // this.vy = (Math.random() - 0.5) * 2;
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 2;
+                this.vy = (Math.random() - 0.5) * 2;
+                this.maxSpeed = 2;
+                this.maxForce = 0.05;
+                this.history = [];
+                this.maxHistory = 0;
+            }
+
+            update() {
+                // Save position history for trail
+                this.history.push({ x: this.x, y: this.y });
+                if (this.history.length > this.maxHistory) {
+                    this.history.shift();
+                }
+
+                // Boid rules: compute steering forces
+                let separation = this.separate(); // steer to avoid crowding
+                let alignment = this.align();     // steer towards average heading
+                let cohesion = this.cohere();     // steer towards center of mass
+                let mouse = this.avoidMouse();    // steer away from mouse
+                let attraction = this.attractToPoint(); // steer towards click point
+                let rotation = this.getRotationalForce(); // rotational force around center
+                let centripetal = this.getCentripetalForce(); // force toward center
+
+                // Weights for each behavior
+                const sepWeight = 2;
+                const aliWeight = 1.0;
+                const cohWeight = 1.0;
+                const mouseWeight = 10.0;
+                const attractionWeight = 10.0; // Strong attraction to click point
+                const rotationWeight = 0.01; // adjust for desired effect
+                const centripetalWeight = 0.02; // adjust for desired effect
+
+                // Sum weighted steering forces
+                let steerX = separation.x * sepWeight + alignment.x * aliWeight + cohesion.x * cohWeight + mouse.x * mouseWeight + attraction.x * attractionWeight + rotation.x * rotationWeight + centripetal.x * centripetalWeight;
+                let steerY = separation.y * sepWeight + alignment.y * aliWeight + cohesion.y * cohWeight + mouse.y * mouseWeight + attraction.y * attractionWeight + rotation.y * rotationWeight + centripetal.y * centripetalWeight;
+
+                // Limit total steering force
+                let steerMag = Math.hypot(steerX, steerY);
+                if (steerMag > this.maxForce) {
+                    steerX = (steerX / steerMag) * this.maxForce;
+                    steerY = (steerY / steerMag) * this.maxForce;
+                }
+
+                // Apply steering to velocity
+                this.vx += steerX;
+                this.vy += steerY;
+
+                // Limit speed
+                let speed = Math.hypot(this.vx, this.vy);
+                if (speed > this.maxSpeed) {
+                    this.vx = (this.vx / speed) * this.maxSpeed;
+                    this.vy = (this.vy / speed) * this.maxSpeed;
+                }
+
+                // Update position
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Periodic boundaries - wrap around edges
+                if (this.x < 0) this.x = canvas.width;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.y < 0) this.y = canvas.height;
+                if (this.y > canvas.height) this.y = 0;
+            }
+
+            align() {
+                let perceptionRadius = 80;
+                let avgVx = 0;
+                let avgVy = 0;
+                let count = 0;
+
+                for (let other of birds) {
+                    let d = Math.hypot(other.x - this.x, other.y - this.y);
+                    if (other !== this && d < perceptionRadius) {
+                        avgVx += other.vx;
+                        avgVy += other.vy;
+                        count++;
+                    }
+                }
+
+                if (count > 0) {
+                    avgVx /= count;
+                    avgVy /= count;
+                    avgVx -= this.vx;
+                    avgVy -= this.vy;
+                    let mag = Math.hypot(avgVx, avgVy);
+                    if (mag > this.maxForce) {
+                        avgVx = (avgVx / mag) * this.maxForce;
+                        avgVy = (avgVy / mag) * this.maxForce;
+                    }
+                }
+
+                return { x: avgVx, y: avgVy };
+            }
+
+            cohere() {
+                let perceptionRadius = 80;
+                let avgX = 0;
+                let avgY = 0;
+                let count = 0;
+
+                for (let other of birds) {
+                    let d = Math.hypot(other.x - this.x, other.y - this.y);
+                    if (other !== this && d < perceptionRadius) {
+                        avgX += other.x;
+                        avgY += other.y;
+                        count++;
+                    }
+                }
+
+                if (count > 0) {
+                    avgX /= count;
+                    avgY /= count;
+                    avgX -= this.x;
+                    avgY -= this.y;
+                    let mag = Math.hypot(avgX, avgY);
+                    if (mag > this.maxForce) {
+                        avgX = (avgX / mag) * this.maxForce;
+                        avgY = (avgY / mag) * this.maxForce;
+                    }
+                }
+
+                return { x: avgX, y: avgY };
+            }
+
+            separate() {
+                let perceptionRadius = 40;
+                let avgX = 0;
+                let avgY = 0;
+                let count = 0;
+
+                for (let other of birds) {
+                    let d = Math.hypot(other.x - this.x, other.y - this.y);
+                    if (other !== this && d < perceptionRadius && d > 0) {
+                        let diffX = this.x - other.x;
+                        let diffY = this.y - other.y;
+                        diffX /= d;
+                        diffY /= d;
+                        avgX += diffX;
+                        avgY += diffY;
+                        count++;
+                    }
+                }
+
+                if (count > 0) {
+                    avgX /= count;
+                    avgY /= count;
+                    let mag = Math.hypot(avgX, avgY);
+                    if (mag > this.maxForce) {
+                        avgX = (avgX / mag) * this.maxForce;
+                        avgY = (avgY / mag) * this.maxForce;
+                    }
+                }
+
+                return { x: avgX, y: avgY };
+            }
+
+            avoidMouse() {
+                let dx = this.x - mouseX;
+                let dy = this.y - mouseY;
+                let d = Math.hypot(dx, dy);
+                if (d < 100 && d > 0) {
+                    dx /= d;
+                    dy /= d;
+                    return { x: dx * 0.1, y: dy * 0.1 };
+                }
+                return { x: 0, y: 0 };
+            }
+
+            attractToPoint() {
+                // Check if attraction is active
+                if (!attractionPoint || (Date.now() - attractionStartTime) > attractionDuration) {
+                    return { x: 0, y: 0 };
+                }
+
+                // Calculate attraction force towards the click point
+                let dx = attractionPoint.x - this.x;
+                let dy = attractionPoint.y - this.y;
+                let d = Math.hypot(dx, dy);
+                
+                if (d > 0) {
+                    // Normalize and apply attraction force
+                    dx /= d;
+                    dy /= d;
+                    
+                    // Stronger attraction force than mouse avoidance
+                    let strength = 0.3;
+                    
+                    // Smooth fade attraction over time using a quadratic easing
+                    let progress = (Date.now() - attractionStartTime) / attractionDuration;
+                    let timeFactor = 1 - (progress * progress); // Quadratic easing out
+
+                    // // Optional: linear fade attraction over time
+                    // let timeFactor = 1 - (Date.now() - attractionStartTime) / attractionDuration;
+                    strength *= timeFactor;
+                    
+                    return { x: dx * strength, y: dy * strength };
+                }
+                
+                return { x: 0, y: 0 };
+            }
+
+            getRotationalForce() {
+                // Calculate a force perpendicular to the vector from center to bird (for counterclockwise rotation)
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                let dx = this.x - centerX;
+                let dy = this.y - centerY;
+                // Perpendicular vector (for 2D: (dx, dy) -> (-dy, dx) for CCW)
+                let perpX = -dy;
+                let perpY = dx;
+                // Normalize
+                let mag = Math.hypot(perpX, perpY);
+                if (mag > 0) {
+                    perpX /= mag;
+                    perpY /= mag;
+                }
+                // Scale by distance from center (optional: could be constant)
+                return { x: perpX, y: perpY };
+            }
+
+            getCentripetalForce() {
+                // Vector from bird to center
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                let dx = centerX - this.x;
+                let dy = centerY - this.y;
+                // Normalize
+                let mag = Math.hypot(dx, dy);
+                if (mag > 0) {
+                    dx /= mag;
+                    dy /= mag;
+                }
+                return { x: dx, y: dy };
+            }
+
+            draw() {
+                // Draw bird as a small triangle pointing in direction of movement
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(Math.atan2(this.vy, this.vx));
+                
+                ctx.beginPath();
+                ctx.moveTo(6, 0);
+                ctx.lineTo(-3, -2);
+                ctx.lineTo(-3, 2);
+                ctx.closePath();
+                
+                ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--particle-color');
+                ctx.fill();
+                
+                ctx.restore();
+
+                // Draw trail
+                if (this.history.length > 1) {
+                    ctx.beginPath();
+                    ctx.moveTo(this.history[0].x, this.history[0].y);
+                    
+                    for (let i = 1; i < this.history.length; i++) {
+                        ctx.lineTo(this.history[i].x, this.history[i].y);
+                    }
+                    
+                    ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--particle-color');
+                    ctx.lineWidth = 0.5;
+                    ctx.globalAlpha = 0.2;
+                    ctx.stroke();
+                    ctx.globalAlpha = 1;
+                }
+            }
+        }
+
+        // Initialize birds
+        for (let i = 0; i < numBirds; i++) {
+            birds.push(new Bird());
+        }
+
+        // Animation loop
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let bird of birds) {
+                bird.update();
+                bird.draw();
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://tommasoderossi7.github.io/sitemap.xml
