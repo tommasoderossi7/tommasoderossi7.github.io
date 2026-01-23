@@ -7,12 +7,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Inter font from Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Raleway font from Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
@@ -23,29 +21,51 @@
         }
 
         :root {
-            --primary-color: #1a1a1a;
             --secondary-color: #4a4a4a;
             --accent-color: #0066cc;
             --background: #ffffff;
-            --surface: #f8f9fa;
             --border: #e5e7eb;
             --text-primary: #1a1a1a;
             --text-secondary: #6b7280;
+            --container-bg: rgba(255, 255, 255, 0.2);
+            --cv-button-bg: rgba(255, 255, 255, 0.35);
+            --contact-box-bg: rgba(255, 255, 255, 0.4);
+            --skills-modal-bg: rgba(255, 255, 255, 0.55);
+            --skill-chip-bg: rgba(255, 255, 255, 0.25);
+            --particle-bg-color: #f6efe3;
+            --particle-color: #ffffff;
+            --particle-link-color: #ffffff;
+            --particle-shadow-color: #000000;
+            --particle-link-shadow-color: #000000;
+            --particle-light-gradient-start: #ffffff;
+            --particle-light-gradient-stop: #000000;
+            --particle-light-shadow-color: #000000;
+            --particle-mask-color: transparent;
             --max-width: 800px;
-            --particle-color: rgba(0, 0, 0, 1)
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --primary-color: #ffffff;
                 --secondary-color: #b8b8b8;
                 --accent-color: #e2c6f7;
                 --background: #0a0a0a;
-                --surface: #1a1a1a;
                 --border: #2a2a2a;
                 --text-primary: #ffffff;
                 --text-secondary: #9ca3af;
-                --particle-color: rgb(255, 255, 255);
+                --container-bg: rgba(26, 26, 26, 0.6);
+                --cv-button-bg: rgba(26, 26, 26, 0.35);
+                --contact-box-bg: rgba(26, 26, 26, 0.4);
+                --skills-modal-bg: rgba(26, 26, 26, 0.72);
+                --skill-chip-bg: rgba(255, 255, 255, 0.06);
+                --particle-bg-color: #4D1701;
+                --particle-color: #ffffff;
+                --particle-link-color: #ffffff;
+                --particle-shadow-color: #000000;
+                --particle-link-shadow-color: #000000;
+                --particle-light-gradient-start: #ffffff;
+                --particle-light-gradient-stop: #000000;
+                --particle-light-shadow-color: #000000;
+                --particle-mask-color: transparent;
             }
         }
 
@@ -57,11 +77,22 @@
             transition: all 0.3s ease;
             position: relative;
             overflow-x: hidden;
+            -webkit-user-select: none;
+            user-select: none;
         }
 
-        /* Ensure Inter font is used everywhere */
         *, *::before, *::after {
             font-family: 'Inter', sans-serif;
+        }
+
+        .container, .container * {
+            -webkit-user-select: text;
+            user-select: text;
+        }
+
+        .skills-modal, .skills-modal * {
+            -webkit-user-select: text;
+            user-select: text;
         }
 
         #particles-canvas {
@@ -81,7 +112,7 @@
             padding: 1.2rem 1.2rem 0.5rem 1.2rem;
             position: relative;
             z-index: 1;
-            background: rgba(255, 255, 255, 0.2);
+            background: var(--container-bg);
             backdrop-filter: blur(12px) saturate(120%);
             -webkit-backdrop-filter: blur(12px) saturate(120%);
             border-radius: 24px;
@@ -90,9 +121,86 @@
 
         @media (prefers-color-scheme: dark) {
             .container {
-                background: rgba(26, 26, 26, 0.6);
                 border: 1px solid rgba(255, 255, 255, 0.1);
             }
+        }
+
+        html[data-theme="light"] {
+            --secondary-color: #c2c0c0; /* #4a4a4a */
+            --accent-color: #0066cc;
+            --background: #ffffff;
+            --border: #e5e7eb;
+            --text-primary: #1a1a1a;
+            --text-secondary: #3b3b3b;
+            --container-bg: #f6efe3; /* #afaeae */
+            --cv-button-bg: #b6b4b4;
+            --contact-box-bg: #ffffff66;
+            --skills-modal-bg: #ffffff;
+            --skill-chip-bg: #c2c0c0;
+            --particle-bg-color: #afaeae; /* #f6efe3 */
+            --particle-color: #000000;
+            --particle-link-color: #000000;
+            --particle-shadow-color: #000000;  
+            --particle-link-shadow-color: #000000;
+            --particle-light-gradient-start: #ffffff;
+            --particle-light-gradient-stop: #000000;
+            --particle-light-shadow-color: #000000;
+            --particle-mask-color: transparent;
+        }
+
+        html[data-theme="dark"] {
+            --secondary-color: #b8b8b8;
+            --accent-color: #e2c6f7;
+            --background: #0a0a0a;
+            --border: #2a2a2a;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --container-bg: #1a1a1a99;
+            --cv-button-bg: #1a1a1a59;
+            --contact-box-bg: #1a1a1a66;
+            --skills-modal-bg: #1a1a1ab8;
+            --skill-chip-bg: #ffffff1a;
+            --particle-bg-color: #4D1701;
+            --particle-color: #ffffff;
+            --particle-link-color: #ffffff;
+            --particle-shadow-color: #000000;
+            --particle-link-shadow-color: #000000;
+            --particle-light-gradient-start: #ffffff;
+            --particle-light-gradient-stop: #000000;
+            --particle-light-shadow-color: #000000;
+            --particle-mask-color: transparent;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 1.1rem;
+            right: 1.1rem;
+            z-index: 2;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.25);
+            color: var(--text-primary);
+            border-radius: 999px;
+            padding: 0.45rem 0.95rem;
+            font-size: 1.25rem;
+            line-height: 1;
+            font-weight: 300;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            backdrop-filter: blur(10px) saturate(120%);
+            -webkit-backdrop-filter: blur(10px) saturate(120%);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .theme-toggle {
+                background: rgba(26, 26, 26, 0.35);
+                border: 1px solid rgba(255, 255, 255, 0.10);
+            }
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-1px);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
         }
 
         header {
@@ -105,7 +213,6 @@
             font-family: 'Raleway', sans-serif;
             font-size: 4rem;
             font-weight: 400;
-            /* font-style: italic; */
             margin-bottom: -1rem;
             letter-spacing: -0.05em;
 
@@ -210,97 +317,6 @@
             text-align: justify;
         }
 
-        .publication {
-            line-height: 1.2;
-            background-color: var(--surface);
-            padding: 0.7rem 1.3rem 0.5rem 1rem;
-            margin-bottom: 0.4rem;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .publication::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 102, 204, 0.1), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .publication:hover::before {
-            left: 100%;
-        }
-
-        .publication:hover {
-            transform: translateY(-2px);
-        }
-
-        .publication[onclick] {
-            cursor: pointer;
-        }
-
-        .publication[onclick]:hover {
-            transform: translateY(-3px);
-        }
-
-        .publication-title {
-            font-family: 'Inter', sans-serif;
-            font-weight: 300;
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-        }
-
-        .publication-authors {
-            font-family: 'Inter', sans-serif;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            font-weight: 200;
-            margin-bottom: 0.5rem;
-        }
-
-        .publication-venue {
-            color: var(--accent-color);
-            font-size: 0.85rem;
-            margin-bottom: 0.5rem;
-            font-weight: 200;
-            letter-spacing: 0.00em;
-            font-style: italic;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .publication-links {
-            margin-top: 1rem;
-            display: flex;
-            gap: 1rem;
-        }
-
-        .publication-links a {
-            color: var(--accent-color);
-            text-decoration: none;
-            font-size: 0.85rem;
-            padding: 0.35rem 1rem;
-            border: 1px solid var(--accent-color);
-            border-radius: 20px;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-weight: 500;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .publication-links a:hover {
-            background-color: var(--accent-color);
-            color: var(--background);
-            transform: translateY(-1px);
-        }
-
         .cv-section {
             margin-bottom: 0.7rem;
         }
@@ -330,11 +346,206 @@
             font-size: 1.1rem;
             margin-bottom: 0.25rem;
         }
+        .cv-header-row {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .cv-header-row .cv-title {
+            margin-bottom: 0;
+        }
+
+        .skills-link--title {
+            margin-left: 0;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
 
         .cv-location {
             color: var(--text-secondary);
             font-weight: 200;
             font-style: italic;
+        }
+        .cv-actions {
+            display: flex;
+            justify-content: flex-start;
+            margin: 0 0 1rem 0;
+        }
+
+        .cv-open-full {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 300;
+            font-size: 0.95rem;
+            padding: 0.35rem 0.9rem;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            background: var(--cv-button-bg);
+            backdrop-filter: blur(8px) saturate(110%);
+            -webkit-backdrop-filter: blur(8px) saturate(110%);
+            transition: all 0.25s ease;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .cv-open-full {
+                border: 1px solid rgba(255, 255, 255, 0.08);
+            }
+        }
+
+        .cv-open-full:hover {
+            transform: translateY(-1px);
+            border-color: var(--accent-color);
+        }
+
+        .cv-summary-line {
+            margin-top: 0.35rem;
+            color: var(--text-secondary);
+            font-weight: 200;
+            line-height: 1.6;
+        }
+
+        .cv-summary-line p {
+            margin: 0;
+            text-align: left;
+        }
+
+        .skills-link {
+            appearance: none;
+            border: none;
+            background: transparent;
+            color: var(--accent-color);
+            cursor: pointer;
+            font-weight: 300;
+            padding: 0;
+            margin-left: 0.35rem;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .skills-link:hover {
+            text-decoration: underline;
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        .skills-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            z-index: 999;
+        }
+
+        .skills-modal.is-open {
+            display: block;
+        }
+
+        .skills-modal__overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .skills-modal__overlay {
+                background: rgba(0, 0, 0, 0.55);
+            }
+        }
+
+        .skills-modal__dialog {
+            position: relative;
+            width: min(640px, calc(100% - 2.2rem));
+            margin: 10vh auto;
+            padding: 1.1rem 1.1rem 1rem 1.1rem;
+            border-radius: 20px;
+            background: var(--skills-modal-bg);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.18),
+                0 1px 2px rgba(255, 255, 255, 0.08) inset;
+            backdrop-filter: blur(14px) saturate(120%);
+            -webkit-backdrop-filter: blur(14px) saturate(120%);
+            animation: fadeUp 0.18s ease;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .skills-modal__dialog {
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                box-shadow:
+                    0 10px 30px rgba(0, 0, 0, 0.35),
+                    0 1px 2px rgba(255, 255, 255, 0.03) inset;
+            }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .skills-modal__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 0.65rem;
+        }
+
+        .skills-modal__title {
+            font-size: 1.05rem;
+            font-weight: 400;
+            color: var(--text-primary);
+        }
+
+        .skills-modal__subtitle {
+            font-size: 0.9rem;
+            font-weight: 200;
+            color: var(--text-secondary);
+            margin: 0 0 0.85rem 0;
+        }
+
+        .skills-modal__close {
+            width: 36px;
+            height: 36px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
+        .skills-modal__close:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-1px);
+        }
+
+        .skills-modal__chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-chip {
+            padding: 0.35rem 0.7rem;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            font-weight: 300;
+            background: var(--skill-chip-bg);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .skill-chip {
+                border: 1px solid rgba(255, 255, 255, 0.10);
+            }
         }
 
         .profile-section {
@@ -393,60 +604,14 @@
             font-size: 1rem;
         }
 
-        .blog-post {
-            margin-bottom: 0.6rem;
-            padding-bottom: 0.6rem;
-            border-bottom: 1px solid var(--border);
-            transition: all 0.3s ease;
-        }
-
-        .blog-post:hover {
-            padding-left: 1rem;
-        }
-
-        .blog-post:last-child {
-            border-bottom: none;
-        }
-
-        .blog-date {
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            font-weight: 600;
-        }
-
-        .blog-title {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.75rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-            text-decoration: none;
-            display: block;
-            transition: color 0.3s ease;
-        }
-
-        .blog-title:hover {
-            color: var(--accent-color);
-        }
-
-        .blog-excerpt {
-            color: var(--text-secondary);
-            line-height: 1.8;
-            font-size: 0.95rem;
-        }
-
         .contact-info {
-            background: rgba(255, 255, 255, 0.4);
+            background: var(--contact-box-bg);
             backdrop-filter: blur(8px) saturate(110%);
             -webkit-backdrop-filter: blur(8px) saturate(110%);
             padding: 1.2rem 1.2rem 0.6rem 1.2rem;
             border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             transition: all 0.3s ease;
-            padding-bottom: 0.6rem;
             box-shadow: 
                 0 4px 16px rgba(0, 0, 0, 0.08),
                 0 1px 2px rgba(255, 255, 255, 0.1) inset;
@@ -454,7 +619,6 @@
 
         @media (prefers-color-scheme: dark) {
             .contact-info {
-                background: rgba(26, 26, 26, 0.4);
                 border: 1px solid rgba(255, 255, 255, 0.08);
                 box-shadow: 
                     0 4px 16px rgba(0, 0, 0, 0.25),
@@ -528,16 +692,6 @@
             padding-left: 0.5rem;
         }
 
-        ul {
-            margin-top: 1rem;
-            margin-left: 2rem;
-            color: var(--text-secondary);
-        }
-
-        ul li {
-            margin-bottom: 0.5rem;
-        }
-
         @media (max-width: 768px) {
             .container {
                 padding: 0.7rem 0.7rem 0.3rem 0.7rem;
@@ -549,19 +703,11 @@
             .section {
                 margin-bottom: 0.3rem;
             }
-            .publication {
-                margin-bottom: 0.2rem;
-                padding-bottom: 0.2rem;
-            }
             .cv-section {
                 margin-bottom: 0.3rem;
             }
             .cv-item {
                 margin-bottom: 0.2rem;
-            }
-            .blog-post {
-                margin-bottom: 0.3rem;
-                padding-bottom: 0.3rem;
             }
             .contact-info {
                 padding-bottom: 0.3rem;
@@ -587,10 +733,6 @@
             nav {
                 gap: 0.7rem;
             }
-            .publication-links {
-                flex-wrap: wrap;
-            }
-            /* Change "curriculum_vitae" to "cv" on mobile */
             nav a[href="#cv"] {
                 font-size: 0;
             }
@@ -602,30 +744,13 @@
                 font-family: 'Raleway', sans-serif;
             }
         }
-
-        .publication-venue-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            gap: 1rem;
-        }
-        .publication-equal-note {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.8rem;
-            font-weight: 200;
-            color: var(--text-secondary);
-            font-style: italic;
-            margin-top: 0;
-            white-space: nowrap;
-        }
-
-        #publications-list {
-            transition: opacity 0.3s ease;
-        }
     </style>
 </head>
 <body>
     <canvas id="particles-canvas"></canvas>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+        ☾
+    </button>
     
     <div class="container">
         <header>
@@ -635,15 +760,12 @@
                 <a href="#about" class="nav-link active">about</a>
                 <a href="#portfolio" class="nav-link">portfolio</a>
                 <a href="#cv" class="nav-link">curriculum vitae</a>
-                <!-- <a href="#thoughts" class="nav-link">Thoughts</a> -->
                 <a href="#contact" class="nav-link">contact</a>
-                <!-- <a href="#birds" class="nav-link" style="margin-left:auto;">hide me</a> -->
             </nav>
         </header>
 
         <main>
             <section id="about" class="section active">
-                <!-- <h2>About me</h2> -->
                 <div class="profile-section">
                     <div class="profile-image">
                         <img src="profile_pic.jpg" alt="Tommaso Derossi" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -652,7 +774,7 @@
                     <div class="profile-content">
                         <p style="font-size:1.5rem;">Hi, I'm Tommaso!</p>
                         <p>I am working as an industrial PhD student, building bridges between cutting-edge technologies and industrial adoption.</p>
-                        <p>I like to work on composable systems and pipelines involving classical machine learning, statistical (Bayesian) modeling, LLMs, and data visualizations.</p>
+                        <p>I like to work on composable systems and pipelines involving classical machine learning, statistical (bayesian) modeling, LLMs, and data visualizations.</p>
                     </div>
                     </div>
 
@@ -663,123 +785,262 @@
             </section>
 
             <section id="cv" class="section">
-                <div class="cv-section">
-                    <h2>Education</h2>
-                    <div class="cv-item">
-                        <div class="cv-title">PhD Student, Deep Learning</div>
-                        <div class="cv-location">Università degli studi di Parma</div>
-                        <div class="cv-date">November 2024 - Present</div>
-                        <div class="cv-summary"><ul><li><p>Currenlty doing research on Artificial Neural Networks <strong>safety and interpretability </strong>with a focus on<strong> Large Language Models </strong>working on combinations of <strong>bottom-up (mechanistic interpetability) </strong>and <strong>top-down (behavioral experiments) </strong>approaches<strong>.</strong></p></li></ul></div>
-                    </div>
-                    <div class="cv-item">
-                        <div class="cv-title">Master Degree in Stochastics and Data Science</div>
-                        <div class="cv-location">Università degli studi di Torino</div>
-                        <div class="cv-date">September 2019 - April 2023</div>
-                        <div class="cv-summary"><ul><li><p>Degree course in <strong>Mathematics</strong> fully taught in <strong>English</strong></p><p><strong>Thesis</strong>: "<em>Modelling the discourse around nature in Twitter in presence of highly imbalanced data.</em>"</p><p><strong>Thesis</strong> <strong>topics: </strong>Natural Language Processing, Transformers models, Network Science, Filtering Techniques, Sentiment Classification, Semantic Clustering, Topic Modeling</p></li></ul></div>
-                    </div>
-                    <div class="cv-item">
-                        <div class="cv-title">1 year exchange programme in Statistics</div>
-                        <div class="cv-location">KU Leuven</div>
-                        <div class="cv-date">September 2020 - July 2021</div>
-                        <div class="cv-summary"><ul><li><p>Second year of master's degree spent in Belgium at KU Leuven. Some of the main courses attended (10 courses in total): <strong>Optimization and Numerical Methods</strong> (17/20), <strong>Concepts of Bayesian Data Analysis</strong> (16/20), <strong>Data Mining and Neural Networks</strong> (15/20), and <strong>Modern Data Analytics</strong> (15/20)</p></li><li><p>Participated in <strong>Data4Good</strong> Challenge (<strong>Emergent Leuven</strong>)</p></li></ul></div>
-                    </div>
-                    <div class="cv-item">
-                        <div class="cv-title">Bachelor Degree in Physics</div>
-                        <div class="cv-location">Università degli studi di Parma</div>
-                        <div class="cv-date">September 2016 - September 2019</div>
-                        <div class="cv-summary"><ul><li><p><strong>Awarded </strong>for being the<strong> top-ranked student in credits earned relative to grade point average </strong>during the second academic year</p><p><strong>Thesis</strong>: "<em>Methodological aspects of neural networks integrated within an application for the classification of relational database columns.</em>"</p><p><strong>Thesis topics: </strong>Artificial Neural Networks, Deep Recurrent Neural Networks (LSTM), Distributed Model Training </p></li></ul></div>
-                    </div>
-                    <div class="cv-item">
-                        <div class="cv-title">High School (Scientific Oriented)</div>
-                        <div class="cv-location">Liceo Scientifico "Giacomo Ulivi"</div>
-                        <div class="cv-date">2011 - 2016</div>
-                    </div>
-                    <div class="cv-item">
-                        <div class="cv-title">English School Attendance, 3 months</div>
-                        <div class="cv-location">South African College High School</div>
-                        <div class="cv-date">2012</div>
-                    </div>
+                <div class="cv-actions">
+                    <a class="cv-open-full" href="assets/cv/tommaso-derossi-cv.pdf" target="_self" rel="noopener">
+                        Open full CV (PDF)
+                    </a>
                 </div>
-
                 <div class="cv-section">
-                    <h2>Work/Research experience</h2>
-                    <div class="cv-item">
+                <h2>Work/Research experience</h2>
+
+                <div class="cv-item">
+                    <div class="cv-header-row">
                         <div class="cv-title">Research Fellow</div>
-                        <div class="cv-location">Supervised Program for Alignment Research | Remote</div>
-                        <div class="cv-date">September 2025 - Present</div>
-                        <div class="cv-summary"><ul><li><p>Alignment research via SPAR: <strong>CoT monitoring</strong>, decomposition techniques, and attribution methods to analyze LLM reasoning traces.</p></li><li><p>Reproducible analysis workflows (<strong>Docker</strong>).</p></li></ul></div>
+                        <button class="skills-link skills-link--title" type="button"
+                            data-title="Research Fellow — SPAR"
+                            data-skills="CoT monitoring, Causal attribution, LLM evaluation, Experiment design, Python, Docker">
+                            skills
+                        </button>
                     </div>
-                    <div class="cv-item">
-                        <div class="cv-title">Industrial PhD</div>
-                        <div class="cv-location">GEA Procomac SPA</div>
-                        <div class="cv-date">November 2024 - Present</div>
-                        <div class="cv-summary"><ul><li><p>Industrial PhD within GEA: designing and developing an embedding-based <strong>recommendation system</strong> for <strong>troubleshooting industrial plant machinery</strong> (patented project).</p></li><li><p>Tech: embeddings, vector databases, clustering, local language models; reproducible packaging (<strong>Docker</strong>) and scalable processing (<strong>Spark/PySpark</strong>) when needed.</p></li></ul></div>
+                    <div class="cv-location">Supervised Program for Alignment Research | Remote</div>
+                    <div class="cv-date">September 2025 - Present</div>
+                    <div class="cv-summary cv-summary-line">
+                    <p>
+                        Alignment research on chain-of-thought monitoring and attribution methods to analyze LLM reasoning traces with reproducible evaluation workflows.
+                    </p>
                     </div>
-                    <div class="cv-item">
+                </div>
+
+                <div class="cv-item">
+                    <div class="cv-header-row">
+                        <div class="cv-title">ML Engineer</div>
+                        <button class="skills-link skills-link--title" type="button"
+                            data-title="ML Engineer — GEA Procomac"
+                            data-skills="NLP, Embeddings, Vector databases, Clustering, Classification, Bayesian modeling, LLMs, Recommendation systems, Docker, Spark, PySpark">
+                            skills
+                        </button>
+                    </div>
+                    <div class="cv-location">GEA Procomac SPA</div>
+                    <div class="cv-date">November 2024 - Present</div>
+                    <div class="cv-summary cv-summary-line">
+                    <p>
+                        Building an embedding-based troubleshooting recommender over maintenance knowledge (vector DB + clustering + local LLM), packaged for reproducible and scalable runs.
+                    </p>
+                    </div>
+                </div>
+
+                <div class="cv-item">
+                    <div class="cv-header-row">
                         <div class="cv-title">Data Scientist / ML Engineer</div>
-                        <div class="cv-location">Freelance</div>
-                        <div class="cv-date">September 2024 - Present</div>
-                        <div class="cv-summary"><ul><li><p>Developing a <strong>job–candidate matching</strong> system with a focus on ranking/recommendation, offline evaluation, and production-friendly implementation.</p></li><li><p>Packaging with <strong>Docker</strong>; exploring cloud deployment patterns on <strong>AWS</strong> (S3/EC2/Lambda) for prototypes.</p></li></ul></div>
+                        <button class="skills-link skills-link--title" type="button"
+                            data-title="Freelance — Job/Candidate Matching"
+                            data-skills="Ranking, Recommenders, Offline evaluation, Python, Docker, AWS (S3/EC2/Lambda), Information retrieval">
+                            skills
+                        </button>
                     </div>
-                    <div class="cv-item">
+                    <div class="cv-location">Freelance</div>
+                    <div class="cv-date">September 2024 - Present</div>
+                    <div class="cv-summary cv-summary-line">
+                    <p>
+                        Developing a job–candidate matching system as ranking/recommendation with offline evaluation and production-friendly packaging, exploring AWS deployment patterns for prototypes.
+                    </p>
+                    </div>
+                </div>
+
+                <div class="cv-item">
+                    <div class="cv-header-row">
                         <div class="cv-title">Data Scientist</div>
-                        <div class="cv-location">Tomorrow S.R.L.</div>
-                        <div class="cv-date">February 2023 - July 2024</div>
-                        <div class="cv-summary"><ul><li><p>Built data transformation pipelines integrated with ML models (Bayesian hierarchical, random forest, gradient boosting) for <strong>IoT analytics</strong>: predictive maintenance, KPI optimization, forecasting.</p></li><li><p>Designed an AI conversational agent for purchasing assistance using <strong>LLMs</strong> (prompting/finetuning, RAG, LlamaIndex, LangChain).</p></li><li><p>Dashboards and stakeholder-ready reporting; reproducible packaging (<strong>Docker</strong>); scalable patterns (<strong>Spark/PySpark</strong>) when needed.</p></li></ul></div>
+                        <button class="skills-link skills-link--title" type="button"
+                            data-title="Data Scientist — Tomorrow S.R.L."
+                            data-skills="Bayesian hierarchical models, Forecasting, scikit-learn, Gradient boosting, Random forest, LLMs, RAG, LangChain, LlamaIndex, Docker, Spark, PySpark, Dashboards">
+                            skills
+                        </button>
                     </div>
-                    <div class="cv-item">
+                    <div class="cv-location">Tomorrow S.R.L.</div>
+                    <div class="cv-date">February 2023 - July 2024</div>
+                    <div class="cv-summary cv-summary-line">
+                    <p>
+                        Built IoT analytics pipelines and models (Bayesian hierarchical + ensembles) for predictive maintenance/KPI optimization/forecasting, plus an LLM-based purchasing assistant and dashboards.
+                    </p>
+                    </div>
+                </div>
+
+                <div class="cv-item">
+                    <div class="cv-header-row">
                         <div class="cv-title">Data Scientist</div>
-                        <div class="cv-location">WATERONMARS S.R.L.</div>
-                        <div class="cv-date">March 2022 - February 2023</div>
-                        <div class="cv-summary"><ul><li><p>Built <strong>ETL pipelines</strong> (web scraping, APIs) and analyzed social media data (text, images, video, geospatial/temporal).</p></li><li><p>Integrated predictive models for NLP and computer vision; delivered customized dashboards.</p></li><li><p>Scalable processing patterns (<strong>Spark/PySpark</strong>) when needed.</p></li></ul></div>
+                        <button class="skills-link skills-link--title" type="button"
+                            data-title="Data Scientist — WATERONMARS"
+                            data-skills="ETL, Web scraping, APIs, NLP, Computer vision, Geospatial analytics, Dashboards, Spark, PySpark">
+                            skills
+                        </button>
                     </div>
-                    <div class="cv-item">
+                    <div class="cv-location">WATERONMARS S.R.L.</div>
+                    <div class="cv-date">March 2022 - February 2023</div>
+                    <div class="cv-summary cv-summary-line">
+                    <p>
+                        Built ETL pipelines (web scraping/APIs) and delivered NLP/CV enrichment and dashboards on geo-temporal social data, using scalable processing patterns when needed.
+                    </p>
+                    </div>
+                </div>
+
+                <div class="cv-item">
+                    <div class="cv-header-row">
                         <div class="cv-title">Machine Learning engineer</div>
-                        <div class="cv-location">OMIGRADE S.R.L.</div>
-                        <div class="cv-date">March 2019 - October 2020</div>
-                        <div class="cv-summary"><ul><li><p>Designed and optimized an LSTM model (TensorFlow) for interactive classification of relational database columns (60 classes).</p></li><li><p>Engineered distributed workflows on Hadoop using Spark RDDs and <strong>PySpark</strong>-style processing; automated retraining, monitoring, and performance analysis.</p></li><li><p><strong>Performance</strong>: Top-1 89.0 ± 1.5%, Top-5 94.1 ± 0.3%.</p></li></ul></div>
+                        <button class="skills-link skills-link--title" type="button"
+                            data-title="ML Engineer — OMIGRADE"
+                            data-skills="TensorFlow, LSTM, Hadoop, Spark, PySpark, Distributed training, Monitoring, MLOps">
+                            skills
+                        </button>
+                    </div>
+                    <div class="cv-location">OMIGRADE S.R.L.</div>
+                    <div class="cv-date">March 2019 - October 2020</div>
+                    <div class="cv-summary cv-summary-line">
+                    <p>
+                        Built an LSTM classifier for database columns and engineered a distributed retraining/monitoring pipeline on Hadoop/Spark with PySpark processing and performance tracking.
+                    </p>
                     </div>
                 </div>
-            </section>
-            <section id="contact" class="section">
-                <!-- <h2>Contact</h2> -->
-                <div class="contact-info">
-                    <div class="contact-section">
-                        <div class="contact-image">
-                            <!-- Replace src with your actual photo path -->
-                            <img src="profile_pic.jpg" alt="Tommaso Derossi" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <div class="contact-placeholder" style="display:none;">TD</div>
-                        </div>
-                        <div class="contact-details">
+                </div>
 
-                    <p><strong>Email:</strong> <a href="mailto:tommasoderossi7@gmail.com">tommasoderossi7@gmail.com</a></p>
-                    <p><strong>Phone:</strong> <a href="tel:+393486612907">+39 3486612907</a></p>
-                    <p><strong>Location:</strong> Via I. Campioni 20, Langhirano (PR), Italy</p>
-                    <p><strong>GitHub:</strong> <a href="https://github.com/tommasoderossi7">GitHub Profile</a></p>
-                    <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/tommaso-derossi-707741205/">LinkedIn Profile</a></p>
-                            <!-- <a href="https://github.com/yourusername">GitHub</a></p>  <a href="https://linkedin.com/in/yourusername">LinkedIn</a></p> -->
-                        </div>
+                <div class="cv-section">
+                <h2>Education</h2>
+
+                <div class="cv-item">
+                    <div class="cv-header-row">
+                        <div class="cv-title">PhD Student</div>
+                        <button class="skills-link skills-link--title" type="button"
+                            data-title="PhD — Neural Network Safety & Interpretability"
+                            data-skills="Neural networks, LLMs, Mechanistic interpretability, Behavioral experiments, Python, PyTorch">
+                            skills
+                        </button>
+                    </div>
+                    <div class="cv-location">Università degli studi di Parma</div>
+                    <div class="cv-date">November 2024 - Present</div>
+                    <div class="cv-summary cv-summary-line">
+                    <p>
+                        PhD research on AI safety and interpretability, chain-of-thought monitoring, mechanistic interpretability, and behavioral experimentation.
+                    </p>
                     </div>
                 </div>
-            </section>
-        </main>
-    </div>
 
-    <script>
-        // Navigation functionality
-        const navLinks = document.querySelectorAll('.nav-link');
-        const sections = document.querySelectorAll('.section');
+                <div class="cv-item">
+                    <div class="cv-header-row">
+                        <div class="cv-title">Master Degree in Stochastics and Data Science</div>
+                        <button class="skills-link skills-link--title" type="button"
+                            data-title="MSc — Stochastics & Data Science"
+                            data-skills="Statistics, Probability, NLP, Transformers, Topic modeling, Class imbalance, Python, R">
+                            skills
+                        </button>
+                    </div>
+                    <div class="cv-location">Università degli studi di Torino</div>
+                    <div class="cv-date">September 2019 - April 2023</div>
+                    <div class="cv-summary cv-summary-line">
+                    <p>
+                        MSc in Mathematics (English-taught); thesis on modelling nature discourse on Twitter with highly imbalanced data using Transformers and topic modelling.
+                    </p>
+                    </div>
+                </div>
+
+                <div class="cv-item">
+                    <div class="cv-header-row">
+                        <div class="cv-title">Exchange programme in Statistics</div>
+                        <button class="skills-link skills-link--title" type="button"
+                            data-title="Exchange — KU Leuven"
+                            data-skills="Bayesian data analysis, Optimization, Data mining, Neural networks, Applied statistics">
+                            skills
+                        </button>
+                    </div>
+                    <div class="cv-location">KU Leuven</div>
+                    <div class="cv-date">September 2020 - July 2021</div>
+                    <div class="cv-summary cv-summary-line">
+                    <p>
+                        Exchange year with coursework in non-parametric statistics, functional analysis, Bayesian data analysis, structural equations, econometrics, optimization, and data mining/neural networks, plus participation in Data4Good challenges.
+                    </p>
+                    </div>
+                </div>
+
+                <div class="cv-item">
+                    <div class="cv-header-row">
+                        <div class="cv-title">Bachelor Degree in Physics</div>
+                        <button class="skills-link skills-link--title" type="button"
+                            data-title="BSc — Physics"
+                            data-skills="Physics, Mathematics, Neural networks, LSTM, Distributed training, Scientific computing">
+                            skills
+                        </button>
+                    </div>
+                    <div class="cv-location">Università degli studi di Parma</div>
+                    <div class="cv-date">September 2016 - September 2019</div>
+                    <div class="cv-summary cv-summary-line">
+                    <p>
+                        BSc in Physics; award for top-ranked student (year 2) and thesis on methodological aspects of neural networks for relational database column classification.
+                    </p>
+                    </div>
+                </div>
+
+                <div class="cv-item">
+                    <div class="cv-header-row">
+                        <div class="cv-title">English School Attendance, 3 months</div>
+                        <button class="skills-link skills-link--title" type="button"
+                            data-title="English School — 3 Months"
+                            data-skills="English, Communication, Cross-cultural collaboration">
+                            skills
+                        </button>
+                    </div>
+                    <div class="cv-location">South African College High School</div>
+                    <div class="cv-date">2012</div>
+                    <div class="cv-summary cv-summary-line">
+                    <p>
+                        Short international immersion experience focused on English language and cultural exchange.
+                    </p>
+                    </div>
+                </div>
+                </div>
+                            </section>
+                            <section id="contact" class="section">
+                                <div class="contact-info">
+                                    <div class="contact-section">
+                                        <div class="contact-image">
+                                            <img src="profile_pic.jpg" alt="Tommaso Derossi" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                            <div class="contact-placeholder" style="display:none;">TD</div>
+                                        </div>
+                                        <div class="contact-details">
+
+                                    <p><strong>Email:</strong> <a href="mailto:tommasoderossi7@gmail.com">tommasoderossi7@gmail.com</a></p>
+                                    <p><strong>Phone:</strong> <a href="tel:+393486612907">+39 3486612907</a></p>
+                                    <p><strong>Location:</strong> Via I. Campioni 20, Langhirano (PR), Italy</p>
+                                    <p><strong>GitHub:</strong> <a href="https://github.com/tommasoderossi7">GitHub Profile</a></p>
+                                    <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/tommaso-derossi-707741205/">LinkedIn Profile</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </main>
+                    </div>
+                    <div id="skills-modal" class="skills-modal" aria-hidden="true">
+                        <div class="skills-modal__overlay" data-close></div>
+
+                        <div class="skills-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="skills-modal-title">
+                            <div class="skills-modal__header">
+                            <div id="skills-modal-title" class="skills-modal__title">Skills</div>
+                            <button class="skills-modal__close" type="button" aria-label="Close" data-close>×</button>
+                            </div>
+
+                            <p class="skills-modal__subtitle" id="skills-modal-subtitle"></p>
+                            <div class="skills-modal__chips" id="skills-modal-chips"></div>
+                        </div>
+                    </div>
+                    <script>
+                        const navLinks = document.querySelectorAll('.nav-link');
+                        const sections = document.querySelectorAll('.section');
 
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const targetId = link.getAttribute('href').substring(1);
                 
-                // Update active nav
                 navLinks.forEach(l => l.classList.remove('active'));
                 link.classList.add('active');
                 
-                // Show target section
                 sections.forEach(section => {
                     section.classList.remove('active');
                     if (section.id === targetId) {
@@ -789,12 +1050,113 @@
                 });
             });
         });
+        (() => {
+            const root = document.documentElement;
+            const btn = document.getElementById('theme-toggle');
+            const KEY = 'theme-preference';
+            const mq = window.matchMedia('(prefers-color-scheme: dark)');
 
+            function systemTheme() {
+                return mq.matches ? 'dark' : 'light';
+            }
+
+            function currentTheme() {
+                return root.getAttribute('data-theme') || systemTheme();
+            }
+
+            function setTheme(theme) {
+                root.setAttribute('data-theme', theme);
+                localStorage.setItem(KEY, theme);
+                updateButton();
+                applyParticleThemeColors();
+            }
+
+            function updateButton() {
+                const t = currentTheme();
+                btn.textContent = (t === 'dark') ? '☀' : '☾';
+                btn.setAttribute('aria-label', (t === 'dark') ? 'Switch to light mode' : 'Switch to dark mode');
+            }
+
+            const saved = localStorage.getItem(KEY);
+            if (saved === 'light' || saved === 'dark') {
+                root.setAttribute('data-theme', saved);
+            }
+            updateButton();
+
+            btn.addEventListener('click', () => {
+                const next = (currentTheme() === 'dark') ? 'light' : 'dark';
+                setTheme(next);
+            });
+
+            mq.addEventListener?.('change', () => {
+                if (!localStorage.getItem(KEY)) {
+                    updateButton();
+                    applyParticleThemeColors();
+                }
+            });
+        })();
+        document.addEventListener('dblclick', (e) => {
+            if (!e.target.closest('.container')) {
+                const sel = window.getSelection?.();
+                if (sel && sel.removeAllRanges) sel.removeAllRanges();
+            }
+        });
+        (() => {
+            const modal = document.getElementById('skills-modal');
+            const chips = document.getElementById('skills-modal-chips');
+            const subtitle = document.getElementById('skills-modal-subtitle');
+
+            function openModal(title, skillsCsv) {
+                subtitle.textContent = title || '';
+                chips.innerHTML = '';
+
+                (skillsCsv || '')
+                    .split(',')
+                    .map(s => s.trim())
+                    .filter(Boolean)
+                    .forEach(skill => {
+                        const chip = document.createElement('span');
+                        chip.className = 'skill-chip';
+                        chip.textContent = skill;
+                        chips.appendChild(chip);
+                    });
+
+                modal.classList.add('is-open');
+                modal.setAttribute('aria-hidden', 'false');
+                document.body.classList.add('modal-open');
+            }
+
+            function closeModal() {
+                modal.classList.remove('is-open');
+                modal.setAttribute('aria-hidden', 'true');
+                document.body.classList.remove('modal-open');
+            }
+
+            document.addEventListener('click', (e) => {
+                const btn = e.target.closest('.skills-link');
+                if (btn) {
+                    const title = btn.getAttribute('data-title') || 'Skills';
+                    const skills = btn.getAttribute('data-skills') || '';
+                    openModal(title, skills);
+                    return;
+                }
+
+                if (e.target.closest('[data-close]') && modal.classList.contains('is-open')) {
+                    closeModal();
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+                    closeModal();
+                }
+            });
+        })();
         const particlesConfig = {
             "autoPlay": true,
             "background": {
                 "color": {
-                    "value": "#4D1701"//"#822801"
+                    "value": "#4D1701"
                 },
                 "image": "",
                 "position": "",
@@ -1309,6 +1671,35 @@
         const canvas = document.getElementById('particles-canvas');
         const ctx = canvas.getContext('2d');
         const config = particlesConfig;
+
+        function applyParticleThemeColors() {
+            const styles = getComputedStyle(document.documentElement);
+            const readVar = (name, fallback) => {
+                const value = styles.getPropertyValue(name).trim();
+                return value || fallback;
+            };
+
+            config.background.color.value = readVar('--particle-bg-color', config.background.color.value);
+            config.backgroundMask.cover.color.value = readVar('--particle-mask-color', config.backgroundMask.cover.color.value);
+            config.particles.color.value = readVar('--particle-color', config.particles.color.value);
+            config.particles.shadow.color.value = readVar('--particle-shadow-color', config.particles.shadow.color.value);
+            config.particles.links.color.value = readVar('--particle-link-color', config.particles.links.color.value);
+            config.particles.links.shadow.color.value = readVar('--particle-link-shadow-color', config.particles.links.shadow.color.value);
+            config.interactivity.modes.light.area.gradient.start.value = readVar(
+                '--particle-light-gradient-start',
+                config.interactivity.modes.light.area.gradient.start.value
+            );
+            config.interactivity.modes.light.area.gradient.stop.value = readVar(
+                '--particle-light-gradient-stop',
+                config.interactivity.modes.light.area.gradient.stop.value
+            );
+            config.interactivity.modes.light.shadow.color.value = readVar(
+                '--particle-light-shadow-color',
+                config.interactivity.modes.light.shadow.color.value
+            );
+        }
+
+        applyParticleThemeColors();
 
         let width = 0;
         let height = 0;
