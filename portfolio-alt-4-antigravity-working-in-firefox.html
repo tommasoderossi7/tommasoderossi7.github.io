@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Portfolio Alt 4 - Adaptive Maintenance Recommender</title>
+    <meta name="description" content="Alternative portfolio layout option 4.">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --secondary-color: #4a4a4a;
+            --accent-color: #0066cc;
+            --background: #ffffff;
+            --border: #e5e7eb;
+            --text-primary: #1a1a1a;
+            --text-secondary: #6b7280;
+            --container-bg: rgba(255, 255, 255, 0.2);
+            --section-bg: rgba(255, 255, 255, 0.5);
+            --hero-bg: var(--background);
+            --hero-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+            --hero-title-width: 100%;
+            --hero-carousel-width: 100%;
+            --hero-carousel-x: 0px;
+            --hero-carousel-y: 0px;
+            --hero-carousel-start: 0px;
+            --hero-row-height: 200px;
+            --carousel-max: 280px;
+            --carousel-min: 180px;
+            --hero-title-max: 2.7rem;
+            --hero-title-min: 1.9rem;
+            --hero-subtitle-max: 1.1rem;
+            --hero-subtitle-min: 0.95rem;
+            --hero-pad-y-max: 1.1rem;
+            --hero-pad-y-min: 0.6rem;
+            --hero-pad-x-max: 1.2rem;
+            --hero-pad-x-min: 1rem;
+            --hero-gap-max: 1rem;
+            --hero-gap-min: 0.6rem;
+            --hero-pad-y: var(--hero-pad-y-max);
+            --hero-pad-x: var(--hero-pad-x-max);
+            --hero-gap: var(--hero-gap-max);
+            --hero-title-size: var(--hero-title-max);
+            --hero-subtitle-size: var(--hero-subtitle-max);
+            --hero-back-size: 0.95rem;
+            --hero-gallery-size: 0.95rem;
+            --hero-title-gap: 0.35rem;
+            --hero-carousel-gap: 0.4rem;
+            --hero-carousel-height: var(--carousel-max);
+            --hero-carousel-inner-width: 100%;
+            --max-width: 920px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --secondary-color: #b8b8b8;
+                --accent-color: #e2c6f7;
+                --background: #0a0a0a;
+                --border: #2a2a2a;
+                --text-primary: #ffffff;
+                --text-secondary: #9ca3af;
+                --container-bg: rgba(26, 26, 26, 0.6);
+                --section-bg: rgba(26, 26, 26, 0.6);
+                --hero-bg: var(--background);
+                --hero-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+            }
+        }
+
+        html[data-theme="light"] {
+            --secondary-color: #4a4a4a;
+            --accent-color: #0066cc;
+            --background: #ffffff;
+            --border: #e5e7eb;
+            --text-primary: #1a1a1a;
+            --text-secondary: #6b7280;
+            --container-bg: rgba(255, 255, 255, 0.2);
+            --section-bg: rgba(255, 255, 255, 0.5);
+            --hero-bg: var(--background);
+            --hero-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+        }
+
+        html[data-theme="dark"] {
+            --secondary-color: #b8b8b8;
+            --accent-color: #e2c6f7;
+            --background: #0a0a0a;
+            --border: #2a2a2a;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --container-bg: rgba(26, 26, 26, 0.6);
+            --section-bg: rgba(26, 26, 26, 0.6);
+            --hero-bg: var(--background);
+            --hero-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--background);
+            transition: all 0.3s ease;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        *,
+        *::before,
+        *::after {
+            font-family: 'Inter', sans-serif;
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        .page-shell {
+            min-height: 100vh;
+            padding: 0 1.2rem 2.4rem;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 1.1rem;
+            right: 1.1rem;
+            z-index: 3;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.25);
+            color: var(--text-primary);
+            border-radius: 999px;
+            padding: 0.45rem 0.95rem;
+            font-size: 1.25rem;
+            line-height: 1;
+            font-weight: 300;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            backdrop-filter: blur(10px) saturate(120%);
+            -webkit-backdrop-filter: blur(10px) saturate(120%);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .theme-toggle {
+                background: rgba(26, 26, 26, 0.35);
+                border: 1px solid rgba(255, 255, 255, 0.10);
+            }
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-1px);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 1.2rem 1.4rem;
+            position: relative;
+            background: var(--container-bg);
+            backdrop-filter: blur(12px) saturate(120%);
+            -webkit-backdrop-filter: blur(12px) saturate(120%);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .container {
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+        }
+
+        .project-hero {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            background: var(--hero-bg);
+            padding: var(--hero-pad-y) var(--hero-pad-x);
+            height: var(--hero-height, auto);
+            border-radius: 20px;
+            box-shadow: var(--hero-shadow);
+            transition: box-shadow 0.3s ease;
+            overflow: hidden;
+
+            overflow-anchor: none;
+            isolation: isolate;
+        }
+
+        .hero-layout {
+            display: flex;
+            flex-direction: column;
+            gap: var(--hero-gap);
+            align-items: flex-start;
+            position: relative;
+            width: 100%;
+        }
+
+        .hero-title {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: var(--hero-title-gap);
+            min-width: 0;
+            width: var(--hero-title-width);
+            max-width: 100%;
+            align-self: flex-start;
+            position: relative;
+            z-index: 2;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 300;
+            font-size: var(--hero-back-size);
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        h1 {
+            font-family: 'Raleway', sans-serif;
+            font-size: var(--hero-title-size);
+            font-weight: 400;
+            letter-spacing: -0.03em;
+        }
+
+        .subtitle {
+            font-size: var(--hero-subtitle-size);
+            color: var(--text-secondary);
+            font-weight: 300;
+            letter-spacing: -0.01em;
+        }
+
+        .hero-carousel {
+            min-width: 0;
+            width: var(--hero-carousel-width);
+            max-width: 100%;
+            position: absolute;
+            left: var(--hero-carousel-left, 0px);
+            top: var(--hero-carousel-top, 0px);
+            z-index: 1;
+        }
+
+        .hero-carousel__scale {
+            display: flex;
+            flex-direction: column;
+            gap: var(--hero-carousel-gap);
+            min-width: 0;
+            width: var(--hero-carousel-inner-width);
+            margin: 0 auto;
+        }
+
+        .hero-carousel h2 {
+            font-size: var(--hero-gallery-size);
+            font-weight: 300;
+            color: var(--text-secondary);
+        }
+
+        .carousel {
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            background: rgba(0, 0, 0, 0.05);
+            height: var(--hero-carousel-height);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .carousel {
+                background: rgba(0, 0, 0, 0.25);
+            }
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.4s ease;
+            will-change: transform;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .carousel-placeholder {
+            width: 100%;
+            height: 100%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.75);
+            color: var(--text-primary);
+            border-radius: 999px;
+            padding: 0.25rem 0.7rem;
+            font-size: 0.8rem;
+            font-weight: 300;
+            cursor: pointer;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+        }
+
+        .carousel-control:hover {
+            transform: translateY(-50%) scale(1.03);
+            border-color: var(--accent-color);
+        }
+
+        .carousel-control--prev {
+            left: 0.7rem;
+        }
+
+        .carousel-control--next {
+            right: 0.7rem;
+        }
+
+        .project-content {
+            margin-top: 1.4rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .project-section {
+            background: var(--section-bg);
+            border-radius: 18px;
+            padding: 1rem 1.1rem;
+            box-shadow: 0 12px 26px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .project-section {
+                box-shadow: 0 12px 26px rgba(0, 0, 0, 0.3);
+            }
+        }
+
+        .project-section h2 {
+            font-size: 1.1rem;
+            font-weight: 300;
+            margin-bottom: 0.4rem;
+        }
+
+        .project-section p {
+            margin-bottom: 0.6rem;
+            line-height: 1.8;
+            font-weight: 200;
+        }
+
+        .project-section ul {
+            margin-left: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        .project-section li {
+            margin-bottom: 0.4rem;
+        }
+
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            display: none;
+            z-index: 10;
+        }
+
+        .lightbox.is-open {
+            display: block;
+        }
+
+        .lightbox__overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.65);
+        }
+
+        .lightbox__dialog {
+            position: relative;
+            z-index: 1;
+            width: min(92vw, 980px);
+            margin: 6vh auto;
+            padding: 1rem 1rem 1.2rem;
+            border-radius: 20px;
+            background: var(--background);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow:
+                0 16px 40px rgba(0, 0, 0, 0.35),
+                0 1px 2px rgba(255, 255, 255, 0.08) inset;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .lightbox__dialog {
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                box-shadow:
+                    0 16px 40px rgba(0, 0, 0, 0.55),
+                    0 1px 2px rgba(255, 255, 255, 0.03) inset;
+            }
+        }
+
+        .lightbox__back {
+            display: inline-block;
+            color: var(--accent-color);
+            background: transparent;
+            border: none;
+            font-weight: 300;
+            font-size: 0.95rem;
+            text-decoration: none;
+            cursor: pointer;
+            margin-bottom: 0.6rem;
+        }
+
+        .lightbox__back:hover {
+            text-decoration: underline;
+        }
+
+        .lightbox__image {
+            width: 100%;
+            height: min(70vh, 620px);
+            object-fit: contain;
+            display: block;
+            border-radius: 14px;
+            background: var(--background);
+        }
+
+        @media (max-width: 860px) {
+            .page-shell {
+                padding: 1.2rem 0.9rem 2rem;
+            }
+
+            .project-hero {
+                position: static;
+                clip-path: none;
+            }
+
+            .carousel {
+                height: 220px;
+            }
+
+            .project-content {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+        &#x263E;
+    </button>
+
+    <div class="page-shell">
+        <div class="container">
+            <header class="project-hero">
+                <div class="hero-layout">
+                    <div class="hero-title">
+                        <a class="back-link" href="index.html#portfolio">Back to portfolio</a>
+                        <h1>Adaptive Maintenance Recommender</h1>
+                        <p class="subtitle">Industrial troubleshooting for bottling lines</p>
+                    </div>
+                    <div class="hero-carousel">
+                        <div class="hero-carousel__scale">
+                            <h2>Gallery</h2>
+                            <div class="carousel" data-carousel data-carousel-group="hero" data-interval="5000">
+                                <div class="carousel-track">
+                                    <div class="carousel-slide">
+                                        <img src="assets/portfolio/players-performance-analysis/players-performance-analysis_0.png"
+                                            alt="Maintenance recommender overview"
+                                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                        <div class="carousel-placeholder" style="display:none;">System View</div>
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="assets/portfolio/players-performance-analysis/players-performance-analysis_1.png"
+                                            alt="Failure clustering dashboard"
+                                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                        <div class="carousel-placeholder" style="display:none;">Dashboard</div>
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="assets/portfolio/players-performance-analysis/players-performance-analysis_2.png"
+                                            alt="Troubleshooting runbook"
+                                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                        <div class="carousel-placeholder" style="display:none;">Runbook</div>
+                                    </div>
+                                </div>
+                                <button class="carousel-control carousel-control--prev" type="button"
+                                    aria-label="Previous image">Prev</button>
+                                <button class="carousel-control carousel-control--next" type="button"
+                                    aria-label="Next image">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="project-content">
+                <section class="project-section">
+                    <h2>Request</h2>
+                    <p>Design a production-ready system that surfaces the most likely maintenance actions for bottling
+                        line failures, using past service notes and sensor logs.O'Neil attended UC Berkeley as an
+                        undergraduate,[1] received a Ph.D. in mathematics from Harvard University in 1999,[2][3] and
+                        afterward held positions in the mathematics departments of MIT and Barnard College.[4] She left
+                        academia in 2007, and worked for four years in the finance industry.[5] She worked as an analyst
+                        at D. E. Shaw & Co.[6] After becoming disenchanted with the world of finance, O'Neil became
+                        involved with the Occupy Wall Street movement,[7][1] participating in its Alternative Banking
+                        Group.[8]
+
+                        O'Neil operates the blog mathbabe.org and is a contributor to Bloomberg View.[9][10][11]
+
+                        Her first book, Doing Data Science, was written with Rachel Schutt and published in 2013.[10] In
+                        2016, her second book, Weapons of Math Destruction was published, long-listed for the National
+                        Book Award for Nonfiction[12][13] and became a New York Times best-seller.[4] A third book, The
+                        Shame Machine: Who Profits in the New Age of Humiliation, was published March 2022.
+
+                        She is the founder of O'Neil Risk Consulting & Algorithmic Auditing (ORCAA), an algorithmic
+                        auditing company.[3][14]</p>
+                </section>
+
+                <section class="project-section">
+                    <h2>My Role</h2>
+                    <p>Owned the ML pipeline end-to-end: data preparation, embedding strategy, retrieval evaluation, and
+                        packaging the workflow for repeatable runs.</p>
+                </section>
+
+                <section class="project-section">
+                    <h2>Features</h2>
+                    <ul>
+                        <li>Vector search over maintenance knowledge with explainable similarity signals.</li>
+                        <li>Interactive runbooks that highlight the top recommended actions.</li>
+                        <li>Offline evaluation harness and reproducible model snapshots.</li>
+                    </ul>
+                </section>
+
+                <section class="project-section">
+                    <h2>Methodology</h2>
+                    <ul>
+                        <li>Cleaned and structured maintenance logs into a queryable knowledge base.</li>
+                        <li>Benchmarked embeddings and clustering against expert feedback loops.</li>
+                        <li>Shipped the system as a containerized pipeline with monitoring hooks.</li>
+                    </ul>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <div id="image-lightbox" class="lightbox" aria-hidden="true">
+        <div class="lightbox__overlay" data-lightbox-close></div>
+        <div class="lightbox__dialog" role="dialog" aria-modal="true" aria-label="Project image">
+            <button class="lightbox__back" type="button" data-lightbox-close>Back to project</button>
+            <img id="lightbox-image" class="lightbox__image" src="" alt="">
+        </div>
+    </div>
+
+    <script>
+        (() => {
+            const root = document.documentElement;
+            const btn = document.getElementById('theme-toggle');
+            const KEY = 'theme-preference';
+            const mq = window.matchMedia('(prefers-color-scheme: dark)');
+
+            function systemTheme() {
+                return mq.matches ? 'dark' : 'light';
+            }
+
+            function currentTheme() {
+                return root.getAttribute('data-theme') || systemTheme();
+            }
+
+            function setTheme(theme) {
+                root.setAttribute('data-theme', theme);
+                localStorage.setItem(KEY, theme);
+                updateButton();
+            }
+
+            function updateButton() {
+                const t = currentTheme();
+                btn.textContent = (t === 'dark') ? '\u2600' : '\u263E';
+                btn.setAttribute('aria-label', (t === 'dark') ? 'Switch to light mode' : 'Switch to dark mode');
+            }
+
+            const saved = localStorage.getItem(KEY);
+            if (saved === 'light' || saved === 'dark') {
+                root.setAttribute('data-theme', saved);
+            }
+            updateButton();
+
+            btn.addEventListener('click', () => {
+                const next = (currentTheme() === 'dark') ? 'light' : 'dark';
+                setTheme(next);
+            });
+
+            mq.addEventListener?.('change', () => {
+                if (!localStorage.getItem(KEY)) updateButton();
+            });
+        })();
+
+        (() => {
+            const hero = document.querySelector('.project-hero');
+            if (!hero) return;
+
+            const scope = hero.closest('.container') || document.documentElement;
+            const heroLayout = hero.querySelector('.hero-layout');
+            const heroTitle = hero.querySelector('.hero-title');
+            const heroCarousel = hero.querySelector('.hero-carousel');
+            const heroCarouselScale = heroCarousel ? heroCarousel.querySelector('.hero-carousel__scale') : null;
+            const titleHeading = heroTitle ? heroTitle.querySelector('h1') : null;
+            const subtitle = heroTitle ? heroTitle.querySelector('.subtitle') : null;
+            const backLink = heroTitle ? heroTitle.querySelector('.back-link') : null;
+            const galleryLabel = heroCarousel ? heroCarousel.querySelector('h2') : null;
+            const carouselBox = heroCarousel ? heroCarousel.querySelector('.carousel') : null;
+
+            if (!heroLayout || !heroTitle || !heroCarousel || !heroCarouselScale) return;
+            if (!titleHeading || !subtitle || !backLink || !galleryLabel || !carouselBox) return;
+
+            let maxScroll = 220;
+            let clipMax = 0;
+            let rowHeight = 0;
+            let rafId = null;
+            let scaleFinal = 1;
+            const mobileQuery = window.matchMedia('(max-width: 860px)');
+            let layoutWidth = 0;
+            let titleWidthFinal = 0;
+            let carouselWidthFinal = 0;
+            let carouselXMax = 0;
+            let carouselStart = 0;
+            let stackHeight = 0;
+            let gapSize = 0;
+            let baseTitleSize = 0;
+            let baseSubtitleSize = 0;
+            let baseCarouselHeight = 0;
+            let basePadY = 0;
+            const sizeVars = [
+                '--hero-title-size',
+                '--hero-subtitle-size',
+                '--hero-title-gap',
+                '--hero-carousel-gap',
+                '--hero-carousel-height',
+                '--hero-carousel-inner-width',
+                '--hero-pad-y',
+                '--hero-gap',
+            ];
+
+            function resetLayout() {
+                sizeVars.forEach((name) => scope.style.removeProperty(name));
+                scope.style.setProperty('--hero-title-width', '100%');
+                scope.style.setProperty('--hero-carousel-width', '100%');
+                scope.style.setProperty('--hero-carousel-left', '0px');
+                scope.style.setProperty('--hero-carousel-top', '0px');
+                scope.style.removeProperty('--hero-height');
+            }
+
+            function computeMetrics() {
+                resetLayout();
+                const layoutRect = heroLayout.getBoundingClientRect();
+                layoutWidth = layoutRect.width;
+                const styles = window.getComputedStyle(heroLayout);
+                gapSize = Number.parseFloat(styles.rowGap || styles.gap || '0') || 0;
+                const heroStyles = window.getComputedStyle(hero);
+                const padTop = Number.parseFloat(heroStyles.paddingTop || '0') || 0;
+                const padBottom = Number.parseFloat(heroStyles.paddingBottom || '0') || 0;
+                basePadY = padTop;
+
+                const titleStyles = window.getComputedStyle(titleHeading);
+                baseTitleSize = Number.parseFloat(titleStyles.fontSize || '0') || baseTitleSize;
+                const subtitleStyles = window.getComputedStyle(subtitle);
+                baseSubtitleSize = Number.parseFloat(subtitleStyles.fontSize || '0') || baseSubtitleSize;
+                const titleWrapperStyles = window.getComputedStyle(heroTitle);
+                baseTitleGap = Number.parseFloat(titleWrapperStyles.rowGap || titleWrapperStyles.gap || '0') || 0;
+                const carouselScaleStyles = window.getComputedStyle(heroCarouselScale);
+                baseCarouselGap = Number.parseFloat(carouselScaleStyles.rowGap || carouselScaleStyles.gap || '0') || 0;
+                const carouselStyles = window.getComputedStyle(carouselBox);
+                baseCarouselHeight = Number.parseFloat(carouselStyles.height || '0') || baseCarouselHeight;
+
+                stackHeight = 0;
+                const availableWidth = Math.max(0, layoutWidth - gapSize);
+                titleWidthFinal = availableWidth * 0.4;
+                carouselWidthFinal = availableWidth * 0.6;
+                carouselXMax = titleWidthFinal + gapSize;
+                const titleHeightStack = heroTitle.getBoundingClientRect().height;
+                const carouselHeight = heroCarousel.getBoundingClientRect().height;
+                carouselStart = titleHeightStack + gapSize;
+                stackHeight = padTop + carouselStart + carouselHeight + padBottom;
+
+                scope.style.setProperty('--hero-carousel-top', `${Math.round(carouselStart)}px`);
+                scope.style.setProperty('--hero-title-width', `${Math.round(titleWidthFinal)}px`);
+                scope.style.setProperty('--hero-carousel-width', `${Math.round(carouselWidthFinal)}px`);
+                scope.style.setProperty('--hero-carousel-left', `${Math.round(carouselXMax)}px`);
+
+                const titleHeightFinal = heroTitle.getBoundingClientRect().height;
+                const carouselHeightFinal = heroCarousel.getBoundingClientRect().height;
+                const contentHeightFinal = Math.max(titleHeightFinal, carouselHeightFinal);
+                const computedRowHeight = contentHeightFinal + padTop + padBottom;
+                const rowHeightOverride = Number.parseFloat(
+                    window.getComputedStyle(scope).getPropertyValue('--hero-row-height') || '0'
+                ) || 0;
+                rowHeight = rowHeightOverride > 0 ? rowHeightOverride : computedRowHeight;
+                scaleFinal = computedRowHeight > 0 ? (rowHeight / computedRowHeight) : 1;
+
+                resetLayout();
+                clipMax = Math.max(0, Math.round(stackHeight - rowHeight));
+                maxScroll = Math.max(160, Math.round(stackHeight * 0.6));
+            }
+
+            function updateProgress() {
+                rafId = null;
+                if (mobileQuery.matches || layoutWidth === 0) {
+                    resetLayout();
+                    return;
+                }
+                const progress = Math.min(1, Math.max(0, window.scrollY / maxScroll));
+                const layout = progress * progress * (3 - 2 * progress);
+                const scale = 1 + (scaleFinal - 1) * layout;
+                const clip = clipMax * progress;
+                const heroHeight = stackHeight - clip;
+                const desiredTitleWidth = layoutWidth + (titleWidthFinal - layoutWidth) * layout;
+                const desiredCarouselWidth = layoutWidth + (carouselWidthFinal - layoutWidth) * layout;
+                const titleWidth = desiredTitleWidth;
+                const carouselWidth = desiredCarouselWidth;
+                const scaledCarouselStart = carouselStart * scale;
+                const currentTop = scaledCarouselStart * (1 - layout);
+                const currentLeft = carouselXMax * layout;
+
+                scope.style.setProperty('--hero-height', `${Math.round(heroHeight)}px`);
+                scope.style.setProperty('--hero-title-width', `${Math.round(titleWidth)}px`);
+                scope.style.setProperty('--hero-carousel-width', `${Math.round(carouselWidth)}px`);
+                scope.style.setProperty('--hero-carousel-inner-width', `${Math.round(carouselWidth * scale)}px`);
+                scope.style.setProperty('--hero-title-size', `${(baseTitleSize * scale).toFixed(2)}px`);
+                scope.style.setProperty('--hero-subtitle-size', `${(baseSubtitleSize * scale).toFixed(2)}px`);
+                scope.style.setProperty('--hero-title-gap', `${(baseTitleGap * scale).toFixed(2)}px`);
+                scope.style.setProperty('--hero-carousel-gap', `${(baseCarouselGap * scale).toFixed(2)}px`);
+                scope.style.setProperty('--hero-carousel-height', `${Math.round(baseCarouselHeight * scale)}px`);
+                scope.style.setProperty('--hero-pad-y', `${Math.round(basePadY * scale)}px`);
+                scope.style.setProperty('--hero-gap', `${Math.round(gapSize * scale)}px`);
+                scope.style.setProperty('--hero-carousel-top', `${Math.round(currentTop)}px`);
+                scope.style.setProperty('--hero-carousel-left', `${Math.round(currentLeft)}px`);
+            }
+
+            function onScroll() {
+                if (rafId) return;
+                rafId = window.requestAnimationFrame(updateProgress);
+            }
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+            window.addEventListener('resize', () => {
+                computeMetrics();
+                updateProgress();
+            });
+            mobileQuery.addEventListener?.('change', () => {
+                computeMetrics();
+                updateProgress();
+            });
+            computeMetrics();
+            updateProgress();
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(() => {
+                    computeMetrics();
+                    updateProgress();
+                });
+            }
+        })();
+
+        (() => {
+            const lightbox = document.getElementById('image-lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+
+            if (!lightbox || !lightboxImage) return;
+
+            function openLightbox(src, alt) {
+                lightboxImage.src = src;
+                lightboxImage.alt = alt || '';
+                lightbox.classList.add('is-open');
+                lightbox.setAttribute('aria-hidden', 'false');
+                document.body.classList.add('modal-open');
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('is-open');
+                lightbox.setAttribute('aria-hidden', 'true');
+                lightboxImage.src = '';
+                document.body.classList.remove('modal-open');
+            }
+
+            document.addEventListener('click', (e) => {
+                const image = e.target.closest('.carousel-slide img');
+                if (image) {
+                    e.preventDefault();
+                    openLightbox(image.src, image.alt);
+                    return;
+                }
+
+                if (e.target.closest('[data-lightbox-close]') && lightbox.classList.contains('is-open')) {
+                    closeLightbox();
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && lightbox.classList.contains('is-open')) {
+                    closeLightbox();
+                }
+            });
+        })();
+
+        (() => {
+            const carousels = Array.from(document.querySelectorAll('[data-carousel]'));
+            if (carousels.length === 0) return;
+
+            const groups = new Map();
+
+            carousels.forEach((carousel, index) => {
+                const groupKey = carousel.dataset.carouselGroup || `carousel-${index}`;
+                if (!groups.has(groupKey)) groups.set(groupKey, []);
+                groups.get(groupKey).push(carousel);
+            });
+
+            groups.forEach((groupCarousels) => {
+                const items = groupCarousels.map((carousel) => {
+                    const track = carousel.querySelector('.carousel-track');
+                    const slides = Array.from(carousel.querySelectorAll('.carousel-slide'));
+                    return {
+                        carousel,
+                        track,
+                        slides,
+                        prevBtn: carousel.querySelector('.carousel-control--prev'),
+                        nextBtn: carousel.querySelector('.carousel-control--next'),
+                    };
+                }).filter((item) => item.track && item.slides.length > 0);
+
+                if (items.length === 0) return;
+
+                const intervalMs = Number.parseInt(items[0].carousel.dataset.interval || '5000', 10);
+                const slideCount = items[0].slides.length;
+                let index = 0;
+                let timerId = null;
+
+                function updateTracks() {
+                    items.forEach((item) => {
+                        item.track.style.transform = `translate3d(-${index * 100}%, 0, 0)`;
+                    });
+                }
+
+                function goTo(nextIndex) {
+                    index = (nextIndex + slideCount) % slideCount;
+                    updateTracks();
+                }
+
+                function startAuto() {
+                    if (slideCount < 2 || timerId) return;
+                    timerId = window.setInterval(() => {
+                        goTo(index + 1);
+                    }, intervalMs);
+                }
+
+                function stopAuto() {
+                    if (!timerId) return;
+                    window.clearInterval(timerId);
+                    timerId = null;
+                }
+
+                items.forEach((item) => {
+                    if (item.prevBtn) {
+                        item.prevBtn.addEventListener('click', () => {
+                            stopAuto();
+                            goTo(index - 1);
+                        });
+                    }
+
+                    if (item.nextBtn) {
+                        item.nextBtn.addEventListener('click', () => {
+                            stopAuto();
+                            goTo(index + 1);
+                        });
+                    }
+                });
+
+                updateTracks();
+                startAuto();
+            });
+        })();
+    </script>
+</body>
+
+</html>
