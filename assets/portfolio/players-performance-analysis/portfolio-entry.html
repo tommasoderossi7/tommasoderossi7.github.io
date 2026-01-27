@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Portfolio Alt 4 - Players Recommender</title>
+    <meta name="description" content="Alternative portfolio layout option 4.">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --secondary-color: #4a4a4a;
+            --accent-color: #0066cc;
+            --background: #ffffff;
+            --border: #e5e7eb;
+            --text-primary: #1a1a1a;
+            --text-secondary: #6b7280;
+            --container-bg: rgba(255, 255, 255, 0.2);
+            --section-bg: var(--background);
+            --section-shadow-alpha-default: 0.1;
+            --hero-bg: var(--background);
+            --hero-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+            --hero-radius: 20px;
+            --hero-scale: 1;
+            --hero-clip: 0px;
+            --hero-content-shift: 0px;
+            --hero-title-width: 100%;
+            --hero-carousel-width: 100%;
+            --hero-title-x: 0px;
+            --hero-carousel-x: 0px;
+            --hero-carousel-y: 0px;
+            --hero-carousel-start: 0px;
+            --hero-row-height: 0px;
+            --carousel-max: 280px;
+            --carousel-min: 140px;
+            --hero-title-max: 2.7rem;
+            --hero-title-min: 1.8rem;
+            --hero-subtitle-max: 1.1rem;
+            --hero-subtitle-min: 0.95rem;
+            --hero-pad-y-max: 1.1rem;
+            --hero-pad-y-min: 0.6rem;
+            --hero-pad-x-max: 1.2rem;
+            --hero-pad-x-min: 1rem;
+            --hero-gap-max: 1rem;
+            --hero-gap-min: 0.6rem;
+            --hero-title-size: var(--hero-title-max);
+            --hero-subtitle-size: var(--hero-subtitle-max);
+            --hero-pad-y: var(--hero-pad-y-max);
+            --hero-pad-x: var(--hero-pad-x-max);
+            --hero-gap: var(--hero-gap-max);
+            --carousel-height: var(--carousel-max);
+            --hero-back-offset: calc(var(--hero-subtitle-size) + 8px);
+            --lightbox-max-width: 98vw;
+            --lightbox-max-height: 96vh;
+            --lightbox-zoom: 1.6;
+            --max-width: 900px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --secondary-color: #b8b8b8;
+                --accent-color: #e2c6f7;
+                --background: #0a0a0a;
+                --border: #2a2a2a;
+                --text-primary: #ffffff;
+                --text-secondary: #9ca3af;
+                --container-bg: rgba(26, 26, 26, 0.6);
+                --section-bg: var(--background);
+                --section-shadow-alpha-default: 0.3;
+                --hero-bg: var(--background);
+                --hero-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+            }
+        }
+
+        html[data-theme="light"] {
+            --secondary-color: #4a4a4a;
+            --accent-color: #0066cc;
+            --background: #ffffff;
+            --border: #e5e7eb;
+            --text-primary: #1a1a1a;
+            --text-secondary: #6b7280;
+            --container-bg: rgba(255, 255, 255, 0.2);
+            --section-bg: var(--background);
+            --section-shadow-alpha-default: 0.1;
+            --hero-bg: var(--background);
+            --hero-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+        }
+
+        html[data-theme="dark"] {
+            --secondary-color: #b8b8b8;
+            --accent-color: #e2c6f7;
+            --background: #0a0a0a;
+            --border: #2a2a2a;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --container-bg: rgba(26, 26, 26, 0.6);
+            --section-bg: var(--background);
+            --section-shadow-alpha-default: 0.3;
+            --hero-bg: var(--background);
+            --hero-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--background);
+            transition: all 0.3s ease;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        html.embedded, html.embedded body {
+            background: transparent;
+        }
+
+        *, *::before, *::after {
+            font-family: 'Inter', sans-serif;
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        .page-shell {
+            min-height: 100vh;
+            padding: 0 1.2rem 2.4rem;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 1.1rem;
+            right: 1.1rem;
+            z-index: 3;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.25);
+            color: var(--text-primary);
+            border-radius: 999px;
+            padding: 0.45rem 0.95rem;
+            font-size: 1.25rem;
+            line-height: 1;
+            font-weight: 300;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            backdrop-filter: blur(10px) saturate(120%);
+            -webkit-backdrop-filter: blur(10px) saturate(120%);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .theme-toggle {
+                background: rgba(26, 26, 26, 0.35);
+                border: 1px solid rgba(255, 255, 255, 0.10);
+            }
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-1px);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        html.embedded .theme-toggle {
+            display: none;
+        }
+
+        html.embedded {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 0, 0, 0.35) transparent;
+        }
+
+        html.embedded::-webkit-scrollbar,
+        html.embedded body::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        html.embedded::-webkit-scrollbar-track,
+        html.embedded body::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        html.embedded::-webkit-scrollbar-thumb,
+        html.embedded body::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 999px;
+            border: 3px solid transparent;
+            background-clip: content-box;
+        }
+
+        html.embedded[data-theme="dark"] {
+            scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+        }
+
+        html.embedded[data-theme="dark"]::-webkit-scrollbar-thumb,
+        html.embedded[data-theme="dark"] body::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 1.2rem 1.4rem;
+            position: relative;
+            background: var(--container-bg);
+            backdrop-filter: blur(12px) saturate(120%);
+            -webkit-backdrop-filter: blur(12px) saturate(120%);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        html.embedded .container {
+            background: transparent;
+            border: none;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            box-shadow: none;
+            width: min(100%, var(--max-width));
+            max-width: var(--max-width);
+            padding: 0 0 0 0; /* 1.4rem; */
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        html.embedded .page-shell {
+            padding: 0 0 0 0; /* 3rem; */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            height: 100vh;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .container {
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+        }
+
+        .project-hero {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            background: var(--hero-bg);
+            padding: var(--hero-pad-y) var(--hero-pad-x);
+            height: var(--hero-height, auto);
+            border-radius: var(--hero-radius);
+            box-shadow: var(--hero-shadow);
+            transition: box-shadow 0.3s ease;
+            overflow: hidden;
+            overflow-anchor: none;
+            isolation: isolate;
+            clip-path: inset(0 0 var(--hero-clip) 0 round var(--hero-radius));
+            -webkit-clip-path: inset(0 0 var(--hero-clip) 0 round var(--hero-radius));
+            will-change: clip-path;
+            transform: translateZ(0);
+        }
+
+        .hero-layout {
+            display: flex;
+            flex-direction: column;
+            gap: var(--hero-gap);
+            align-items: flex-start;
+            position: relative;
+            width: 100%;
+            transform: scale(var(--hero-scale)); /* scale(1, var(--hero-scale)) */
+            transform-origin: top left;
+            will-change: transform;
+        }
+
+        .hero-title {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 0.35rem;
+            min-width: 0;
+            width: var(--hero-title-width);
+            max-width: 100%;
+            align-self: flex-start;
+            position: relative;
+            z-index: 2;
+            transform: translate3d(var(--hero-title-x), 0, 0);
+            will-change: transform, width;
+            padding-top: var(--hero-back-offset);
+        }
+
+        .back-link {
+            display: inline-block;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 300;
+            font-size: 0.95rem;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+
+        h1 {
+            font-family: 'Raleway', sans-serif;
+            font-size: var(--hero-title-size);
+            font-weight: 400;
+            letter-spacing: -0.03em;
+        }
+
+        .subtitle {
+            font-size: var(--hero-subtitle-size);
+            color: var(--text-secondary);
+            font-weight: 300;
+            letter-spacing: -0.01em;
+        }
+
+        .hero-carousel {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            min-width: 0;
+            width: var(--hero-carousel-width);
+            max-width: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            transform: translate3d(
+                var(--hero-carousel-x),
+                calc(var(--hero-carousel-start) + var(--hero-carousel-y)),
+                0
+            );
+            will-change: transform, width;
+            z-index: 1;
+        }
+
+        .hero-carousel h2 {
+            font-size: 0.95rem;
+            font-weight: 300;
+            color: var(--text-secondary);
+        }
+
+        .carousel {
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            background: rgba(0, 0, 0, 0.05);
+            height: var(--carousel-height);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .carousel {
+                background: rgba(0, 0, 0, 0.25);
+            }
+
+            .carousel-control {
+                background: rgba(0, 0, 0, 0.7);
+                color: #f9fafb;
+                -webkit-text-fill-color: #f9fafb;
+                border-color: rgba(255, 255, 255, 0.25);
+                text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+            }
+        }
+
+        html[data-theme="dark"] .carousel-control {
+            background: rgba(0, 0, 0, 0.7);
+            color: #f9fafb;
+            -webkit-text-fill-color: #f9fafb;
+            border-color: rgba(255, 255, 255, 0.25);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.4s ease;
+            will-change: transform;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .carousel-placeholder {
+            width: 100%;
+            height: 100%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.75);
+            color: #111111;
+            -webkit-text-fill-color: #111111;
+            border-radius: 999px;
+            padding: 0.25rem 0.7rem;
+            font-size: 0.8rem;
+            font-weight: 300;
+            cursor: pointer;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+        }
+
+        .carousel-control:hover {
+            transform: translateY(-50%) scale(1.03);
+            border-color: var(--accent-color);
+        }
+
+        .carousel-control--prev {
+            left: 0.7rem;
+        }
+
+        .carousel-control--next {
+            right: 0.7rem;
+        }
+
+        .project-content {
+            margin-top: 1.4rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            transform: translate3d(0, calc(-1 * var(--hero-content-shift)), 0);
+            will-change: transform;
+        }
+
+        html.embedded .project-content {
+            flex: 1;
+        }
+
+        html.embedded .project-section:last-child {
+            flex: 1;
+        }
+
+        .project-section {
+            background: var(--section-bg);
+            border-radius: 18px;
+            padding: 1rem 1.1rem;
+            box-shadow: 0 12px 26px rgba(0, 0, 0, var(--section-shadow-alpha, var(--section-shadow-alpha-default)));
+            transition: box-shadow 0.2s ease;
+        }
+
+        .project-section.is-under-hero {
+            box-shadow: none;
+            clip-path: inset(var(--section-clip-top, 0px) 0 0 0);
+            -webkit-clip-path: inset(var(--section-clip-top, 0px) 0 0 0);
+        }
+
+        .project-section h2 {
+            font-size: 1.1rem;
+            font-weight: 300;
+            margin-bottom: 0.4rem;
+        }
+
+        .project-section p {
+            margin-bottom: 0.6rem;
+            line-height: 1.8;
+            font-weight: 200;
+        }
+
+        .project-section ul {
+            margin-left: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        .project-section li {
+            margin-bottom: 0.4rem;
+        }
+
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            display: none;
+            /* align-items: center;
+            justify-content: center; */
+            z-index: 10;
+        }
+
+        .lightbox.is-open {
+            display: block; /* flex; */
+        }
+
+        .lightbox__overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        .lightbox__dialog {
+            position: relative;
+            z-index: 1;
+            width: fit-content;
+            max-width: var(--lightbox-max-width);
+            max-height: var(--lightbox-max-height);
+            margin: 4vh auto;
+            padding: 0.4rem;
+            border-radius: 20px;
+            background: var(--background);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow:
+                0 16px 40px rgba(0, 0, 0, 0.35),
+                0 1px 2px rgba(255, 255, 255, 0.08) inset;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            overflow: hidden;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .lightbox__dialog {
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                box-shadow:
+                    0 16px 40px rgba(0, 0, 0, 0.55),
+                    0 1px 2px rgba(255, 255, 255, 0.03) inset;
+            }
+        }
+
+        .lightbox__back {
+            display: inline-block;
+            color: var(--accent-color);
+            background: transparent;
+            border: none;
+            font-weight: 300;
+            font-size: 0.95rem;
+            text-decoration: none;
+            cursor: pointer;
+            margin-bottom: 0.2rem;
+        }
+
+        .lightbox__back:hover {
+            text-decoration: underline;
+        }
+
+        .lightbox__media {
+            max-width: calc(var(--lightbox-max-width) - 1.2rem);
+            max-height: calc(var(--lightbox-max-height) - 3.2rem);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox__image {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            display: block;
+            border-radius: 14px;
+            background: var(--background);
+            cursor: zoom-in;
+        }
+
+        .lightbox.is-zoomed .lightbox__media {
+            overflow: auto;
+            cursor: zoom-out;
+            align-items: flex-start;
+            justify-content: flex-start;
+        }
+
+        .lightbox.is-zoomed .lightbox__image {
+            max-width: none;
+            max-height: none;
+            cursor: zoom-out;
+        }
+
+        @media (max-width: 860px) {
+            .page-shell {
+                padding: 1.2rem 0.9rem 2rem;
+            }
+            .project-hero {
+                position: static;
+                clip-path: none;
+                --carousel-height: 220px;
+            }
+            .hero-layout {
+                transform: none;
+            }
+            .project-content {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+        &#x263E;
+    </button>
+
+    <div class="page-shell">
+        <div class="container">
+            <header class="project-hero">
+                <div class="hero-layout">
+                    <div class="hero-title">
+                        <a class="back-link" href="../../../index.html#portfolio" target="_top">Back to portfolio</a>
+                        <h1> Maintenance Recommender System</h1>
+                        <p class="subtitle">Industrial troubleshooting.</p>
+                    </div>
+                    <div class="hero-carousel">
+                        <h2>Gallery</h2>
+                        <div class="carousel" data-carousel data-carousel-group="hero" data-interval="5000">
+                            <div class="carousel-track">
+                                <div class="carousel-slide">
+                                    <img src="players-performance-analysis_0.png" alt="Maintenance recommender overview" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <div class="carousel-placeholder" style="display:none;">System View</div>
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="players-performance-analysis_1.png" alt="Failure clustering dashboard" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <div class="carousel-placeholder" style="display:none;">Dashboard</div>
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="players-performance-analysis_2.png" alt="Troubleshooting runbook" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <div class="carousel-placeholder" style="display:none;">Runbook</div>
+                                </div>
+                            </div>
+                            <button class="carousel-control carousel-control--prev" type="button" aria-label="Previous image">Prev</button>
+                            <button class="carousel-control carousel-control--next" type="button" aria-label="Next image">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="project-content">
+                <section class="project-section">
+                    <h2>Request</h2>
+                    <p>Design a production-ready system that surfaces the most likely maintenance actions for bottling line failures, using past service notes and sensor logs.O'Neil attended UC Berkeley as an undergraduate,[1] received a Ph.D. in mathematics from Harvard University in 1999,[2][3] and afterward held positions in the mathematics departments of MIT and Barnard College.[4] She left academia in 2007, and worked for four years in the finance industry.[5] She worked as an analyst at D. E. Shaw & Co.[6] After becoming disenchanted with the world of finance, O'Neil became involved with the Occupy Wall Street movement,[7][1] participating in its Alternative Banking Group.[8]
+
+O'Neil operates the blog mathbabe.org and is a contributor to Bloomberg View.[9][10][11]
+
+Her first book, Doing Data Science, was written with Rachel Schutt and published in 2013.[10] In 2016, her second book, Weapons of Math Destruction was published, long-listed for the National Book Award for Nonfiction[12][13] and became a New York Times best-seller.[4] A third book, The Shame Machine: Who Profits in the New Age of Humiliation, was published March 2022.
+
+She is the founder of O'Neil Risk Consulting & Algorithmic Auditing (ORCAA), an algorithmic auditing company.[3][14]</p>
+                </section>
+
+                <section class="project-section">
+                    <h2>My Role</h2>
+                    <p>Owned the ML pipeline end-to-end: data preparation, embedding strategy, retrieval evaluation, and packaging the workflow for repeatable runs.</p>
+                </section>
+
+                <section class="project-section">
+                    <h2>Features</h2>
+                    <ul>
+                        <li>Vector search over maintenance knowledge with explainable similarity signals.</li>
+                        <li>Interactive runbooks that highlight the top recommended actions.</li>
+                        <li>Offline evaluation harness and reproducible model snapshots.</li>
+                    </ul>
+                </section>
+
+                <section class="project-section">
+                    <h2>Methodology</h2>
+                    <ul>
+                        <li>Cleaned and structured maintenance logs into a queryable knowledge base.</li>
+                        <li>Benchmarked embeddings and clustering against expert feedback loops.</li>
+                        <li>Shipped the system as a containerized pipeline with monitoring hooks.</li>
+                    </ul>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <div id="image-lightbox" class="lightbox" aria-hidden="true">
+        <div class="lightbox__overlay" data-lightbox-close></div>
+        <div class="lightbox__dialog" role="dialog" aria-modal="true" aria-label="Project image">
+            <button class="lightbox__back" type="button" data-lightbox-close>Back to project</button>
+            <div class="lightbox__media">
+                <img id="lightbox-image" class="lightbox__image" src="" alt="">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const POST_ORIGIN = window.location.origin === 'null' ? '*' : window.location.origin;
+
+        (() => {
+            const root = document.documentElement;
+            const btn = document.getElementById('theme-toggle');
+            const KEY = 'theme-preference';
+            const mq = window.matchMedia('(prefers-color-scheme: dark)');
+            const isEmbedded = window.self !== window.top;
+
+            function systemTheme() {
+                return mq.matches ? 'dark' : 'light';
+            }
+
+            function currentTheme() {
+                return root.getAttribute('data-theme') || systemTheme();
+            }
+
+            function setTheme(theme) {
+                root.setAttribute('data-theme', theme);
+                localStorage.setItem(KEY, theme);
+                updateButton();
+            }
+
+            function updateButton() {
+                const t = currentTheme();
+                btn.textContent = (t === 'dark') ? '\u2600' : '\u263E';
+                btn.setAttribute('aria-label', (t === 'dark') ? 'Switch to light mode' : 'Switch to dark mode');
+            }
+
+            const saved = localStorage.getItem(KEY);
+            if (saved === 'light' || saved === 'dark') {
+                root.setAttribute('data-theme', saved);
+            }
+            updateButton();
+            if (isEmbedded) {
+                document.documentElement.classList.add('embedded');
+            }
+
+            btn.addEventListener('click', () => {
+                const next = (currentTheme() === 'dark') ? 'light' : 'dark';
+                setTheme(next);
+            });
+
+            mq.addEventListener?.('change', () => {
+                if (!localStorage.getItem(KEY)) updateButton();
+            });
+
+            window.addEventListener('storage', (e) => {
+                if (e.key !== KEY) return;
+                if (e.newValue === 'light' || e.newValue === 'dark') {
+                    setTheme(e.newValue);
+                }
+            });
+        })();
+
+        (() => {
+            const hero = document.querySelector('.project-hero');
+            if (!hero) return;
+
+            const scope = hero.closest('.container') || document.documentElement;
+            const heroLayout = hero.querySelector('.hero-layout');
+            const heroTitle = hero.querySelector('.hero-title');
+            const heroCarousel = hero.querySelector('.hero-carousel');
+            const heroHeading = heroTitle?.querySelector('h1');
+            const heroSubtitle = heroTitle?.querySelector('.subtitle');
+            const carouselFrame = heroCarousel?.querySelector('.carousel');
+            const sections = Array.from(document.querySelectorAll('.project-section'));
+
+            if (!heroLayout || !heroTitle || !heroCarousel || !heroHeading || !heroSubtitle || !carouselFrame) return;
+
+            let maxScroll = 220;
+            let clipMax = 0;
+            let rowHeight = 0;
+            let rafId = null;
+            const mobileQuery = window.matchMedia('(max-width: 860px)');
+            let layoutWidth = 0;
+            let stackHeight = 0;
+            let carouselStartMax = 0;
+            let carouselStartMin = 0;
+            let sizeMax = null;
+            let sizeMin = null;
+
+            const SIZE_VARS = {
+                title: '--hero-title-size',
+                subtitle: '--hero-subtitle-size',
+                padY: '--hero-pad-y',
+                gap: '--hero-gap',
+                carousel: '--carousel-height',
+            };
+
+            const SIZE_VAR_MAX = {
+                title: '--hero-title-max',
+                subtitle: '--hero-subtitle-max',
+                padY: '--hero-pad-y-max',
+                gap: '--hero-gap-max',
+                carousel: '--carousel-max',
+            };
+
+            const SIZE_VAR_MIN = {
+                title: '--hero-title-min',
+                subtitle: '--hero-subtitle-min',
+                padY: '--hero-pad-y-min',
+                gap: '--hero-gap-min',
+                carousel: '--carousel-min',
+            };
+
+            function setSizeVarsFrom(map) {
+                Object.keys(SIZE_VARS).forEach((key) => {
+                    scope.style.setProperty(SIZE_VARS[key], `var(${map[key]})`);
+                });
+            }
+
+            function setSizeVarsPx(values) {
+                Object.keys(SIZE_VARS).forEach((key) => {
+                    const val = values[key];
+                    if (Number.isFinite(val)) {
+                        scope.style.setProperty(SIZE_VARS[key], `${val.toFixed(2)}px`);
+                    }
+                });
+            }
+
+            function readSizes() {
+                const heroStyles = window.getComputedStyle(hero);
+                const layoutStyles = window.getComputedStyle(heroLayout);
+                const headingStyles = window.getComputedStyle(heroHeading);
+                const subtitleStyles = window.getComputedStyle(heroSubtitle);
+                const carouselStyles = window.getComputedStyle(carouselFrame);
+
+                return {
+                    title: Number.parseFloat(headingStyles.fontSize || '0') || 0,
+                    subtitle: Number.parseFloat(subtitleStyles.fontSize || '0') || 0,
+                    padY: Number.parseFloat(heroStyles.paddingTop || '0') || 0,
+                    gap: Number.parseFloat(layoutStyles.rowGap || layoutStyles.gap || '0') || 0,
+                    carousel: Number.parseFloat(carouselStyles.height || '0') || 0,
+                };
+            }
+
+            function toPx(value, context) {
+                if (!value) return 0;
+                const raw = value.toString().trim();
+                if (raw === '' || raw === '0') return 0;
+                const numeric = Number.parseFloat(raw);
+                if (!Number.isFinite(numeric)) return 0;
+                if (raw.endsWith('px')) return numeric;
+                if (raw.endsWith('rem')) {
+                    const rootSize = Number.parseFloat(window.getComputedStyle(document.documentElement).fontSize || '16') || 16;
+                    return numeric * rootSize;
+                }
+                if (raw.endsWith('em')) {
+                    const ctxSize = Number.parseFloat(window.getComputedStyle(context || hero).fontSize || '16') || 16;
+                    return numeric * ctxSize;
+                }
+                if (raw.endsWith('vh')) return (numeric / 100) * window.innerHeight;
+                if (raw.endsWith('vw')) return (numeric / 100) * window.innerWidth;
+                return numeric;
+            }
+
+            function getForcedRowHeight() {
+                const styles = window.getComputedStyle(scope);
+                return toPx(styles.getPropertyValue('--hero-row-height'), hero);
+            }
+
+            function scaleSizes(base, scale) {
+                const scaled = {};
+                Object.keys(SIZE_VARS).forEach((key) => {
+                    scaled[key] = Math.max(0, (base[key] || 0) * scale);
+                });
+                return scaled;
+            }
+
+            function resetLayout(keepSizes = false) {
+                if (!keepSizes) {
+                    setSizeVarsFrom(SIZE_VAR_MAX);
+                    scope.style.setProperty('--hero-pad-x', 'var(--hero-pad-x-max)');
+                }
+                scope.style.setProperty('--hero-scale', '1');
+                scope.style.setProperty('--hero-title-width', '100%');
+                scope.style.setProperty('--hero-carousel-width', '100%');
+                scope.style.setProperty('--hero-title-x', '0px');
+                scope.style.setProperty('--hero-carousel-x', '0px');
+                scope.style.setProperty('--hero-carousel-y', '0px');
+                scope.style.setProperty('--hero-carousel-start', '0px');
+                scope.style.setProperty('--hero-clip', '0px');
+                scope.style.setProperty('--hero-content-shift', '0px');
+                sections.forEach((section) => {
+                    section.classList.remove('is-under-hero');
+                    section.style.removeProperty('--section-clip-top');
+                });
+                scope.style.removeProperty('--hero-height');
+            }
+
+            function applyFinalLayout(gap, carouselStart) {
+                const availableWidth = Math.max(0, layoutWidth - gap);
+                const titleWidth = availableWidth * 0.4;
+                const carouselWidth = availableWidth * 0.6;
+                const carouselX = titleWidth + gap;
+                scope.style.setProperty('--hero-title-width', `${titleWidth.toFixed(1)}px`);
+                scope.style.setProperty('--hero-carousel-width', `${carouselWidth.toFixed(1)}px`);
+                scope.style.setProperty('--hero-carousel-x', `${carouselX.toFixed(1)}px`);
+                scope.style.setProperty('--hero-carousel-y', `${(-carouselStart).toFixed(1)}px`);
+                scope.style.setProperty('--hero-carousel-start', `${carouselStart.toFixed(1)}px`);
+            }
+
+            function updateSectionOverlap(clipAmount) {
+                if (!sections.length) return;
+                const heroRect = hero.getBoundingClientRect();
+                const visibleHeroHeight = Math.max(0, stackHeight - clipAmount);
+                const clipStart = heroRect.top + visibleHeroHeight * 0.5;
+
+                sections.forEach((section) => {
+                    const rect = section.getBoundingClientRect();
+                    const overlap = Math.max(0, clipStart - rect.top);
+                    const clipTop = Math.min(overlap, rect.height);
+                    const isUnder = overlap > 0 && rect.bottom > heroRect.top;
+                    section.classList.toggle('is-under-hero', isUnder);
+                    section.style.setProperty('--section-clip-top', `${clipTop.toFixed(1)}px`);
+                });
+            }
+
+            function computeMetrics() {
+                resetLayout(false);
+
+                const layoutRect = heroLayout.getBoundingClientRect();
+                layoutWidth = layoutRect.width;
+                if (layoutWidth === 0) return;
+
+                sizeMax = readSizes();
+                const gapMax = sizeMax.gap;
+
+                const titleHeightStackMax = heroTitle.getBoundingClientRect().height;
+                const carouselHeightStackMax = heroCarousel.getBoundingClientRect().height;
+                carouselStartMax = titleHeightStackMax + gapMax;
+                stackHeight = sizeMax.padY + carouselStartMax + carouselHeightStackMax + sizeMax.padY;
+
+                applyFinalLayout(gapMax, carouselStartMax);
+                const titleHeightFinalMax = heroTitle.getBoundingClientRect().height;
+                const carouselHeightFinalMax = heroCarousel.getBoundingClientRect().height;
+                const rowHeightMax = Math.max(titleHeightFinalMax, carouselHeightFinalMax) + sizeMax.padY * 2;
+
+                const forcedRowHeight = getForcedRowHeight();
+                if (forcedRowHeight > 0) {
+                    const fitScale = Math.min(1, forcedRowHeight / rowHeightMax);
+                    sizeMin = scaleSizes(sizeMax, fitScale);
+                    setSizeVarsPx(sizeMin);
+                } else {
+                    setSizeVarsFrom(SIZE_VAR_MIN);
+                    sizeMin = readSizes();
+                    setSizeVarsPx(sizeMin);
+                }
+
+                resetLayout(true);
+
+                const gapMin = sizeMin.gap;
+                const titleHeightStackMin = heroTitle.getBoundingClientRect().height;
+                const carouselHeightStackMin = heroCarousel.getBoundingClientRect().height;
+                carouselStartMin = titleHeightStackMin + gapMin;
+
+                applyFinalLayout(gapMin, carouselStartMin);
+                const titleHeightFinalMin = heroTitle.getBoundingClientRect().height;
+                const carouselHeightFinalMin = heroCarousel.getBoundingClientRect().height;
+                const rowHeightMin = Math.max(titleHeightFinalMin, carouselHeightFinalMin) + sizeMin.padY * 2;
+
+                rowHeight = forcedRowHeight > 0 ? forcedRowHeight : rowHeightMin;
+                clipMax = Math.max(0, Math.round(stackHeight - rowHeight));
+                maxScroll = Math.max(160, Math.round(stackHeight * 0.6));
+
+                resetLayout(false);
+                scope.style.setProperty('--hero-height', `${stackHeight.toFixed(1)}px`);
+            }
+
+            function updateProgress() {
+                rafId = null;
+                if (mobileQuery.matches || layoutWidth === 0 || !sizeMax || !sizeMin) {
+                    resetLayout(false);
+                    return;
+                }
+
+                const progress = Math.min(1, Math.max(0, window.scrollY / maxScroll));
+                const layout = progress * progress * (3 - 2 * progress);
+                const gap = sizeMax.gap + (sizeMin.gap - sizeMax.gap) * layout;
+                const titleSize = sizeMax.title + (sizeMin.title - sizeMax.title) * layout;
+                const subtitleSize = sizeMax.subtitle + (sizeMin.subtitle - sizeMax.subtitle) * layout;
+                const padY = sizeMax.padY + (sizeMin.padY - sizeMax.padY) * layout;
+                const carouselHeight = sizeMax.carousel + (sizeMin.carousel - sizeMax.carousel) * layout;
+
+                setSizeVarsPx({
+                    title: titleSize,
+                    subtitle: subtitleSize,
+                    padY,
+                    gap,
+                    carousel: carouselHeight,
+                });
+
+                const availableWidth = Math.max(0, layoutWidth - gap);
+                const titleWidthFinal = availableWidth * 0.4;
+                const carouselWidthFinal = availableWidth * 0.6;
+                const carouselStart = carouselStartMax + (carouselStartMin - carouselStartMax) * layout;
+                const clip = clipMax * progress;
+
+                scope.style.setProperty('--hero-scale', '1');
+                scope.style.setProperty('--hero-clip', `${clip.toFixed(1)}px`);
+                scope.style.setProperty('--hero-content-shift', `${clip.toFixed(1)}px`);
+                updateSectionOverlap(clip);
+                scope.style.setProperty('--hero-title-width', `${(layoutWidth + (titleWidthFinal - layoutWidth) * layout).toFixed(1)}px`);
+                scope.style.setProperty('--hero-carousel-width', `${(layoutWidth + (carouselWidthFinal - layoutWidth) * layout).toFixed(1)}px`);
+                scope.style.setProperty('--hero-carousel-start', `${carouselStart.toFixed(1)}px`);
+                scope.style.setProperty('--hero-carousel-x', `${((titleWidthFinal + gap) * layout).toFixed(1)}px`);
+                scope.style.setProperty('--hero-carousel-y', `${(-carouselStart * layout).toFixed(1)}px`);
+            }
+
+            function onScroll() {
+                if (rafId) return;
+                rafId = window.requestAnimationFrame(updateProgress);
+            }
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+            window.addEventListener('resize', () => {
+                computeMetrics();
+                updateProgress();
+            });
+            mobileQuery.addEventListener?.('change', () => {
+                computeMetrics();
+                updateProgress();
+            });
+            computeMetrics();
+            updateProgress();
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(() => {
+                    computeMetrics();
+                    updateProgress();
+                });
+            }
+        })();
+
+        (() => {
+            const lightbox = document.getElementById('image-lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxMedia = lightbox ? lightbox.querySelector('.lightbox__media') : null;
+            const isEmbedded = window.self !== window.top;
+            const isFileOrigin = window.location.origin === 'null';
+            let embeddedLightboxOpen = false;
+            let parentLightboxAck = false;
+            let fallbackTimer = null;
+            let localLightboxOpen = false;
+
+            if (!lightbox || !lightboxImage) return;
+
+            function openParentLightbox(src, alt) {
+                const absoluteSrc = new URL(src, window.location.href).href;
+                try {
+                    const parentApi = window.top?.portfolioEntryLightbox;
+                    if (parentApi && typeof parentApi.open === 'function') {
+                        parentApi.open(absoluteSrc, alt);
+                        return true;
+                    }
+                } catch (err) {
+                    return false;
+                }
+                try {
+                    const parentDoc = window.top.document;
+                    const parentOverlay = parentDoc.getElementById('portfolio-entry-overlay');
+                    const parentLightbox = parentDoc.getElementById('portfolio-image-lightbox');
+                    const parentImage = parentDoc.getElementById('portfolio-image-lightbox-img');
+                    const parentMedia = parentLightbox ? parentLightbox.querySelector('.portfolio-image-lightbox__media') : null;
+                    if (!parentLightbox || !parentImage) return false;
+                    parentImage.src = absoluteSrc;
+                    parentImage.alt = alt || '';
+                    parentImage.style.width = '';
+                    parentImage.style.height = '';
+                    parentImage.style.maxWidth = '';
+                    parentImage.style.maxHeight = '';
+                    parentLightbox.classList.add('is-open');
+                    parentLightbox.classList.remove('is-zoomed');
+                    parentLightbox.setAttribute('aria-hidden', 'false');
+                    if (parentOverlay) {
+                        parentOverlay.classList.add('is-expanded');
+                    }
+                    if (parentMedia) {
+                        parentMedia.scrollTop = 0;
+                        parentMedia.scrollLeft = 0;
+                    }
+                    return true;
+                } catch (err) {
+                    return false;
+                }
+            }
+
+            function closeParentLightbox() {
+                try {
+                    const parentApi = window.top?.portfolioEntryLightbox;
+                    if (parentApi && typeof parentApi.close === 'function') {
+                        parentApi.close();
+                        return true;
+                    }
+                } catch (err) {
+                    return false;
+                }
+                try {
+                    const parentDoc = window.top.document;
+                    const parentOverlay = parentDoc.getElementById('portfolio-entry-overlay');
+                    const parentLightbox = parentDoc.getElementById('portfolio-image-lightbox');
+                    const parentImage = parentDoc.getElementById('portfolio-image-lightbox-img');
+                    const parentMedia = parentLightbox ? parentLightbox.querySelector('.portfolio-image-lightbox__media') : null;
+                    if (!parentLightbox || !parentImage) return false;
+                    parentLightbox.classList.remove('is-open');
+                    parentLightbox.classList.remove('is-zoomed');
+                    parentLightbox.setAttribute('aria-hidden', 'true');
+                    parentImage.style.width = '';
+                    parentImage.style.height = '';
+                    parentImage.style.maxWidth = '';
+                    parentImage.style.maxHeight = '';
+                    parentImage.src = '';
+                    if (parentOverlay) {
+                        parentOverlay.classList.remove('is-expanded');
+                    }
+                    if (parentMedia) {
+                        parentMedia.scrollTop = 0;
+                        parentMedia.scrollLeft = 0;
+                    }
+                    return true;
+                } catch (err) {
+                    return false;
+                }
+            }
+
+            function openLocalLightbox(src, alt) {
+                lightboxImage.src = src;
+                lightboxImage.alt = alt || '';
+                lightboxImage.style.width = '';
+                lightboxImage.style.height = '';
+                lightboxImage.style.maxWidth = '';
+                lightboxImage.style.maxHeight = '';
+                lightbox.classList.add('is-open');
+                lightbox.classList.remove('is-zoomed');
+                lightbox.setAttribute('aria-hidden', 'false');
+                document.body.classList.add('modal-open');
+                localLightboxOpen = true;
+                if (lightboxMedia) {
+                    lightboxMedia.scrollTop = 0;
+                    lightboxMedia.scrollLeft = 0;
+                }
+                if (isEmbedded) {
+                    window.top.postMessage({ type: 'portfolioEntryLightboxLocalOpen' }, '*');
+                }
+            }
+
+            function closeLocalLightbox() {
+                lightbox.classList.remove('is-open');
+                lightbox.classList.remove('is-zoomed');
+                lightbox.setAttribute('aria-hidden', 'true');
+                lightboxImage.style.width = '';
+                lightboxImage.style.height = '';
+                lightboxImage.style.maxWidth = '';
+                lightboxImage.style.maxHeight = '';
+                lightboxImage.src = '';
+                document.body.classList.remove('modal-open');
+                localLightboxOpen = false;
+                if (lightboxMedia) {
+                    lightboxMedia.scrollTop = 0;
+                    lightboxMedia.scrollLeft = 0;
+                }
+                if (isEmbedded) {
+                    window.top.postMessage({ type: 'portfolioEntryLightboxLocalClose' }, '*');
+                }
+            }
+
+            function openLightbox(src, alt) {
+                if (isEmbedded) {
+                    embeddedLightboxOpen = true;
+                    parentLightboxAck = false;
+                    if (fallbackTimer) window.clearTimeout(fallbackTimer);
+                    if (openParentLightbox(src, alt)) {
+                        parentLightboxAck = true;
+                        return;
+                    }
+                    window.top.postMessage({ type: 'portfolioEntryLightboxOpen', src, alt }, '*');
+                    fallbackTimer = window.setTimeout(() => {
+                        if (!parentLightboxAck) {
+                            openLocalLightbox(src, alt);
+                        }
+                    }, 500);
+                    return;
+                }
+                openLocalLightbox(src, alt);
+            }
+
+            function closeLightbox() {
+                if (isEmbedded) {
+                    if (fallbackTimer) {
+                        window.clearTimeout(fallbackTimer);
+                        fallbackTimer = null;
+                    }
+                    if (localLightboxOpen) {
+                        closeLocalLightbox();
+                    }
+                    if (embeddedLightboxOpen) {
+                        embeddedLightboxOpen = false;
+                        parentLightboxAck = false;
+                        if (!closeParentLightbox()) {
+                            window.top.postMessage({ type: 'portfolioEntryLightboxClose' }, '*');
+                        }
+                    }
+                    return;
+                }
+                closeLocalLightbox();
+            }
+
+            document.addEventListener('click', (e) => {
+                const slide = e.target.closest('.carousel-slide');
+                if (slide) {
+                    const image = slide.querySelector('img');
+                    if (image && image.src) {
+                        e.preventDefault();
+                        openLightbox(image.src, image.alt);
+                        return;
+                    }
+                }
+
+                if (e.target === lightboxImage && lightbox.classList.contains('is-open')) {
+                    if (!lightboxMedia) return;
+                    if (!lightbox.classList.contains('is-zoomed')) {
+                        const rect = lightboxImage.getBoundingClientRect();
+                        const clickX = e.clientX - rect.left;
+                        const clickY = e.clientY - rect.top;
+                        const zoomValue = Number.parseFloat(
+                            getComputedStyle(lightbox).getPropertyValue('--lightbox-zoom')
+                        ) || 1.6;
+                        const zoomedWidth = rect.width * zoomValue;
+                        const zoomedHeight = rect.height * zoomValue;
+
+                        lightboxImage.style.width = `${zoomedWidth}px`;
+                        lightboxImage.style.height = `${zoomedHeight}px`;
+                        lightboxImage.style.maxWidth = 'none';
+                        lightboxImage.style.maxHeight = 'none';
+                        lightbox.classList.add('is-zoomed');
+
+                        window.requestAnimationFrame(() => {
+                            const targetX = clickX * zoomValue;
+                            const targetY = clickY * zoomValue;
+                            const maxScrollLeft = lightboxMedia.scrollWidth - lightboxMedia.clientWidth;
+                            const maxScrollTop = lightboxMedia.scrollHeight - lightboxMedia.clientHeight;
+                            lightboxMedia.scrollLeft = Math.min(
+                                Math.max(0, targetX - lightboxMedia.clientWidth / 2),
+                                Math.max(0, maxScrollLeft)
+                            );
+                            lightboxMedia.scrollTop = Math.min(
+                                Math.max(0, targetY - lightboxMedia.clientHeight / 2),
+                                Math.max(0, maxScrollTop)
+                            );
+                        });
+                    } else {
+                        lightbox.classList.remove('is-zoomed');
+                        lightboxImage.style.width = '';
+                        lightboxImage.style.height = '';
+                        lightboxImage.style.maxWidth = '';
+                        lightboxImage.style.maxHeight = '';
+                        lightboxMedia.scrollTop = 0;
+                        lightboxMedia.scrollLeft = 0;
+                    }
+                    return;
+                }
+
+                if (e.target.closest('[data-lightbox-close]') && lightbox.classList.contains('is-open')) {
+                    closeLightbox();
+                }
+            }, true);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && isEmbedded && embeddedLightboxOpen) {
+                    closeLightbox();
+                    return;
+                }
+                if (e.key === 'Escape' && lightbox.classList.contains('is-open')) {
+                    closeLightbox();
+                }
+            });
+
+            if (isEmbedded) {
+                window.addEventListener('message', (e) => {
+                    if (!isFileOrigin && e.origin !== window.location.origin) return;
+                    if (e.source && e.source !== window.top) return;
+                    if (!e.data || !e.data.type) return;
+                    if (e.data.type === 'portfolioEntryLightboxOpened') {
+                        parentLightboxAck = true;
+                        if (fallbackTimer) {
+                            window.clearTimeout(fallbackTimer);
+                            fallbackTimer = null;
+                        }
+                        if (localLightboxOpen) {
+                            closeLocalLightbox();
+                        }
+                    }
+                    if (e.data.type === 'portfolioEntryLightboxClosed') {
+                        embeddedLightboxOpen = false;
+                        parentLightboxAck = false;
+                        if (fallbackTimer) {
+                            window.clearTimeout(fallbackTimer);
+                            fallbackTimer = null;
+                        }
+                        if (localLightboxOpen) {
+                            closeLocalLightbox();
+                        }
+                    }
+                    if (e.data.type === 'portfolioEntryLightboxForceClose') {
+                        if (localLightboxOpen) {
+                            closeLocalLightbox();
+                        }
+                    }
+                    if (e.data.type === 'portfolioEntryScroll' && Number.isFinite(e.data.deltaY)) {
+                        window.scrollBy({ top: e.data.deltaY, left: 0, behavior: 'auto' });
+                    }
+                });
+            }
+        })();
+
+        (() => {
+            const hero = document.querySelector('.project-hero');
+            const lightbox = document.getElementById('image-lightbox');
+            const themeToggle = document.getElementById('theme-toggle');
+            const backLink = document.querySelector('.back-link');
+            const isEmbedded = window.self !== window.top;
+
+            if (!hero) return;
+
+            function requestClose() {
+                if (isEmbedded) {
+                    const closed = (() => {
+                        try {
+                            const parentDoc = window.top.document;
+                            const parentOverlay = parentDoc.getElementById('portfolio-entry-overlay');
+                            const parentFrame = parentDoc.getElementById('portfolio-entry-frame');
+                            if (!parentOverlay) return false;
+                            parentOverlay.classList.remove('is-open');
+                            parentOverlay.classList.remove('is-expanded');
+                            parentOverlay.setAttribute('aria-hidden', 'true');
+                            parentOverlay.style.removeProperty('--entry-overlay-width');
+                            if (parentFrame) parentFrame.src = '';
+                            parentDoc.body.classList.remove('modal-open');
+                            return true;
+                        } catch (err) {
+                            return false;
+                        }
+                    })();
+                    try {
+                        window.top.postMessage({ type: 'portfolioEntryClose' }, '*');
+                    } catch (err) {
+                        // no-op
+                    }
+                    try {
+                        window.top.location.hash = '#portfolio';
+                    } catch (err) {
+                        try {
+                            window.top.location.href = new URL('#portfolio', window.top.location.href).href;
+                        } catch (err2) {
+                            // no-op
+                        }
+                    }
+                    return closed;
+                } else {
+                    window.location.href = '../../../index.html#portfolio';
+                    return true;
+                }
+            }
+
+            if (backLink) {
+                backLink.addEventListener('click', (e) => {
+                    if (isEmbedded) {
+                        e.preventDefault();
+                        requestClose();
+                    }
+                });
+            }
+
+            document.addEventListener('click', (e) => {
+                if (document.body.classList.contains('modal-open')) return;
+                if (lightbox && lightbox.contains(e.target)) return;
+                if (themeToggle && themeToggle.contains(e.target)) return;
+                if (hero && hero.contains(e.target)) return;
+                if (e.target.closest('.project-section')) return;
+                requestClose();
+            });
+        })();
+
+        (() => {
+            const carousels = Array.from(document.querySelectorAll('[data-carousel]'));
+            if (carousels.length === 0) return;
+
+            const groups = new Map();
+
+            carousels.forEach((carousel, index) => {
+                const groupKey = carousel.dataset.carouselGroup || `carousel-${index}`;
+                if (!groups.has(groupKey)) groups.set(groupKey, []);
+                groups.get(groupKey).push(carousel);
+            });
+
+            groups.forEach((groupCarousels) => {
+                const items = groupCarousels.map((carousel) => {
+                    const track = carousel.querySelector('.carousel-track');
+                    const slides = Array.from(carousel.querySelectorAll('.carousel-slide'));
+                    return {
+                        carousel,
+                        track,
+                        slides,
+                        prevBtn: carousel.querySelector('.carousel-control--prev'),
+                        nextBtn: carousel.querySelector('.carousel-control--next'),
+                    };
+                }).filter((item) => item.track && item.slides.length > 0);
+
+                if (items.length === 0) return;
+
+                const intervalMs = Number.parseInt(items[0].carousel.dataset.interval || '5000', 10);
+                const slideCount = items[0].slides.length;
+                let index = 0;
+                let timerId = null;
+
+                function updateTracks() {
+                    items.forEach((item) => {
+                        item.track.style.transform = `translateX(-${index * 100}%)`;
+                    });
+                }
+
+                function goTo(nextIndex) {
+                    index = (nextIndex + slideCount) % slideCount;
+                    updateTracks();
+                }
+
+                function startAuto() {
+                    if (slideCount < 2 || timerId) return;
+                    timerId = window.setInterval(() => {
+                        goTo(index + 1);
+                    }, intervalMs);
+                }
+
+                function stopAuto() {
+                    if (!timerId) return;
+                    window.clearInterval(timerId);
+                    timerId = null;
+                }
+
+                items.forEach((item) => {
+                    if (item.prevBtn) {
+                        item.prevBtn.addEventListener('click', () => {
+                            stopAuto();
+                            goTo(index - 1);
+                        });
+                    }
+
+                    if (item.nextBtn) {
+                        item.nextBtn.addEventListener('click', () => {
+                            stopAuto();
+                            goTo(index + 1);
+                        });
+                    }
+                });
+
+                updateTracks();
+                startAuto();
+            });
+        })();
+
+        (() => {
+            if (window.self === window.top) return;
+            const hero = document.querySelector('.project-hero');
+            if (!hero) return;
+
+            let rafId = null;
+            const sendSize = () => {
+                rafId = null;
+                const rect = hero.getBoundingClientRect();
+                if (rect.width > 0) {
+                    window.top.postMessage(
+                        { type: 'portfolioEntryResize', width: Math.round(rect.width) },
+                        POST_ORIGIN
+                    );
+                }
+            };
+
+            const schedule = () => {
+                if (rafId) return;
+                rafId = window.requestAnimationFrame(sendSize);
+            };
+
+            schedule();
+            window.addEventListener('resize', schedule);
+            if (window.ResizeObserver) {
+                const observer = new ResizeObserver(schedule);
+                observer.observe(hero);
+            }
+        })();
+    </script>
+</body>
+</html>

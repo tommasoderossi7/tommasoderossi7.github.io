@@ -42,6 +42,16 @@
             --particle-light-shadow-color: #000000;
             --particle-mask-color: transparent;
             --max-width: 800px;
+            --entry-overlay-blur: 0px;
+            --entry-overlay-dim: 0.22;
+            --entry-overlay-dim-dark: 0.8;
+            --entry-overlay-dim-expanded: 0.5;
+            --entry-overlay-dim-expanded-dark: 0.5;
+            --entry-overlay-width: 900px;
+            --entry-overlay-width-expanded: 1400px;
+            --portfolio-lightbox-max-width: 98vw;
+            --portfolio-lightbox-max-height: 94vh;
+            --portfolio-lightbox-zoom: 1.6;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -643,6 +653,169 @@
             gap: 0.5rem;
         }
 
+        .portfolio-entry-overlay {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: flex-start;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .portfolio-entry-overlay.is-open {
+            display: flex;
+        }
+
+        .portfolio-entry-overlay__backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, var(--entry-overlay-dim));
+            backdrop-filter: blur(var(--entry-overlay-blur));
+            -webkit-backdrop-filter: blur(var(--entry-overlay-blur));
+        }
+
+        .portfolio-entry-overlay.is-expanded .portfolio-entry-overlay__backdrop {
+            background: rgba(0, 0, 0, var(--entry-overlay-dim-expanded));
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .portfolio-entry-overlay__backdrop {
+                background: rgba(0, 0, 0, var(--entry-overlay-dim-dark));
+            }
+
+            .portfolio-entry-overlay.is-expanded .portfolio-entry-overlay__backdrop {
+                background: rgba(0, 0, 0, var(--entry-overlay-dim-expanded-dark));
+            }
+        }
+
+        .portfolio-entry-overlay__panel {
+            position: relative;
+            z-index: 1;
+            width: min(92vw, var(--entry-overlay-width));
+            height: 100vh;
+            border-radius: 0;
+            overflow: hidden;
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .portfolio-entry-overlay.is-expanded .portfolio-entry-overlay__panel {
+            width: min(98vw, var(--entry-overlay-width-expanded));
+            height: 100vh;
+        }
+
+
+        .portfolio-entry-overlay__frame {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            background: transparent;
+            display: block;
+        }
+
+        .portfolio-image-lightbox {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            display: none;
+            /* align-items: center;
+            justify-content: center; */
+            z-index: 1100;
+        }
+
+        .portfolio-image-lightbox.is-open {
+            display: block; /* flex; */
+        }
+
+        .portfolio-image-lightbox__overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+
+        .portfolio-image-lightbox__dialog {
+            position: relative;
+            z-index: 1;
+            width: fit-content;
+            max-width: var(--portfolio-lightbox-max-width);
+            max-height: var(--portfolio-lightbox-max-height);
+            margin: 4vh auto;
+            padding: 0.4rem;
+            border-radius: 20px;
+            background: var(--background);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow:
+                0 16px 40px rgba(0, 0, 0, 0.35),
+                0 1px 2px rgba(255, 255, 255, 0.08) inset;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            overflow: hidden;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .portfolio-image-lightbox__dialog {
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                box-shadow:
+                    0 16px 40px rgba(0, 0, 0, 0.55),
+                    0 1px 2px rgba(255, 255, 255, 0.03) inset;
+            }
+        }
+
+        .portfolio-image-lightbox__back {
+            display: inline-block;
+            color: var(--accent-color);
+            background: transparent;
+            border: none;
+            font-weight: 300;
+            font-size: 0.95rem;
+            text-decoration: none;
+            cursor: pointer;
+            margin-bottom: 0.2rem;
+        }
+
+        .portfolio-image-lightbox__back:hover {
+            text-decoration: underline;
+        }
+
+        .portfolio-image-lightbox__media {
+            max-width: calc(var(--portfolio-lightbox-max-width) - 1.2rem);
+            max-height: calc(var(--portfolio-lightbox-max-height) - 3.2rem);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .portfolio-image-lightbox__image {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            display: block;
+            border-radius: 14px;
+            background: var(--background);
+            cursor: zoom-in;
+        }
+
+        .portfolio-image-lightbox.is-zoomed .portfolio-image-lightbox__media {
+            overflow: auto;
+            cursor: zoom-out;
+            align-items: flex-start;
+            justify-content: flex-start;
+        }
+
+        .portfolio-image-lightbox.is-zoomed .portfolio-image-lightbox__image {
+            max-width: none;
+            max-height: none;
+            cursor: zoom-out;
+        }
+
         .tech-stack-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -917,6 +1090,9 @@
                         <p style="font-size:1.5rem;">Hi, I'm Tommaso!</p>
                         <p>I am working as an industrial PhD student, building bridges between cutting-edge technologies and industrial adoption.</p>
                         <p>I like to work on composable systems and pipelines involving classical machine learning, statistical (bayesian) modeling, LLMs, and data visualizations.</p>
+                        <!-- quotation in italics -->
+                        <p><em>“All models are wrong, but some are useful.” – George E. P. Box</em></p>
+
                     </div>
                     </div>
 
@@ -931,7 +1107,7 @@
                     </button>
                 </div>
                 <div class="portfolio-list">
-                    <a class="portfolio-card" href="portfolio-alt-4-antigravity-working-in-firefox.html">
+                    <a class="portfolio-card" href="assets/portfolio/players-performance-analysis/portfolio-entry.html">
                         <div class="portfolio-card__media">
                             <img src="assets/portfolio/players-performance-analysis/players-performance-analysis_0.png" alt="Players Performance Analysis" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                             <div class="portfolio-card__placeholder" style="display:none;">Case Study</div>
@@ -964,7 +1140,7 @@
                     </div>
                     <div class="cv-summary cv-summary-line">
                     <p>
-                        Alignment research on chain-of-thought monitoring and attribution methods to analyze LLM reasoning traces with reproducible evaluation workflows.
+                        Alignment research on chain-of-thought monitoring and causal attribution methods to analyze LLM reasoning traces.
                     </p>
                     </div>
                 </div>
@@ -981,7 +1157,7 @@
                     </div>
                     <div class="cv-summary cv-summary-line">
                     <p>
-                        Building an embedding-based troubleshooting recommender over maintenance knowledge (vector DB + Bayesian modeling + local LLMs), packaged for reproducible and scalable runs.
+                        Building an embedding-based troubleshooting recommender over maintenance knowledge (vector DB + Bayesian modeling + local LLMs).
                     </p>
                     </div>
                 </div>
@@ -998,7 +1174,7 @@
                     </div>
                     <div class="cv-summary cv-summary-line">
                     <p>
-                        Developing a job–candidate matching system as ranking/recommendation with offline evaluation and production-friendly packaging, exploring AWS deployment patterns for prototypes.
+                        Recently working on a job–candidate matching system with a focus on explainability.
                     </p>
                     </div>
                 </div>
@@ -1015,7 +1191,7 @@
                     </div>
                     <div class="cv-summary cv-summary-line">
                     <p>
-                        Built IoT analytics pipelines and models (Bayesian hierarchical + ensembles) for predictive maintenance/KPI optimization/forecasting, plus an LLM-based purchasing assistant and dashboards.
+                        Built IoT analytics pipelines and models (Bayesian hierarchical + ensembles) for predictive maintenance/KPI optimization/forecasting, an LLM-based purchasing assistant for VR environments, and an end-to-end sport recommender system.
                     </p>
                     </div>
                 </div>
@@ -1032,7 +1208,7 @@
                     </div>
                     <div class="cv-summary cv-summary-line">
                     <p>
-                        Built ETL pipelines (web scraping/APIs) and delivered NLP/CV enrichment and dashboards on geo-temporal social data, using scalable processing patterns when needed.
+                        Built ETL pipelines (web scraping/APIs), delivered NLP/CV enrichments and dashboards on geo-temporal social data.
                     </p>
                     </div>
                 </div>
@@ -1049,7 +1225,7 @@
                     </div>
                     <div class="cv-summary cv-summary-line">
                     <p>
-                        Built an LSTM classifier for database columns and engineered a distributed retraining/monitoring pipeline on Hadoop/Spark with PySpark processing and performance tracking.
+                        Built an LSTM classifier for database columns and engineered a distributed retraining/monitoring pipeline on Hadoop/Spark.
                     </p>
                     </div>
                 </div>
@@ -1081,13 +1257,13 @@
                         <div class="cv-location">Università degli studi di Torino<span class="cv-date"> | September 2019 - April 2023</span></div>
                         <button class="skills-link skills-link--title" type="button"
                             data-title="MSc — Stochastics & Data Science"
-                            data-skills="Statistics, Probability, NLP, Transformers, Topic modeling, Class imbalance, Python, R">
+                            data-skills="Statistics, Probability, NLP, Transformers, Network Science, Topic modeling, Class imbalance, Python, R">
                             skills
                         </button>
                     </div>
                     <div class="cv-summary cv-summary-line">
                     <p>
-                        MSc in Mathematics (English-taught); thesis on modelling nature discourse on Twitter with highly imbalanced data using Transformers and topic modelling.
+                        MSc in Mathematics (English-taught); thesis on modelling nature discourse on Twitter using Transformers, topic modelling, and network science.
                     </p>
                     </div>
                 </div>
@@ -1104,7 +1280,7 @@
                     </div>
                     <div class="cv-summary cv-summary-line">
                     <p>
-                        Exchange year with coursework in non-parametric statistics, functional analysis, Bayesian data analysis, structural equations, econometrics, optimization, and data mining/neural networks, plus participation in Data4Good challenges.
+                        Exchange year with coursework in non-parametric statistics, functional analysis, Bayesian data analysis, structural equations, econometrics, optimization, and data mining/neural networks. Participated in Data4Good challenges.
                     </p>
                     </div>
                 </div>
@@ -1121,7 +1297,7 @@
                     </div>
                     <div class="cv-summary cv-summary-line">
                     <p>
-                        BSc in Physics; award for top-ranked student (year 2) and thesis on methodological aspects of neural networks for relational database column classification.
+                        BSc in Physics; award for top-ranked student (year 2) and thesis on methodological aspects of artificial neural networks.
                     </p>
                     </div>
                 </div>
@@ -1138,7 +1314,7 @@
                     </div>
                     <div class="cv-summary cv-summary-line">
                     <p>
-                        Short international immersion experience focused on English language and cultural exchange.
+                        Short international immersion experience focused on English language, rugby training, and cultural exchange.
                     </p>
                     </div>
                 </div>
@@ -1163,6 +1339,21 @@
                                 </div>
                             </section>
                         </main>
+                    </div>
+                    <div id="portfolio-entry-overlay" class="portfolio-entry-overlay" aria-hidden="true">
+                        <div class="portfolio-entry-overlay__backdrop" data-entry-close></div>
+                        <div class="portfolio-entry-overlay__panel" role="dialog" aria-modal="true" aria-label="Project details">
+                            <iframe id="portfolio-entry-frame" class="portfolio-entry-overlay__frame" title="Project details"></iframe>
+                        </div>
+                    </div>
+                    <div id="portfolio-image-lightbox" class="portfolio-image-lightbox" aria-hidden="true">
+                        <div class="portfolio-image-lightbox__overlay" data-portfolio-lightbox-close></div>
+                        <div class="portfolio-image-lightbox__dialog" role="dialog" aria-modal="true" aria-label="Project image">
+                            <button class="portfolio-image-lightbox__back" type="button" data-portfolio-lightbox-close>Back to project</button>
+                            <div class="portfolio-image-lightbox__media">
+                                <img id="portfolio-image-lightbox-img" class="portfolio-image-lightbox__image" src="" alt="">
+                            </div>
+                        </div>
                     </div>
                     <div id="skills-modal" class="skills-modal" aria-hidden="true">
                         <div class="skills-modal__overlay" data-close></div>
@@ -1400,6 +1591,248 @@
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' && modal.classList.contains('is-open')) {
                     closeModal();
+                }
+            });
+        })();
+        const POST_ORIGIN = window.location.origin === 'null' ? '*' : window.location.origin;
+
+        (() => {
+            const overlay = document.getElementById('portfolio-entry-overlay');
+            const frame = document.getElementById('portfolio-entry-frame');
+            const cards = document.querySelectorAll('.portfolio-card[href]');
+            const lightbox = document.getElementById('portfolio-image-lightbox');
+            const lightboxImage = document.getElementById('portfolio-image-lightbox-img');
+            const lightboxMedia = lightbox ? lightbox.querySelector('.portfolio-image-lightbox__media') : null;
+            const isFileOrigin = window.location.origin === 'null';
+            let entryLightboxOpen = false;
+
+            if (!overlay || !frame) return;
+
+            function openEntry(url) {
+                if (!url) return;
+                frame.src = url;
+                overlay.classList.add('is-open');
+                overlay.classList.remove('is-expanded');
+                overlay.style.removeProperty('--entry-overlay-width');
+                overlay.setAttribute('aria-hidden', 'false');
+                document.body.classList.add('modal-open');
+            }
+
+            function closeEntry() {
+                overlay.classList.remove('is-open');
+                overlay.setAttribute('aria-hidden', 'true');
+                overlay.classList.remove('is-expanded');
+                overlay.style.removeProperty('--entry-overlay-width');
+                frame.src = '';
+                document.body.classList.remove('modal-open');
+            }
+
+
+            function openImageLightbox(src, alt) {
+                if (!lightbox || !lightboxImage || !src) return;
+                lightboxImage.src = src;
+                lightboxImage.alt = alt || '';
+                lightboxImage.style.width = '';
+                lightboxImage.style.height = '';
+                lightboxImage.style.maxWidth = '';
+                lightboxImage.style.maxHeight = '';
+                lightbox.classList.add('is-open');
+                lightbox.classList.remove('is-zoomed');
+                lightbox.setAttribute('aria-hidden', 'false');
+                entryLightboxOpen = true;
+                if (lightboxMedia) {
+                    lightboxMedia.scrollTop = 0;
+                    lightboxMedia.scrollLeft = 0;
+                }
+            }
+
+            function closeImageLightbox() {
+                if (!lightbox || !lightboxImage) return;
+                lightbox.classList.remove('is-open');
+                lightbox.classList.remove('is-zoomed');
+                lightbox.setAttribute('aria-hidden', 'true');
+                lightboxImage.style.width = '';
+                lightboxImage.style.height = '';
+                lightboxImage.style.maxWidth = '';
+                lightboxImage.style.maxHeight = '';
+                lightboxImage.src = '';
+                entryLightboxOpen = false;
+                overlay.classList.remove('is-expanded');
+                if (lightboxMedia) {
+                    lightboxMedia.scrollTop = 0;
+                    lightboxMedia.scrollLeft = 0;
+                }
+                if (frame && frame.contentWindow) {
+                    frame.contentWindow.postMessage({ type: 'portfolioEntryLightboxClosed' }, POST_ORIGIN);
+                }
+            }
+
+            window.portfolioEntryLightbox = {
+                open: (src, alt) => {
+                    if (!overlay) return;
+                    overlay.classList.add('is-expanded');
+                    openImageLightbox(src, alt);
+                },
+                close: () => {
+                    if (!overlay) return;
+                    overlay.classList.remove('is-expanded');
+                    closeImageLightbox();
+                }
+            };
+
+            function forwardScroll(deltaY) {
+                if (!frame || !frame.contentWindow || !Number.isFinite(deltaY)) return;
+                try {
+                    frame.contentWindow.scrollBy({ top: deltaY, left: 0, behavior: 'auto' });
+                } catch (err) {
+                    frame.contentWindow.postMessage({ type: 'portfolioEntryScroll', deltaY }, POST_ORIGIN);
+                }
+            }
+
+            cards.forEach((card) => {
+                card.addEventListener('click', (e) => {
+                    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+                    e.preventDefault();
+                    openEntry(card.getAttribute('href'));
+                });
+            });
+
+            overlay.querySelectorAll('[data-entry-close]').forEach((btn) => {
+                btn.addEventListener('click', (e) => {
+                    const isExpanded = overlay.classList.contains('is-expanded');
+                    if (entryLightboxOpen || isExpanded || (lightbox && lightbox.classList.contains('is-open'))) {
+                        e.preventDefault();
+                        closeImageLightbox();
+                        if (frame && frame.contentWindow) {
+                            frame.contentWindow.postMessage({ type: 'portfolioEntryLightboxForceClose' }, POST_ORIGIN);
+                        }
+                        return;
+                    }
+                    closeEntry();
+                });
+            });
+
+
+            const shouldForwardScroll = () =>
+                overlay.classList.contains('is-open') &&
+                !(lightbox && lightbox.classList.contains('is-open'));
+
+            window.addEventListener('wheel', (e) => {
+                if (!shouldForwardScroll()) return;
+                e.preventDefault();
+                forwardScroll(e.deltaY);
+            }, { passive: false, capture: true });
+
+            let touchStartY = null;
+            window.addEventListener('touchstart', (e) => {
+                if (!shouldForwardScroll()) return;
+                if (e.touches && e.touches.length === 1) {
+                    touchStartY = e.touches[0].clientY;
+                }
+            }, { passive: true, capture: true });
+
+            window.addEventListener('touchmove', (e) => {
+                if (!shouldForwardScroll()) return;
+                if (!e.touches || e.touches.length !== 1 || touchStartY === null) return;
+                const currentY = e.touches[0].clientY;
+                const deltaY = touchStartY - currentY;
+                touchStartY = currentY;
+                e.preventDefault();
+                forwardScroll(deltaY);
+            }, { passive: false, capture: true });
+
+            window.addEventListener('touchend', () => {
+                touchStartY = null;
+            }, { passive: true, capture: true });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && lightbox && lightbox.classList.contains('is-open')) {
+                    closeImageLightbox();
+                    return;
+                }
+                if (e.key === 'Escape' && overlay.classList.contains('is-open')) {
+                    closeEntry();
+                }
+            });
+
+            if (lightbox) {
+                lightbox.querySelectorAll('[data-portfolio-lightbox-close]').forEach((btn) => {
+                    btn.addEventListener('click', closeImageLightbox);
+                });
+
+                lightbox.addEventListener('click', (e) => {
+                    if (e.target === lightboxImage && lightbox.classList.contains('is-open')) {
+                        if (!lightboxMedia) return;
+                        if (!lightbox.classList.contains('is-zoomed')) {
+                            const rect = lightboxImage.getBoundingClientRect();
+                            const clickX = e.clientX - rect.left;
+                            const clickY = e.clientY - rect.top;
+                            const zoomValue = Number.parseFloat(
+                                getComputedStyle(lightbox).getPropertyValue('--portfolio-lightbox-zoom')
+                            ) || 1.6;
+                            const zoomedWidth = rect.width * zoomValue;
+                            const zoomedHeight = rect.height * zoomValue;
+
+                            lightboxImage.style.width = `${zoomedWidth}px`;
+                            lightboxImage.style.height = `${zoomedHeight}px`;
+                            lightboxImage.style.maxWidth = 'none';
+                            lightboxImage.style.maxHeight = 'none';
+                            lightbox.classList.add('is-zoomed');
+
+                            window.requestAnimationFrame(() => {
+                                const targetX = clickX * zoomValue;
+                                const targetY = clickY * zoomValue;
+                                const maxScrollLeft = lightboxMedia.scrollWidth - lightboxMedia.clientWidth;
+                                const maxScrollTop = lightboxMedia.scrollHeight - lightboxMedia.clientHeight;
+                                lightboxMedia.scrollLeft = Math.min(
+                                    Math.max(0, targetX - lightboxMedia.clientWidth / 2),
+                                    Math.max(0, maxScrollLeft)
+                                );
+                                lightboxMedia.scrollTop = Math.min(
+                                    Math.max(0, targetY - lightboxMedia.clientHeight / 2),
+                                    Math.max(0, maxScrollTop)
+                                );
+                            });
+                        } else {
+                            lightbox.classList.remove('is-zoomed');
+                            lightboxImage.style.width = '';
+                            lightboxImage.style.height = '';
+                            lightboxImage.style.maxWidth = '';
+                            lightboxImage.style.maxHeight = '';
+                            lightboxMedia.scrollTop = 0;
+                            lightboxMedia.scrollLeft = 0;
+                        }
+                    }
+                });
+            }
+
+            window.addEventListener('message', (e) => {
+                if (!isFileOrigin && e.origin !== window.location.origin) return;
+                if (!e.data || !e.data.type) return;
+                if (e.data.type === 'portfolioEntryClose') {
+                    closeEntry();
+                }
+                if (e.data.type === 'portfolioEntryResize' && Number.isFinite(e.data.width)) {
+                    overlay.style.setProperty('--entry-overlay-width', `${Math.round(e.data.width)}px`);
+                }
+                if (e.data.type === 'portfolioEntryLightboxOpen') {
+                    overlay.classList.add('is-expanded');
+                    openImageLightbox(e.data.src, e.data.alt);
+                    if (frame && frame.contentWindow) {
+                        frame.contentWindow.postMessage({ type: 'portfolioEntryLightboxOpened' }, POST_ORIGIN);
+                    }
+                }
+                if (e.data.type === 'portfolioEntryLightboxClose') {
+                    overlay.classList.remove('is-expanded');
+                    closeImageLightbox();
+                }
+                if (e.data.type === 'portfolioEntryLightboxLocalOpen') {
+                    entryLightboxOpen = true;
+                    overlay.classList.add('is-expanded');
+                }
+                if (e.data.type === 'portfolioEntryLightboxLocalClose') {
+                    entryLightboxOpen = false;
+                    overlay.classList.remove('is-expanded');
                 }
             });
         })();
