@@ -691,7 +691,7 @@
         .portfolio-entry-overlay__panel {
             position: relative;
             z-index: 1;
-            width: min(92vw, var(--entry-overlay-width));
+            width: min(92vw, max(var(--entry-overlay-width), 280px));
             height: 100vh;
             border-radius: 0;
             overflow: hidden;
@@ -700,7 +700,7 @@
         }
 
         .portfolio-entry-overlay.is-expanded .portfolio-entry-overlay__panel {
-            width: min(98vw, var(--entry-overlay-width-expanded));
+            width: min(98vw, max(var(--entry-overlay-width-expanded), 280px));
             height: 100vh;
         }
 
@@ -1813,7 +1813,9 @@
                     closeEntry();
                 }
                 if (e.data.type === 'portfolioEntryResize' && Number.isFinite(e.data.width)) {
-                    overlay.style.setProperty('--entry-overlay-width', `${Math.round(e.data.width)}px`);
+                    const nextWidth = Math.round(e.data.width);
+                    if (nextWidth < 220) return;
+                    overlay.style.setProperty('--entry-overlay-width', `${nextWidth}px`);
                 }
                 if (e.data.type === 'portfolioEntryLightboxOpen') {
                     overlay.classList.add('is-expanded');
