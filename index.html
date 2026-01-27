@@ -691,7 +691,7 @@
         .portfolio-entry-overlay__panel {
             position: relative;
             z-index: 1;
-            width: min(92vw, max(var(--entry-overlay-width), 280px));
+            width: min(92vw, max(var(--entry-overlay-width), var(--entry-overlay-min-width, 280px)));
             height: 100vh;
             border-radius: 0;
             overflow: hidden;
@@ -700,7 +700,7 @@
         }
 
         .portfolio-entry-overlay.is-expanded .portfolio-entry-overlay__panel {
-            width: min(98vw, max(var(--entry-overlay-width-expanded), 280px));
+            width: min(98vw, max(var(--entry-overlay-width-expanded), var(--entry-overlay-min-width, 280px)));
             height: 100vh;
         }
 
@@ -1605,6 +1605,7 @@
             const lightboxMedia = lightbox ? lightbox.querySelector('.portfolio-image-lightbox__media') : null;
             const isFileOrigin = window.location.origin === 'null';
             let entryLightboxOpen = false;
+            let entryMinWidth = 0;
 
             if (!overlay || !frame) return;
 
@@ -1614,8 +1615,18 @@
                 overlay.classList.add('is-open');
                 overlay.classList.remove('is-expanded');
                 overlay.style.removeProperty('--entry-overlay-width');
+                overlay.style.removeProperty('--entry-overlay-min-width');
                 overlay.setAttribute('aria-hidden', 'false');
                 document.body.classList.add('modal-open');
+                window.requestAnimationFrame(() => {
+                    const panel = overlay.querySelector('.portfolio-entry-overlay__panel');
+                    if (!panel) return;
+                    const panelWidth = Math.round(panel.getBoundingClientRect().width);
+                    if (panelWidth > 0) {
+                        entryMinWidth = panelWidth;
+                        overlay.style.setProperty('--entry-overlay-min-width', `${panelWidth}px`);
+                    }
+                });
             }
 
             function closeEntry() {
@@ -1623,6 +1634,8 @@
                 overlay.setAttribute('aria-hidden', 'true');
                 overlay.classList.remove('is-expanded');
                 overlay.style.removeProperty('--entry-overlay-width');
+                overlay.style.removeProperty('--entry-overlay-min-width');
+                entryMinWidth = 0;
                 frame.src = '';
                 document.body.classList.remove('modal-open');
             }
@@ -1814,7 +1827,7 @@
                 }
                 if (e.data.type === 'portfolioEntryResize' && Number.isFinite(e.data.width)) {
                     const nextWidth = Math.round(e.data.width);
-                    if (nextWidth < 220) return;
+                    if (entryMinWidth && nextWidth < entryMinWidth) return;
                     overlay.style.setProperty('--entry-overlay-width', `${nextWidth}px`);
                 }
                 if (e.data.type === 'portfolioEntryLightboxOpen') {
