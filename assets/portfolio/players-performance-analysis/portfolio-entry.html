@@ -45,8 +45,8 @@
             --carousel-min: 140px;
             --hero-title-max: 2.7rem;
             --hero-title-min: 1.8rem;
-            --hero-subtitle-max: 1.1rem;
-            --hero-subtitle-min: 0.95rem;
+            --hero-subtitle-max: 1.2rem;
+            --hero-subtitle-min: 1.05rem;
             --hero-pad-y-max: 1.1rem;
             --hero-pad-y-min: 0.6rem;
             --hero-pad-x-max: 1.2rem;
@@ -320,7 +320,7 @@
         .subtitle {
             font-size: var(--hero-subtitle-size);
             color: var(--text-secondary);
-            font-weight: 300;
+            font-weight: 350;
             letter-spacing: -0.01em;
         }
 
@@ -485,16 +485,25 @@
         .project-section p {
             margin-bottom: 0.6rem;
             line-height: 1.8;
-            font-weight: 200;
+            font-weight: 300;
+            color: var(--text-primary);
         }
 
         .project-section ul {
             margin-left: 1.1rem;
-            color: var(--text-secondary);
+            color: var(--text-primary);
+            font-weight: 300;
+            line-height: 1.8;
         }
 
         .project-section li {
             margin-bottom: 0.4rem;
+            font-weight: 300;
+        }
+
+        .project-section strong,
+        .project-section b {
+            font-weight: 600;
         }
 
         .lightbox {
@@ -625,23 +634,23 @@
                 <div class="hero-layout">
                     <div class="hero-title">
                         <a class="back-link" href="../../../index.html#portfolio" target="_top">Back to portfolio</a>
-                        <h1> Maintenance Recommender System</h1>
-                        <p class="subtitle">Industrial troubleshooting.</p>
+                        <h1>Football Data Analytics</h1>
+                        <p class="subtitle">Data-driven decision support system: football players scouting and performance evaluation.</p>
                     </div>
                     <div class="hero-carousel">
                         <h2>Gallery</h2>
                         <div class="carousel" data-carousel data-carousel-group="hero" data-interval="5000">
                             <div class="carousel-track">
                                 <div class="carousel-slide">
-                                    <img src="players-performance-analysis_0.png" alt="Maintenance recommender overview" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <img src="players-performance-analysis_0.png" alt="Players performance overview" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                                     <div class="carousel-placeholder" style="display:none;">System View</div>
                                 </div>
                                 <div class="carousel-slide">
-                                    <img src="players-performance-analysis_1.png" alt="Failure clustering dashboard" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <img src="players-performance-analysis_1.png" alt="Players performance dashboard" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                                     <div class="carousel-placeholder" style="display:none;">Dashboard</div>
                                 </div>
                                 <div class="carousel-slide">
-                                    <img src="players-performance-analysis_2.png" alt="Troubleshooting runbook" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <img src="players-performance-analysis_2.png" alt="Players performance runbook" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                                     <div class="carousel-placeholder" style="display:none;">Runbook</div>
                                 </div>
                             </div>
@@ -655,38 +664,90 @@
             <main class="project-content">
                 <section class="project-section">
                     <h2>Request</h2>
-                    <p>Design a production-ready system that surfaces the most likely maintenance actions for bottling line failures, using past service notes and sensor logs.O'Neil attended UC Berkeley as an undergraduate,[1] received a Ph.D. in mathematics from Harvard University in 1999,[2][3] and afterward held positions in the mathematics departments of MIT and Barnard College.[4] She left academia in 2007, and worked for four years in the finance industry.[5] She worked as an analyst at D. E. Shaw & Co.[6] After becoming disenchanted with the world of finance, O'Neil became involved with the Occupy Wall Street movement,[7][1] participating in its Alternative Banking Group.[8]
-
-O'Neil operates the blog mathbabe.org and is a contributor to Bloomberg View.[9][10][11]
-
-Her first book, Doing Data Science, was written with Rachel Schutt and published in 2013.[10] In 2016, her second book, Weapons of Math Destruction was published, long-listed for the National Book Award for Nonfiction[12][13] and became a New York Times best-seller.[4] A third book, The Shame Machine: Who Profits in the New Age of Humiliation, was published March 2022.
-
-She is the founder of O'Neil Risk Consulting & Algorithmic Auditing (ORCAA), an algorithmic auditing company.[3][14]</p>
+                    <p>
+                    Build an automated system that converts <strong>raw football match events data</strong> into
+                    <strong>scouting-ready performance insights</strong> typically computed manually. The goal was to enable
+                    player discovery and comparison by producing consistent KPIs and inferred qualitative indicators,
+                    delivered through an interactive dashboard.
+                    </p>
                 </section>
 
                 <section class="project-section">
                     <h2>My Role</h2>
-                    <p>Owned the ML pipeline end-to-end: data preparation, embedding strategy, retrieval evaluation, and packaging the workflow for repeatable runs.</p>
+                    <p>
+                    I was the <strong>end-to-end owner</strong> and <strong>technical lead</strong>, from requirements and architecture to a working
+                    prototype. I led the weekly feedback loop with scouts, translated expert criteria into measurable data/ML requirements,
+                    and coordinated delivery across the team.
+                    </p>
+                    <p>
+                    I designed and implemented the core pipeline: data preprocessing, enrichment and normalization;
+                    integration with the player performance scoring model (batch inference + periodic retraining);
+                    financial value estimation; and position classification. I also ensured outputs were accessible to
+                    end users via a live, interactive multi-page dashboard (with an embedded chatbot) for filtering, comparison, and short-listing.
+                    </p>
                 </section>
 
                 <section class="project-section">
                     <h2>Features</h2>
                     <ul>
-                        <li>Vector search over maintenance knowledge with explainable similarity signals.</li>
-                        <li>Interactive runbooks that highlight the top recommended actions.</li>
-                        <li>Offline evaluation harness and reproducible model snapshots.</li>
+                    <li>
+                        <strong>Automated scouting indicators from match events:</strong> transforms raw event streams into
+                        advanced KPIs and expert-defined qualitative signals (e.g., behaviors/patterns inferred from sequences
+                        of actions).
+                    </li>
+                    <li>
+                        <strong>Player comparison at scale:</strong> normalization and modeling enable robust comparisons across
+                        players, matches, and contexts, supporting fair ranking and short-listing.
+                    </li>
+                    <li>
+                        <strong>End-to-end scoring pipeline:</strong> batch inference produces periodic player performance scores,
+                        with scheduled retraining to keep models aligned with new matches and evolving expert criteria.
+                    </li>
+                    <li>
+                        <strong>Player valuation + role intelligence:</strong> financial value estimation and on-field position
+                        classification to support recruitment decisions beyond raw performance.
+                    </li>
+                    <li>
+                        <strong>Interactive, production-ready dashboard:</strong> multi-page drilldowns, filters, and reporting
+                        views, plus an integrated AI chatbot to guide exploration and answer user questions in-context.
+                    </li>
+                    <li>
+                        <strong>Scalable by design:</strong> modular pipeline and metrics definitions allow new competitions,
+                        seasons, and indicators to be added with minimal refactoring.
+                    </li>
                     </ul>
                 </section>
 
                 <section class="project-section">
                     <h2>Methodology</h2>
                     <ul>
-                        <li>Cleaned and structured maintenance logs into a queryable knowledge base.</li>
-                        <li>Benchmarked embeddings and clustering against expert feedback loops.</li>
-                        <li>Shipped the system as a containerized pipeline with monitoring hooks.</li>
+                    <li>
+                        <strong>User-needs to system requirements:</strong> structured interviews and weekly working sessions
+                        with scouts/analysts; converted their evaluation framework into measurable definitions, thresholds,
+                        and acceptance criteria.
+                    </li>
+                    <li>
+                        <strong>Iterative delivery with tight feedback loops:</strong> fast prototyping, weekly demos, and clear
+                        action items; continuously validated indicators against expert judgment and adjusted feature logic.
+                    </li>
+                    <li>
+                        <strong>Data ingestion and modeling layer:</strong> integrated provider APIs into an ETL workspace for
+                        cleaning, standardization, and entity resolution; implemented custom feature engineering aligned to
+                        expert scouting criteria.
+                    </li>
+                    <li>
+                        <strong>ML integration and lifecycle:</strong> built the batch inference workflow for scoring, defined
+                        retraining cadence and data windows, versioned datasets/features, and monitored stability of key
+                        indicators over time.
+                    </li>
+                    <li>
+                        <strong>End-user delivery:</strong> surfaced outputs through a multi-level interactive dashboard with
+                        consistent metric definitions, drilldowns, and an AI assistant to reduce manual analysis time.
+                    </li>
                     </ul>
                 </section>
             </main>
+
         </div>
     </div>
 
