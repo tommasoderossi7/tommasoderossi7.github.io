@@ -642,16 +642,16 @@
                         <div class="carousel" data-carousel data-carousel-group="hero" data-interval="5000">
                             <div class="carousel-track">
                                 <div class="carousel-slide">
+                                    <img src="./USPs-discovery_2.png" alt="Usps Discovery 3" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <div class="carousel-placeholder" style="display:none;">Image 3</div>
+                                </div>
+                                <div class="carousel-slide">
                                     <img src="./USPs-discovery_0.png" alt="Usps Discovery 1" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                                     <div class="carousel-placeholder" style="display:none;">Image 1</div>
                                 </div>
                                 <div class="carousel-slide">
                                     <img src="./USPs-discovery_1.png" alt="Usps Discovery 2" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                                     <div class="carousel-placeholder" style="display:none;">Image 2</div>
-                                </div>
-                                <div class="carousel-slide">
-                                    <img src="./USPs-discovery_2.png" alt="Usps Discovery 3" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                                    <div class="carousel-placeholder" style="display:none;">Image 3</div>
                                 </div>
                             </div>
                             <button class="carousel-control carousel-control--prev" type="button" aria-label="Previous image">Prev</button>
@@ -664,35 +664,76 @@
             <main class="project-content">
                 <section class="project-section">
                     <h2>Request</h2>
-                    <p>Design a production-ready system that surfaces the most likely maintenance actions for bottling line failures, using past service notes and sensor logs.O'Neil attended UC Berkeley as an undergraduate,[1] received a Ph.D. in mathematics from Harvard University in 1999,[2][3] and afterward held positions in the mathematics departments of MIT and Barnard College.[4] She left academia in 2007, and worked for four years in the finance industry.[5] She worked as an analyst at D. E. Shaw & Co.[6] After becoming disenchanted with the world of finance, O'Neil became involved with the Occupy Wall Street movement,[7][1] participating in its Alternative Banking Group.[8]
-
-O'Neil operates the blog mathbabe.org and is a contributor to Bloomberg View.[9][10][11]
-
-Her first book, Doing Data Science, was written with Rachel Schutt and published in 2013.[10] In 2016, her second book, Weapons of Math Destruction was published, long-listed for the National Book Award for Nonfiction[12][13] and became a New York Times best-seller.[4] A third book, The Shame Machine: Who Profits in the New Age of Humiliation, was published March 2022.
-
-She is the founder of O'Neil Risk Consulting & Algorithmic Auditing (ORCAA), an algorithmic auditing company.[3][14]</p>
+                    <p>
+                    Design a data-driven strategy to identify the <strong>most effective USP</strong> for a B2B client with ~1300 potential customers,
+                    after a campaign underperformed. The goal was to understand the target audience’s <strong>real interests and messaging triggers</strong>
+                    by reconstructing their social “bubble” and ranking which value propositions would resonate most—so the next campaign could be
+                    optimized with evidence rather than intuition.
+                    </p>
                 </section>
 
                 <section class="project-section">
                     <h2>My Role</h2>
-                    <p>Owned the ML pipeline end-to-end: data preparation, embedding strategy, retrieval evaluation, and packaging the workflow for repeatable runs.</p>
+                    <p>
+                    I managed the <strong>client relationship</strong> and led the work end-to-end from a strategy and analytics perspective. I defined the
+                    analytical approach (how we would map customer interests to messaging), set success criteria, and guided the team’s execution to
+                    ensure outputs were directly usable for marketing decisions.
+                    </p>
+                    <p>
+                    I supervised data collection and source selection, designed the USP taxonomy and KPI logic, trained/validated the models, and delivered
+                    both an <strong>interactive ranking dashboard</strong> and a written strategic report translating findings into concrete campaign recommendations.
+                    </p>
                 </section>
 
                 <section class="project-section">
                     <h2>Features</h2>
                     <ul>
-                        <li>Vector search over maintenance knowledge with explainable similarity signals.</li>
-                        <li>Interactive runbooks that highlight the top recommended actions.</li>
-                        <li>Offline evaluation harness and reproducible model snapshots.</li>
+                    <li>
+                        <strong>Qualitative-to-quantitative marketing intelligence:</strong> converted content themes and positioning signals into measurable KPIs via
+                        classification and clustering.
+                    </li>
+                    <li>
+                        <strong>Automated identity matching:</strong> scripted the linkage between customer records and their public social media profiles (starting from LinkedIn),
+                        enabling scalable data collection.
+                    </li>
+                    <li>
+                        <strong>Audience focus mapping:</strong> identified and ranked what each potential customer cared about most (topics, pain points, and product angles).
+                    </li>
+                    <li>
+                        <strong>Influence and relevance ranking:</strong> surfaced key players within the target audience’s network and ranked them by their impact on the “bubble.”
+                    </li>
+                    <li>
+                        <strong>Timeline and behavior reconstruction:</strong> used platform APIs to infer meaningful changes in social presence (e.g., aesthetic/profile updates)
+                        to extract creative insights for ad design.
+                    </li>
+                    <li>
+                        <strong>USP effectiveness ranking:</strong> produced a prioritized list of value propositions, supported by model outputs and performance indicators,
+                        to guide the next campaign.
+                    </li>
                     </ul>
                 </section>
 
                 <section class="project-section">
                     <h2>Methodology</h2>
                     <ul>
-                        <li>Cleaned and structured maintenance logs into a queryable knowledge base.</li>
-                        <li>Benchmarked embeddings and clustering against expert feedback loops.</li>
-                        <li>Shipped the system as a containerized pipeline with monitoring hooks.</li>
+                    <li>
+                        <strong>Customer-to-social graph building:</strong> a custom script matched each target account to LinkedIn and then resolved additional primary social profiles.
+                    </li>
+                    <li>
+                        <strong>Bubble reconstruction via APIs:</strong> collected performance and engagement signals for each customer’s network/following to approximate their content
+                        exposure and interests over time.
+                    </li>
+                    <li>
+                        <strong>USP taxonomy and labeling strategy:</strong> mapped product sheets into a structured set of candidate USPs, grouped into consistent categories for classification.
+                    </li>
+                    <li>
+                        <strong>Model training and evaluation:</strong> trained classifiers and clustering components to associate audience segments and themes with specific USPs; validated
+                        rankings using performance metrics and sanity checks with stakeholders.
+                    </li>
+                    <li>
+                        <strong>Decision-ready delivery:</strong> aggregated results into a dashboard that ranked USPs by predicted effectiveness and highlighted customer-level preferences,
+                        plus a written report translating analytics into actionable messaging and targeting guidance.
+                    </li>
                     </ul>
                 </section>
             </main>

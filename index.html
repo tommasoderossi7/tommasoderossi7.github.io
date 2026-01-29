@@ -1118,7 +1118,7 @@
                     </a>
                     <a class="portfolio-card" href="assets/portfolio/VRspace-activity-monitoring/portfolio-entry.html">
                         <div class="portfolio-card__media">
-                            <img src="assets/portfolio/VRspace-activity-monitoring/VRspace-activity-monitoring_2.png" alt="Vrspace Activity Monitoring" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <img src="assets/portfolio/VRspace-activity-monitoring/VRspace-activity-monitoring_1.png" alt="Vrspace Activity Monitoring" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                             <div class="portfolio-card__placeholder" style="display:none;">Case Study</div>
                         </div>
                         <div class="portfolio-card__content">
@@ -1154,7 +1154,7 @@
                     </a>
                     <a class="portfolio-card" href="assets/portfolio/herd-supervision/portfolio-entry.html">
                         <div class="portfolio-card__media">
-                            <img src="assets/portfolio/herd-supervision/herd-supervision_1.png" alt="Herd Supervision" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <img src="assets/portfolio/herd-supervision/herd-supervision_0.png" alt="Herd Supervision" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                             <div class="portfolio-card__placeholder" style="display:none;">Case Study</div>
                         </div>
                         <div class="portfolio-card__content">
@@ -1172,7 +1172,7 @@
                     </a>
                     <a class="portfolio-card" href="assets/portfolio/navigation-analysis/portfolio-entry.html">
                         <div class="portfolio-card__media">
-                            <img src="assets/portfolio/navigation-analysis/navigation-analysis_3.png" alt="Navigation Analysis" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <img src="assets/portfolio/navigation-analysis/navigation-analysis_2.png" alt="Navigation Analysis" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                             <div class="portfolio-card__placeholder" style="display:none;">Case Study</div>
                         </div>
                         <div class="portfolio-card__content">
@@ -1181,7 +1181,7 @@
                     </a>
                     <a class="portfolio-card" href="assets/portfolio/niche-market-research/portfolio-entry.html">
                         <div class="portfolio-card__media">
-                            <img src="assets/portfolio/niche-market-research/niche-market-research_1.png" alt="Niche Market Research" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <img src="assets/portfolio/niche-market-research/niche-market-research_0.png" alt="Niche Market Research" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                             <div class="portfolio-card__placeholder" style="display:none;">Case Study</div>
                         </div>
                         <div class="portfolio-card__content">
@@ -1810,21 +1810,31 @@
                 overlay.classList.contains('is-open') &&
                 !(lightbox && lightbox.classList.contains('is-open'));
 
-            window.addEventListener('wheel', (e) => {
+            const scrollTargets = [
+                window,
+                overlay,
+                overlay.querySelector('.portfolio-entry-overlay__backdrop')
+            ].filter(Boolean);
+
+            const onWheel = (e) => {
                 if (!shouldForwardScroll()) return;
                 e.preventDefault();
                 forwardScroll(e.deltaY);
-            }, { passive: false, capture: true });
+            };
+
+            scrollTargets.forEach((target) => {
+                target.addEventListener('wheel', onWheel, { passive: false, capture: true });
+            });
 
             let touchStartY = null;
-            window.addEventListener('touchstart', (e) => {
+            const onTouchStart = (e) => {
                 if (!shouldForwardScroll()) return;
                 if (e.touches && e.touches.length === 1) {
                     touchStartY = e.touches[0].clientY;
                 }
-            }, { passive: true, capture: true });
+            };
 
-            window.addEventListener('touchmove', (e) => {
+            const onTouchMove = (e) => {
                 if (!shouldForwardScroll()) return;
                 if (!e.touches || e.touches.length !== 1 || touchStartY === null) return;
                 const currentY = e.touches[0].clientY;
@@ -1832,11 +1842,17 @@
                 touchStartY = currentY;
                 e.preventDefault();
                 forwardScroll(deltaY);
-            }, { passive: false, capture: true });
+            };
 
-            window.addEventListener('touchend', () => {
+            const onTouchEnd = () => {
                 touchStartY = null;
-            }, { passive: true, capture: true });
+            };
+
+            scrollTargets.forEach((target) => {
+                target.addEventListener('touchstart', onTouchStart, { passive: true, capture: true });
+                target.addEventListener('touchmove', onTouchMove, { passive: false, capture: true });
+                target.addEventListener('touchend', onTouchEnd, { passive: true, capture: true });
+            });
 
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' && lightbox && lightbox.classList.contains('is-open')) {

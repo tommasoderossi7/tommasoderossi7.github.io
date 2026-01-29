@@ -656,38 +656,82 @@
             <main class="project-content">
                 <section class="project-section">
                     <h2>Request</h2>
-                    <p>Design a production-ready system that surfaces the most likely maintenance actions for bottling line failures, using past service notes and sensor logs.O'Neil attended UC Berkeley as an undergraduate,[1] received a Ph.D. in mathematics from Harvard University in 1999,[2][3] and afterward held positions in the mathematics departments of MIT and Barnard College.[4] She left academia in 2007, and worked for four years in the finance industry.[5] She worked as an analyst at D. E. Shaw & Co.[6] After becoming disenchanted with the world of finance, O'Neil became involved with the Occupy Wall Street movement,[7][1] participating in its Alternative Banking Group.[8]
-
-O'Neil operates the blog mathbabe.org and is a contributor to Bloomberg View.[9][10][11]
-
-Her first book, Doing Data Science, was written with Rachel Schutt and published in 2013.[10] In 2016, her second book, Weapons of Math Destruction was published, long-listed for the National Book Award for Nonfiction[12][13] and became a New York Times best-seller.[4] A third book, The Shame Machine: Who Profits in the New Age of Humiliation, was published March 2022.
-
-She is the founder of O'Neil Risk Consulting & Algorithmic Auditing (ORCAA), an algorithmic auditing company.[3][14]</p>
+                    <p>
+                    Develop a method to <strong>massively analyze a national real-estate portfolio</strong> and produce a
+                    <strong>property value estimation</strong> in the context of the (then) upcoming <strong>Winter Olympics</strong>.
+                    The objective was to combine heterogeneous public and proprietary sources to rank and classify assets,
+                    enabling fast, evidence-based investment and planning decisions.
+                    </p>
                 </section>
 
                 <section class="project-section">
                     <h2>My Role</h2>
-                    <p>Owned the ML pipeline end-to-end: data preparation, embedding strategy, retrieval evaluation, and packaging the workflow for repeatable runs.</p>
+                    <p>
+                    I led the project from end to end on the analytics side: I managed the <strong>client relationship</strong>,
+                    defined the <strong>analytical framework</strong>, and owned the translation of business goals into a measurable
+                    KPI system.
+                    </p>
+                    <p>
+                    I selected and validated the data sources, performed the <strong>data modeling and aggregations</strong> (including
+                    integrating GeoJSON land-registry layers with ISTAT tables), designed the <strong>weight-based ranking algorithm</strong>
+                    and KPI logic, and delivered the final outputs through an <strong>interactive dashboard</strong> tailored to portfolio exploration
+                    and property-level drilldowns.
+                    </p>
                 </section>
 
                 <section class="project-section">
                     <h2>Features</h2>
                     <ul>
-                        <li>Vector search over maintenance knowledge with explainable similarity signals.</li>
-                        <li>Interactive runbooks that highlight the top recommended actions.</li>
-                        <li>Offline evaluation harness and reproducible model snapshots.</li>
+                    <li>
+                        <strong>Multi-source data integration:</strong> connected independent, complex datasets (land registry + ISTAT) into a single
+                        analytical model usable at portfolio scale.
+                    </li>
+                    <li>
+                        <strong>Weighted scoring and classification:</strong> converted raw indicators into a transparent ranking algorithm by selecting
+                        relevant factors, assigning weights, and producing comparable property scores.
+                    </li>
+                    <li>
+                        <strong>Tabular + geospatial analytics:</strong> crossed conventional tables with geospatial layers (GeoJSON) to enrich each asset
+                        with location-driven attributes and context.
+                    </li>
+                    <li>
+                        <strong>KPI compression of statistical data:</strong> reduced a large ISTAT feature space into a small set of decision-ready metrics,
+                        preserving signal while removing redundancy and noise.
+                    </li>
+                    <li>
+                        <strong>Interactive dashboard exploration:</strong> portfolio-level monitoring with drilldowns to asset detail pages for inspection,
+                        filtering, and scenario comparison.
+                    </li>
                     </ul>
                 </section>
 
                 <section class="project-section">
                     <h2>Methodology</h2>
                     <ul>
-                        <li>Cleaned and structured maintenance logs into a queryable knowledge base.</li>
-                        <li>Benchmarked embeddings and clustering against expert feedback loops.</li>
-                        <li>Shipped the system as a containerized pipeline with monitoring hooks.</li>
+                    <li>
+                        <strong>ETL workspace modeling:</strong> loaded static land-registry GeoJSONs and ISTAT tables into an ETL environment; cleaned,
+                        standardized keys, and built a unified data model for aggregation and analysis.
+                    </li>
+                    <li>
+                        <strong>Geospatial enrichment pipeline:</strong> engineered joins between properties and territorial statistics (e.g., municipality/area mappings),
+                        handling geometry constraints and edge cases typical of cadastral datasets.
+                    </li>
+                    <li>
+                        <strong>Metric design from ISTAT to KPIs:</strong> mapped the full ISTAT information space into a limited KPI set by defining what each metric
+                        should represent, selecting proxies, and validating that KPIs were interpretable and actionable.
+                    </li>
+                    <li>
+                        <strong>Scoring algorithm construction:</strong> implemented a factor-weight model to compute rankings and classes; tested sensitivity of weights,
+                        ensured stability across regions, and documented the logic for stakeholder review.
+                    </li>
+                    <li>
+                        <strong>Visualization and delivery:</strong> published polished datasets and scores into an interactive dashboard with filters, ranking views,
+                        and property drilldowns to support decision-making.
+                    </li>
                     </ul>
                 </section>
             </main>
+
         </div>
     </div>
 
