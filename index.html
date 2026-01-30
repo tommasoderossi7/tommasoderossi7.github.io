@@ -704,6 +704,61 @@
             height: 100vh;
         }
 
+        .portfolio-entry-overlay.is-loading .portfolio-entry-overlay__panel {
+            background: rgba(255, 255, 255, 0.82);
+        }
+
+        .portfolio-entry-overlay.is-loading .portfolio-entry-overlay__panel::after {
+            content: "Loading project…";
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            font: 600 0.95rem/1.2 "Raleway", sans-serif;
+            color: #111;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            pointer-events: none;
+        }
+
+        .portfolio-entry-overlay.is-loading .portfolio-entry-overlay__panel::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(0, 0, 0, 0.05), transparent 45%),
+                radial-gradient(circle at 80% 30%, rgba(0, 0, 0, 0.04), transparent 50%),
+                linear-gradient(120deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.06));
+            background-size: 140% 140%;
+            animation: entry-loading 1.8s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .portfolio-entry-overlay.is-loading .portfolio-entry-overlay__panel {
+                background: rgba(12, 12, 12, 0.86);
+            }
+
+            .portfolio-entry-overlay.is-loading .portfolio-entry-overlay__panel::after {
+                color: #f3f4f6;
+            }
+
+            .portfolio-entry-overlay.is-loading .portfolio-entry-overlay__panel::before {
+                background:
+                    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.07), transparent 45%),
+                    radial-gradient(circle at 80% 30%, rgba(255, 255, 255, 0.05), transparent 50%),
+                    linear-gradient(120deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.08));
+            }
+        }
+
+        @keyframes entry-loading {
+            0% {
+                background-position: 0% 0%;
+            }
+            100% {
+                background-position: 100% 100%;
+            }
+        }
 
         .portfolio-entry-overlay__frame {
             width: 100%;
@@ -711,6 +766,12 @@
             border: 0;
             background: transparent;
             display: block;
+            opacity: 1;
+            transition: opacity 300ms ease;
+        }
+
+        .portfolio-entry-overlay.is-loading .portfolio-entry-overlay__frame {
+            opacity: 0;
         }
 
         .portfolio-image-lightbox {
@@ -780,6 +841,28 @@
 
         .portfolio-image-lightbox__back:hover {
             text-decoration: underline;
+        }
+
+        .portfolio-image-lightbox__nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(12, 12, 12, 0.75);
+            color: #f9fafb;
+            padding: 0.35rem 0.6rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .portfolio-image-lightbox__nav--prev {
+            left: 0.9rem;
+        }
+
+        .portfolio-image-lightbox__nav--next {
+            right: 0.9rem;
         }
 
         .portfolio-image-lightbox__media {
@@ -1107,58 +1190,13 @@
                     </button>
                 </div>
                 <div class="portfolio-list">
-                    <a class="portfolio-card" href="assets/portfolio/USPs-discovery/portfolio-entry.html">
+                    <a class="portfolio-card" href="assets/portfolio/football-analytics/portfolio-entry.html">
                         <div class="portfolio-card__media">
-                            <img src="assets/portfolio/USPs-discovery/USPs-discovery_2.png" alt="Usps Discovery" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <img src="assets/portfolio/football-analytics/football-analytics_0.png" alt="Football Analytics" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                             <div class="portfolio-card__placeholder" style="display:none;">Case Study</div>
                         </div>
                         <div class="portfolio-card__content">
-                            <div class="portfolio-card__title">Usps Discovery</div>
-                        </div>
-                    </a>
-                    <a class="portfolio-card" href="assets/portfolio/VRspace-activity-monitoring/portfolio-entry.html">
-                        <div class="portfolio-card__media">
-                            <img src="assets/portfolio/VRspace-activity-monitoring/VRspace-activity-monitoring_1.png" alt="Vrspace Activity Monitoring" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <div class="portfolio-card__placeholder" style="display:none;">Case Study</div>
-                        </div>
-                        <div class="portfolio-card__content">
-                            <div class="portfolio-card__title">Vrspace Activity Monitoring</div>
-                        </div>
-                    </a>
-                    <a class="portfolio-card" href="assets/portfolio/audience-analysis/portfolio-entry.html">
-                        <div class="portfolio-card__media">
-                            <img src="assets/portfolio/audience-analysis/audience-analysis_0.png" alt="Audience Analysis" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <div class="portfolio-card__placeholder" style="display:none;">Case Study</div>
-                        </div>
-                        <div class="portfolio-card__content">
-                            <div class="portfolio-card__title">Audience Analysis</div>
-                        </div>
-                    </a>
-                    <a class="portfolio-card" href="assets/portfolio/custom-analysis/portfolio-entry.html">
-                        <div class="portfolio-card__media">
-                            <img src="assets/portfolio/custom-analysis/custom-analysis_0.png" alt="Custom Analysis" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <div class="portfolio-card__placeholder" style="display:none;">Case Study</div>
-                        </div>
-                        <div class="portfolio-card__content">
-                            <div class="portfolio-card__title">Custom Analysis</div>
-                        </div>
-                    </a>
-                    <a class="portfolio-card" href="assets/portfolio/ecommerce-monitoring/portfolio-entry.html">
-                        <div class="portfolio-card__media">
-                            <img src="assets/portfolio/ecommerce-monitoring/ecommerce-monitoring_0.png" alt="Ecommerce Monitoring" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <div class="portfolio-card__placeholder" style="display:none;">Case Study</div>
-                        </div>
-                        <div class="portfolio-card__content">
-                            <div class="portfolio-card__title">Ecommerce Monitoring</div>
-                        </div>
-                    </a>
-                    <a class="portfolio-card" href="assets/portfolio/herd-supervision/portfolio-entry.html">
-                        <div class="portfolio-card__media">
-                            <img src="assets/portfolio/herd-supervision/herd-supervision_0.png" alt="Herd Supervision" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <div class="portfolio-card__placeholder" style="display:none;">Case Study</div>
-                        </div>
-                        <div class="portfolio-card__content">
-                            <div class="portfolio-card__title">Herd Supervision</div>
+                            <div class="portfolio-card__title">Football Analytics</div>
                         </div>
                     </a>
                     <a class="portfolio-card" href="assets/portfolio/media-intelligence/portfolio-entry.html">
@@ -1170,13 +1208,22 @@
                             <div class="portfolio-card__title">Media Intelligence</div>
                         </div>
                     </a>
-                    <a class="portfolio-card" href="assets/portfolio/navigation-analysis/portfolio-entry.html">
+                    <a class="portfolio-card" href="assets/portfolio/USPs-discovery/portfolio-entry.html">
                         <div class="portfolio-card__media">
-                            <img src="assets/portfolio/navigation-analysis/navigation-analysis_2.png" alt="Navigation Analysis" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <img src="assets/portfolio/USPs-discovery/USPs-discovery_2.png" alt="USPs Discovery" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                             <div class="portfolio-card__placeholder" style="display:none;">Case Study</div>
                         </div>
                         <div class="portfolio-card__content">
-                            <div class="portfolio-card__title">Navigation Analysis</div>
+                            <div class="portfolio-card__title">USPs Discovery</div>
+                        </div>
+                    </a>
+                    <a class="portfolio-card" href="assets/portfolio/VRspace-activity-monitoring/portfolio-entry.html">
+                        <div class="portfolio-card__media">
+                            <img src="assets/portfolio/VRspace-activity-monitoring/VRspace-activity-monitoring_1.png" alt="VR Space Activity Monitoring" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="portfolio-card__placeholder" style="display:none;">Case Study</div>
+                        </div>
+                        <div class="portfolio-card__content">
+                            <div class="portfolio-card__title">VR Space Activity Monitoring</div>
                         </div>
                     </a>
                     <a class="portfolio-card" href="assets/portfolio/niche-market-research/portfolio-entry.html">
@@ -1188,13 +1235,49 @@
                             <div class="portfolio-card__title">Niche Market Research</div>
                         </div>
                     </a>
-                    <a class="portfolio-card" href="assets/portfolio/football-analytics/portfolio-entry.html">
+                    <a class="portfolio-card" href="assets/portfolio/herd-supervision/portfolio-entry.html">
                         <div class="portfolio-card__media">
-                            <img src="assets/portfolio/football-analytics/football-analytics_0.png" alt="Football Analytics" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <img src="assets/portfolio/herd-supervision/herd-supervision_0.png" alt="Herd Supervision" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                             <div class="portfolio-card__placeholder" style="display:none;">Case Study</div>
                         </div>
                         <div class="portfolio-card__content">
-                            <div class="portfolio-card__title">Football Analytics</div>
+                            <div class="portfolio-card__title">Herd Supervision</div>
+                        </div>
+                    </a>
+                    <a class="portfolio-card" href="assets/portfolio/audience-analysis/portfolio-entry.html">
+                        <div class="portfolio-card__media">
+                            <img src="assets/portfolio/audience-analysis/audience-analysis_0.png" alt="Audience Analysis" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="portfolio-card__placeholder" style="display:none;">Case Study</div>
+                        </div>
+                        <div class="portfolio-card__content">
+                            <div class="portfolio-card__title">Audience Analysis</div>
+                        </div>
+                    </a>
+                    <a class="portfolio-card" href="assets/portfolio/navigation-analysis/portfolio-entry.html">
+                        <div class="portfolio-card__media">
+                            <img src="assets/portfolio/navigation-analysis/navigation-analysis_2.png" alt="Maritime Navigation Analysis" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="portfolio-card__placeholder" style="display:none;">Case Study</div>
+                        </div>
+                        <div class="portfolio-card__content">
+                            <div class="portfolio-card__title">Maritime Navigation Analysis</div>
+                        </div>
+                    </a>
+                    <a class="portfolio-card" href="assets/portfolio/custom-analysis/portfolio-entry.html">
+                        <div class="portfolio-card__media">
+                            <img src="assets/portfolio/custom-analysis/custom-analysis_0.png" alt="Real Estate Analysis" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="portfolio-card__placeholder" style="display:none;">Case Study</div>
+                        </div>
+                        <div class="portfolio-card__content">
+                            <div class="portfolio-card__title">Real Estate Analysis</div>
+                        </div>
+                    </a>
+                    <a class="portfolio-card" href="assets/portfolio/ecommerce-monitoring/portfolio-entry.html">
+                        <div class="portfolio-card__media">
+                            <img src="assets/portfolio/ecommerce-monitoring/ecommerce-monitoring_0.png" alt="Ecommerce Monitoring" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="portfolio-card__placeholder" style="display:none;">Case Study</div>
+                        </div>
+                        <div class="portfolio-card__content">
+                            <div class="portfolio-card__title">Ecommerce Monitoring</div>
                         </div>
                     </a>
                 </div>
@@ -1431,6 +1514,8 @@
                         <div class="portfolio-image-lightbox__overlay" data-portfolio-lightbox-close></div>
                         <div class="portfolio-image-lightbox__dialog" role="dialog" aria-modal="true" aria-label="Project image">
                             <button class="portfolio-image-lightbox__back" type="button" data-portfolio-lightbox-close>Back to project</button>
+                            <button class="portfolio-image-lightbox__nav portfolio-image-lightbox__nav--prev" type="button" aria-label="Previous image">Prev</button>
+                            <button class="portfolio-image-lightbox__nav portfolio-image-lightbox__nav--next" type="button" aria-label="Next image">Next</button>
                             <div class="portfolio-image-lightbox__media">
                                 <img id="portfolio-image-lightbox-img" class="portfolio-image-lightbox__image" src="" alt="">
                             </div>
@@ -1682,15 +1767,20 @@
             const lightbox = document.getElementById('portfolio-image-lightbox');
             const lightboxImage = document.getElementById('portfolio-image-lightbox-img');
             const lightboxMedia = lightbox ? lightbox.querySelector('.portfolio-image-lightbox__media') : null;
+            const lightboxPrev = lightbox ? lightbox.querySelector('.portfolio-image-lightbox__nav--prev') : null;
+            const lightboxNext = lightbox ? lightbox.querySelector('.portfolio-image-lightbox__nav--next') : null;
             const isFileOrigin = window.location.protocol === 'file:' || window.location.origin === 'null';
             const POST_ORIGIN = isFileOrigin ? '*' : window.location.origin;
             let entryLightboxOpen = false;
             let entryMinWidth = 0;
+            let entryLightboxImages = [];
+            let entryLightboxIndex = -1;
 
             if (!overlay || !frame) return;
 
             function openEntry(url) {
                 if (!url) return;
+                overlay.classList.add('is-loading');
                 frame.src = url;
                 overlay.classList.add('is-open');
                 overlay.classList.remove('is-expanded');
@@ -1717,6 +1807,7 @@
                 overlay.style.removeProperty('--entry-overlay-min-width');
                 entryMinWidth = 0;
                 frame.src = '';
+                overlay.classList.remove('is-loading');
                 document.body.classList.remove('modal-open');
             }
 
@@ -1739,6 +1830,21 @@
                 }
             }
 
+            function setParentLightboxIndex(nextIndex) {
+                if (!entryLightboxImages.length) return;
+                const count = entryLightboxImages.length;
+                const normalized = ((nextIndex % count) + count) % count;
+                entryLightboxIndex = normalized;
+                const item = entryLightboxImages[normalized];
+                openImageLightbox(item.src, item.alt);
+                if (frame && frame.contentWindow) {
+                    frame.contentWindow.postMessage(
+                        { type: 'portfolioEntryLightboxNavigate', index: normalized },
+                        POST_ORIGIN
+                    );
+                }
+            }
+
             function closeImageLightbox() {
                 if (!lightbox || !lightboxImage) return;
                 lightbox.classList.remove('is-open');
@@ -1750,6 +1856,8 @@
                 lightboxImage.style.maxHeight = '';
                 lightboxImage.src = '';
                 entryLightboxOpen = false;
+                entryLightboxImages = [];
+                entryLightboxIndex = -1;
                 overlay.classList.remove('is-expanded');
                 if (lightboxMedia) {
                     lightboxMedia.scrollTop = 0;
@@ -1788,6 +1896,10 @@
                     e.preventDefault();
                     openEntry(card.getAttribute('href'));
                 });
+            });
+
+            frame.addEventListener('load', () => {
+                overlay.classList.remove('is-loading');
             });
 
             overlay.querySelectorAll('[data-entry-close]').forEach((btn) => {
@@ -1862,9 +1974,26 @@
                 if (e.key === 'Escape' && overlay.classList.contains('is-open')) {
                     closeEntry();
                 }
+                if (lightbox && lightbox.classList.contains('is-open') && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
+                    if (e.key === 'ArrowLeft') setParentLightboxIndex(entryLightboxIndex - 1);
+                    if (e.key === 'ArrowRight') setParentLightboxIndex(entryLightboxIndex + 1);
+                }
             });
 
             if (lightbox) {
+                if (lightboxPrev) {
+                    lightboxPrev.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        setParentLightboxIndex(entryLightboxIndex - 1);
+                    });
+                }
+                if (lightboxNext) {
+                    lightboxNext.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        setParentLightboxIndex(entryLightboxIndex + 1);
+                    });
+                }
+
                 lightbox.querySelectorAll('[data-portfolio-lightbox-close]').forEach((btn) => {
                     btn.addEventListener('click', closeImageLightbox);
                 });
@@ -1931,6 +2060,12 @@
                     openImageLightbox(e.data.src, e.data.alt);
                     if (frame && frame.contentWindow) {
                         frame.contentWindow.postMessage({ type: 'portfolioEntryLightboxOpened' }, POST_ORIGIN);
+                    }
+                }
+                if (e.data.type === 'portfolioEntryLightboxImages') {
+                    if (Array.isArray(e.data.images)) {
+                        entryLightboxImages = e.data.images.filter((item) => item && item.src);
+                        entryLightboxIndex = Number.isFinite(e.data.index) ? e.data.index : -1;
                     }
                 }
                 if (e.data.type === 'portfolioEntryLightboxClose') {
@@ -2466,6 +2601,42 @@
         const canvas = document.getElementById('particles-canvas');
         const ctx = canvas.getContext('2d');
         const config = particlesConfig;
+        const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)') ?? { matches: false, addEventListener: null };
+        const perfEnabled = new URLSearchParams(window.location.search).has('perf') || localStorage.getItem('perf') === '1';
+        const perfStats = { frames: 0, lastFpsTime: 0, fps: 0, frameMs: 0, longTasks: 0 };
+        let perfPanel = null;
+
+        if (perfEnabled) {
+            perfPanel = document.createElement('div');
+            perfPanel.id = 'perf-panel';
+            perfPanel.style.cssText = [
+                'position:fixed',
+                'bottom:12px',
+                'right:12px',
+                'z-index:9999',
+                'padding:10px 12px',
+                'border-radius:8px',
+                'background:rgba(0,0,0,0.65)',
+                'color:#fff',
+                'font:12px/1.3 system-ui, -apple-system, Segoe UI, sans-serif',
+                'letter-spacing:0.2px',
+                'pointer-events:none',
+                'white-space:pre'
+            ].join(';');
+            perfPanel.textContent = 'Perf: init';
+            document.body.appendChild(perfPanel);
+
+            if ('PerformanceObserver' in window) {
+                try {
+                    const observer = new PerformanceObserver((list) => {
+                        perfStats.longTasks += list.getEntries().length;
+                    });
+                    observer.observe({ entryTypes: ['longtask'] });
+                } catch (err) {
+                    // no-op
+                }
+            }
+        }
 
         function applyParticleThemeColors() {
             const styles = getComputedStyle(document.documentElement);
@@ -2496,11 +2667,23 @@
 
         applyParticleThemeColors();
 
+        if (prefersReducedMotion.matches) {
+            config.particles.links.enable = false;
+            config.interactivity.events.onHover.enable = false;
+            config.interactivity.events.onClick.enable = false;
+            config.fpsLimit = Math.min(config.fpsLimit || 60, 30);
+            config.particles.number.value = Math.min(config.particles.number.value || 100, 40);
+        }
+
         let width = 0;
         let height = 0;
         let dpr = 1;
         let particles = [];
         let mouse = { x: 0, y: 0, active: false };
+        let rafId = null;
+        let lastFrameTime = 0;
+        let paused = false;
+        let resizeRaf = null;
 
         function getColorValue(color) {
             if (!color) return '#ffffff';
@@ -2531,7 +2714,7 @@
         }
 
         function resizeCanvas() {
-            dpr = window.devicePixelRatio || 1;
+            dpr = Math.min(window.devicePixelRatio || 1, 2);
             width = window.innerWidth;
             height = window.innerHeight;
             canvas.width = Math.floor(width * dpr);
@@ -2563,7 +2746,14 @@
         }
 
         function initializeParticles() {
-            const count = config.particles?.number?.value ?? 100;
+            const baseCount = config.particles?.number?.value ?? 100;
+            const density = config.particles?.number?.density;
+            let count = baseCount;
+            if (density?.enable && density.width && density.height) {
+                const areaScale = (width * height) / (density.width * density.height);
+                count = Math.round(baseCount * areaScale);
+                count = Math.max(20, Math.min(baseCount, count));
+            }
             particles = Array.from({ length: count }, () => createParticle());
         }
 
@@ -2671,12 +2861,40 @@
             }
         }
 
-        function animate() {
+        function animate(now = 0) {
+            if (paused) {
+                rafId = requestAnimationFrame(animate);
+                return;
+            }
+            const fpsLimit = config.fpsLimit || 60;
+            const frameInterval = 1000 / fpsLimit;
+            if (now - lastFrameTime < frameInterval) {
+                rafId = requestAnimationFrame(animate);
+                return;
+            }
+            perfStats.frameMs = now - lastFrameTime;
+            lastFrameTime = now;
             drawBackground();
             updateParticles();
             drawLinks();
             drawGrabLines();
             drawParticles();
+            if (perfPanel) {
+                perfStats.frames += 1;
+                if (!perfStats.lastFpsTime) perfStats.lastFpsTime = now;
+                const elapsed = now - perfStats.lastFpsTime;
+                if (elapsed >= 1000) {
+                    perfStats.fps = Math.round((perfStats.frames * 1000) / elapsed);
+                    perfStats.frames = 0;
+                    perfStats.lastFpsTime = now;
+                    perfPanel.textContent = [
+                        `FPS: ${perfStats.fps}`,
+                        `Frame ms: ${perfStats.frameMs.toFixed(1)}`,
+                        `Particles: ${particles.length}`,
+                        `Long tasks: ${perfStats.longTasks}`
+                    ].join('\\n');
+                }
+            }
             requestAnimationFrame(animate);
         }
 
@@ -2712,7 +2930,20 @@
         }
 
         window.addEventListener('resize', () => {
-            resizeCanvas();
+            if (resizeRaf) return;
+            resizeRaf = window.requestAnimationFrame(() => {
+                resizeRaf = null;
+                resizeCanvas();
+                initializeParticles();
+            });
+        });
+
+        document.addEventListener('visibilitychange', () => {
+            paused = document.hidden;
+        });
+
+        prefersReducedMotion.addEventListener?.('change', (e) => {
+            paused = e.matches;
         });
 
         window.addEventListener('mousemove', handleMouseMove);

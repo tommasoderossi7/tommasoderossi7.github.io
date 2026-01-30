@@ -11,7 +11,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <style>
+        <script>
+        if (window.self !== window.top) {
+            document.documentElement.classList.add('embedded');
+        }
+    </script>
+<style>
         * {
             margin: 0;
             padding: 0;
@@ -571,6 +576,34 @@
             text-decoration: underline;
         }
 
+        .lightbox__nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            background: rgba(255, 255, 255, 0.9);
+            color: #111;
+            padding: 0.35rem 0.6rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        html[data-theme="dark"] .lightbox__nav {
+            background: rgba(17, 17, 17, 0.9);
+            color: #f9fafb;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .lightbox__nav--prev {
+            left: 0.8rem;
+        }
+
+        .lightbox__nav--next {
+            right: 0.8rem;
+        }
+
         .lightbox__media {
             max-width: calc(var(--lightbox-max-width) - 1.2rem);
             max-height: calc(var(--lightbox-max-height) - 3.2rem);
@@ -634,8 +667,8 @@
                 <div class="hero-layout">
                     <div class="hero-title">
                         <a class="back-link" href="../../../index.html#portfolio" target="_top">Back to portfolio</a>
-                        <h1>Vrspace Activity Monitoring</h1>
-                        <p class="subtitle">Industrial troubleshooting.</p>
+                        <h1>VR Space Activity Monitoring</h1>
+                        <p class="subtitle">Monitoring and analyzing activity within virtual reality environments.</p>
                     </div>
                     <div class="hero-carousel">
                         <h2>Gallery</h2>
@@ -672,35 +705,100 @@
             <main class="project-content">
                 <section class="project-section">
                     <h2>Request</h2>
-                    <p>Design a production-ready system that surfaces the most likely maintenance actions for bottling line failures, using past service notes and sensor logs.O'Neil attended UC Berkeley as an undergraduate,[1] received a Ph.D. in mathematics from Harvard University in 1999,[2][3] and afterward held positions in the mathematics departments of MIT and Barnard College.[4] She left academia in 2007, and worked for four years in the finance industry.[5] She worked as an analyst at D. E. Shaw & Co.[6] After becoming disenchanted with the world of finance, O'Neil became involved with the Occupy Wall Street movement,[7][1] participating in its Alternative Banking Group.[8]
-
-O'Neil operates the blog mathbabe.org and is a contributor to Bloomberg View.[9][10][11]
-
-Her first book, Doing Data Science, was written with Rachel Schutt and published in 2013.[10] In 2016, her second book, Weapons of Math Destruction was published, long-listed for the National Book Award for Nonfiction[12][13] and became a New York Times best-seller.[4] A third book, The Shame Machine: Who Profits in the New Age of Humiliation, was published March 2022.
-
-She is the founder of O'Neil Risk Consulting & Algorithmic Auditing (ORCAA), an algorithmic auditing company.[3][14]</p>
+                    <p>
+                    An Italian producer of <strong>AR/VR retail experiences</strong> asked our team to build an analytics system to understand how users behave inside a
+                    virtual 3D clothing store (“miniverso”), where <strong>avatar store clerks</strong> could hold <strong>multi-turn natural-language conversations</strong>
+                    and recommend products. The client needed a single, operations-friendly dashboard to answer questions like:
+                    <em>Which rooms are most visited?</em> <em>Which objects drive engagement?</em> <em>Where do users spend time?</em> <em>What conversations happen during
+                    visits?</em> and <em>How do views translate into purchases?</em>
+                    </p>
+                    <p>
+                    The tool had to support a “funnel-style” view from high-level KPIs (visitors, visits, time spent, purchases) down to deep dives by
+                    <strong>room, product, activity type, visitor, visit session</strong> and time window, all based on <strong>real interaction logs</strong> captured in
+                    the VR environment.
+                    </p>
                 </section>
 
                 <section class="project-section">
                     <h2>My Role</h2>
-                    <p>Owned the ML pipeline end-to-end: data preparation, embedding strategy, retrieval evaluation, and packaging the workflow for repeatable runs.</p>
+                    <p>
+                    I acted as <strong>end-to-end owner</strong> of the analytics layer and dashboard delivery. I translated the product/UX goals (engagement + conversion +
+                    conversational support) into a measurable KPI framework, defined the event schema needed to track VR activity (movement, object interactions, product
+                    views, purchases, dialogue turns), and designed the drilldown experience to move quickly from “overview” to “root cause”.
+                    </p>
+                    <p>
+                    I implemented the full pipeline: sessionization (visitor/visit definition), feature engineering for engagement and conversion metrics, and the
+                    <strong>interactive dashboard</strong> including spatial heatmaps, time-based trends, conversion ratios (view → buy), and conversational analytics
+                    (keywords, question volume, question/answer tables) to improve both the VR experience design and the avatar selling behavior.
+                    </p>
                 </section>
 
                 <section class="project-section">
                     <h2>Features</h2>
                     <ul>
-                        <li>Vector search over maintenance knowledge with explainable similarity signals.</li>
-                        <li>Interactive runbooks that highlight the top recommended actions.</li>
-                        <li>Offline evaluation harness and reproducible model snapshots.</li>
+                    <li>
+                        <strong>Executive KPI overview:</strong> headline metrics (e.g., total visitors, total visits, total time spent in the miniverse, total purchases) to
+                        provide a fast “business pulse” for the VR experience.
+                    </li>
+                    <li>
+                        <strong>Room-level engagement analysis:</strong> time spent per room with breakdowns by interaction/activity type, highlighting which areas act as
+                        “hotspots” and which rooms underperform.
+                    </li>
+                    <li>
+                        <strong>Activity-type analytics:</strong> distribution of time across behaviors (movement, product interactions, videos, avatars, images, 3D objects),
+                        plus average duration per activity to quantify what is truly engaging vs. “background navigation”.
+                    </li>
+                    <li>
+                        <strong>Conversion and effectiveness metrics:</strong> <em>products purchased vs. products viewed</em> by room and by product, with percentages to
+                        identify rooms/products that convert better and support merchandising decisions (placement, signage, avatar prompts).
+                    </li>
+                    <li>
+                        <strong>Spatial behavior deep dives:</strong> per-room <strong>movement heatmaps</strong> and path traces to detect attention zones, dead areas,
+                        navigation friction, and layout issues inside the 3D store.
+                    </li>
+                    <li>
+                        <strong>Temporal monitoring:</strong> trends over time for visits, activity duration, and purchase/view ratios to evaluate changes after content or
+                        dialogue/prompt updates.
+                    </li>
+                    <li>
+                        <strong>Conversation analytics:</strong> questions volume over time, <strong>word cloud</strong> of frequent terms, and a Q/A table (visitor question
+                        ↔ avatar response) to spot recurring intents, missing knowledge, and opportunities to improve scripts, prompts, and product recommendations.
+                    </li>
+                    <li>
+                        <strong>Interactive filtering and drilldowns:</strong> slicers for miniverse, visitor, visit session, room, activity type, interaction object, and
+                        time interval to move from a macro overview to a specific session in a few clicks.
+                    </li>
                     </ul>
                 </section>
 
                 <section class="project-section">
                     <h2>Methodology</h2>
                     <ul>
-                        <li>Cleaned and structured maintenance logs into a queryable knowledge base.</li>
-                        <li>Benchmarked embeddings and clustering against expert feedback loops.</li>
-                        <li>Shipped the system as a containerized pipeline with monitoring hooks.</li>
+                    <li>
+                        <strong>Event modeling for VR telemetry:</strong> defined a consistent schema for interaction logs (movement coordinates, room context, object IDs,
+                        product views, purchases, conversation turns) to enable reliable aggregation and cross-analysis.
+                    </li>
+                    <li>
+                        <strong>Data preprocessing and sessionization:</strong> cleaned and aligned event timestamps, grouped events into coherent visits, and derived
+                        durations/engagement measures (time in room, time per activity, time per object) robust to gaps and noisy telemetry.
+                    </li>
+                    <li>
+                        <strong>Engagement KPI engineering:</strong> computed room and object engagement metrics (total/average time, frequency of interactions, return visits)
+                        and built activity taxonomies to interpret VR behavior beyond raw event counts.
+                    </li>
+                    <li>
+                        <strong>Conversion analytics design:</strong> linked product-view events to purchase events to produce view-to-buy ratios at room and product level,
+                        enabling optimization of both store layout and avatar recommendation strategies.
+                    </li>
+                    <li>
+                        <strong>Conversation mining:</strong> extracted conversational signals (question counts over time, frequent terms/keywords, Q/A logs) to evaluate user
+                        needs and measure how well the avatar supports discovery and purchase decisions.
+                    </li>
+                    <li>
+                        <strong>Dashboard delivery:</strong> implemented a multi-page, drilldown-friendly interface combining KPI cards, room/product breakdowns, temporal trends,
+                        spatial heatmaps, and conversation panels—built to support both <em>experience designers</em> and <em>business stakeholders</em> in iterative VR retail
+                        optimization.
+                    </li>
                     </ul>
                 </section>
             </main>
@@ -923,11 +1021,18 @@ She is the founder of O'Neil Risk Consulting & Algorithmic Auditing (ORCAA), an 
                 scope.style.setProperty('--hero-carousel-start', `${carouselStart.toFixed(1)}px`);
             }
 
-            function updateSectionOverlap(clipAmount) {
+            function updateSectionOverlap(collapsed) {
                 if (!sections.length) return;
+                if (!collapsed) {
+                    sections.forEach((section) => {
+                        section.classList.remove('is-under-hero');
+                        section.style.setProperty('--section-clip-top', '0px');
+                    });
+                    return;
+                }
+
                 const heroRect = hero.getBoundingClientRect();
-                const visibleHeroHeight = Math.max(0, stackHeight - clipAmount);
-                const clipStart = heroRect.top + visibleHeroHeight * 0.5;
+                const clipStart = heroRect.top + rowHeight * 0.5;
 
                 sections.forEach((section) => {
                     const rect = section.getBoundingClientRect();
@@ -984,7 +1089,7 @@ She is the founder of O'Neil Risk Consulting & Algorithmic Auditing (ORCAA), an 
 
                 rowHeight = forcedRowHeight > 0 ? forcedRowHeight : rowHeightMin;
                 clipMax = Math.max(0, Math.round(stackHeight - rowHeight));
-                maxScroll = Math.max(160, Math.round(stackHeight * 0.6));
+                maxScroll = Math.max(1, Math.round(clipMax));
 
                 resetLayout(false);
                 scope.style.setProperty('--hero-height', `${stackHeight.toFixed(1)}px`);
@@ -997,7 +1102,8 @@ She is the founder of O'Neil Risk Consulting & Algorithmic Auditing (ORCAA), an 
                     return;
                 }
 
-                const progress = Math.min(1, Math.max(0, window.scrollY / maxScroll));
+                const scrollY = window.scrollY;
+                const progress = Math.min(1, Math.max(0, scrollY / maxScroll));
                 const layout = progress * progress * (3 - 2 * progress);
                 const gap = sizeMax.gap + (sizeMin.gap - sizeMax.gap) * layout;
                 const titleSize = sizeMax.title + (sizeMin.title - sizeMax.title) * layout;
@@ -1017,12 +1123,14 @@ She is the founder of O'Neil Risk Consulting & Algorithmic Auditing (ORCAA), an 
                 const titleWidthFinal = availableWidth * 0.4;
                 const carouselWidthFinal = availableWidth * 0.6;
                 const carouselStart = carouselStartMax + (carouselStartMin - carouselStartMax) * layout;
-                const clip = clipMax * progress;
+                const clip = Math.min(clipMax, scrollY);
+                const collapsed = progress >= 1;
+                const contentShift = 0;
 
                 scope.style.setProperty('--hero-scale', '1');
                 scope.style.setProperty('--hero-clip', `${clip.toFixed(1)}px`);
-                scope.style.setProperty('--hero-content-shift', `${clip.toFixed(1)}px`);
-                updateSectionOverlap(clip);
+                scope.style.setProperty('--hero-content-shift', `${contentShift.toFixed(1)}px`);
+                updateSectionOverlap(collapsed);
                 scope.style.setProperty('--hero-title-width', `${(layoutWidth + (titleWidthFinal - layoutWidth) * layout).toFixed(1)}px`);
                 scope.style.setProperty('--hero-carousel-width', `${(layoutWidth + (carouselWidthFinal - layoutWidth) * layout).toFixed(1)}px`);
                 scope.style.setProperty('--hero-carousel-start', `${carouselStart.toFixed(1)}px`);
@@ -1058,12 +1166,18 @@ She is the founder of O'Neil Risk Consulting & Algorithmic Auditing (ORCAA), an 
             const lightbox = document.getElementById('image-lightbox');
             const lightboxImage = document.getElementById('lightbox-image');
             const lightboxMedia = lightbox ? lightbox.querySelector('.lightbox__media') : null;
+            const lightboxPrev = lightbox ? lightbox.querySelector('.lightbox__nav--prev') : null;
+            const lightboxNext = lightbox ? lightbox.querySelector('.lightbox__nav--next') : null;
             const isEmbedded = window.self !== window.top;
             const isFileOrigin = window.location.protocol === 'file:' || window.location.origin === 'null';
             let embeddedLightboxOpen = false;
             let parentLightboxAck = false;
             let fallbackTimer = null;
             let localLightboxOpen = false;
+            const slideImages = Array.from(document.querySelectorAll('.carousel-slide img'))
+                .filter((img) => img && img.src)
+                .map((img) => ({ src: img.src, alt: img.alt || '' }));
+            let lightboxIndex = -1;
 
             if (!lightbox || !lightboxImage) return;
 
@@ -1186,7 +1300,34 @@ She is the founder of O'Neil Risk Consulting & Algorithmic Auditing (ORCAA), an 
                 }
             }
 
-            function openLightbox(src, alt) {
+            function setLightboxIndex(nextIndex) {
+                if (!slideImages.length) return;
+                const count = slideImages.length;
+                const normalized = ((nextIndex % count) + count) % count;
+                lightboxIndex = normalized;
+                const item = slideImages[normalized];
+                openLightbox(item.src, item.alt, normalized);
+            }
+
+            function openLightbox(src, alt, index = -1) {
+                if (Number.isFinite(index) && index >= 0) {
+                    lightboxIndex = index;
+                } else if (slideImages.length) {
+                    const idx = slideImages.findIndex((item) => item.src === src);
+                    if (idx >= 0) lightboxIndex = idx;
+                }
+
+                if (isEmbedded && slideImages.length) {
+                    const absoluteImages = slideImages.map((item) => ({
+                        src: new URL(item.src, window.location.href).href,
+                        alt: item.alt || ''
+                    }));
+                    window.top.postMessage(
+                        { type: 'portfolioEntryLightboxImages', images: absoluteImages, index: lightboxIndex },
+                        '*'
+                    );
+                }
+
                 if (isEmbedded) {
                     embeddedLightboxOpen = true;
                     parentLightboxAck = false;
@@ -1233,7 +1374,8 @@ She is the founder of O'Neil Risk Consulting & Algorithmic Auditing (ORCAA), an 
                     const image = slide.querySelector('img');
                     if (image && image.src) {
                         e.preventDefault();
-                        openLightbox(image.src, image.alt);
+                        const idx = slideImages.findIndex((item) => item.src === image.src);
+                        openLightbox(image.src, image.alt, idx);
                         return;
                     }
                 }
@@ -1287,6 +1429,20 @@ She is the founder of O'Neil Risk Consulting & Algorithmic Auditing (ORCAA), an 
                 }
             }, true);
 
+            if (lightboxPrev) {
+                lightboxPrev.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    setLightboxIndex(lightboxIndex - 1);
+                });
+            }
+
+            if (lightboxNext) {
+                lightboxNext.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    setLightboxIndex(lightboxIndex + 1);
+                });
+            }
+
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' && isEmbedded && embeddedLightboxOpen) {
                     closeLightbox();
@@ -1294,6 +1450,10 @@ She is the founder of O'Neil Risk Consulting & Algorithmic Auditing (ORCAA), an 
                 }
                 if (e.key === 'Escape' && lightbox.classList.contains('is-open')) {
                     closeLightbox();
+                }
+                if (lightbox.classList.contains('is-open') && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
+                    if (e.key === 'ArrowLeft') setLightboxIndex(lightboxIndex - 1);
+                    if (e.key === 'ArrowRight') setLightboxIndex(lightboxIndex + 1);
                 }
             });
 
@@ -1327,6 +1487,9 @@ She is the founder of O'Neil Risk Consulting & Algorithmic Auditing (ORCAA), an 
                         if (localLightboxOpen) {
                             closeLocalLightbox();
                         }
+                    if (e.data.type === 'portfolioEntryLightboxNavigate' && Number.isFinite(e.data.index)) {
+                        setLightboxIndex(e.data.index);
+                    }
                     }
                     if (e.data.type === 'portfolioEntryScroll' && Number.isFinite(e.data.deltaY)) {
                         window.scrollBy({ top: e.data.deltaY, left: 0, behavior: 'auto' });
