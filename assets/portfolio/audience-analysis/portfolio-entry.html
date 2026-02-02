@@ -637,6 +637,31 @@
             max-height: none;
             cursor: zoom-out;
         }
+        html.is-mobile-layout .project-hero {
+            position: static;
+            clip-path: none;
+            --carousel-height: 220px;
+        }
+
+        html.is-mobile-layout .hero-layout,
+        html.is-mobile-layout .hero-title,
+        html.is-mobile-layout .hero-carousel {
+            transform: none;
+            width: 100%;
+        }
+
+        html.is-mobile-layout .hero-carousel {
+            position: static;
+            left: auto;
+            top: auto;
+            z-index: auto;
+            max-width: 100%;
+        }
+
+        html.is-mobile-layout .project-content {
+            transform: none;
+        }
+
 
         @media (max-width: 860px) {
             .page-shell {
@@ -1037,16 +1062,16 @@
             }
 
             function computeMetrics() {
-                if (mobileQuery.matches) {
+                const layoutRect = heroLayout.getBoundingClientRect();
+                layoutWidth = layoutRect.width;
+                const isNarrowLayout = mobileQuery.matches || layoutWidth <= 720;
+                document.documentElement.classList.toggle('is-mobile-layout', isNarrowLayout);
+                if (isNarrowLayout || layoutWidth == 0) {
                     resetLayout(false);
                     scope.style.removeProperty('--hero-height');
                     return;
                 }
                 resetLayout(false);
-
-                const layoutRect = heroLayout.getBoundingClientRect();
-                layoutWidth = layoutRect.width;
-                if (layoutWidth === 0) return;
 
                 sizeMax = readSizes();
                 const gapMax = sizeMax.gap;
@@ -1094,7 +1119,9 @@
 
             function updateProgress() {
                 rafId = null;
-                if (mobileQuery.matches || layoutWidth === 0 || !sizeMax || !sizeMin) {
+                const isNarrowLayout = mobileQuery.matches || layoutWidth <= 720;
+                document.documentElement.classList.toggle('is-mobile-layout', isNarrowLayout);
+                if (isNarrowLayout || layoutWidth === 0 || !sizeMax || !sizeMin) {
                     resetLayout(false);
                     return;
                 }
