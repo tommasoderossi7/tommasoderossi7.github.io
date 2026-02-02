@@ -647,8 +647,14 @@
                 clip-path: none;
                 --carousel-height: 220px;
             }
-            .hero-layout {
+                        .hero-layout,
+            .hero-title,
+            .hero-carousel {
                 transform: none;
+                width: 100%;
+            }
+            .hero-carousel {
+                max-width: 100%;
             }
             .project-content {
                 transform: none;
@@ -1008,6 +1014,11 @@
             }
 
             function computeMetrics() {
+                if (mobileQuery.matches) {
+                    resetLayout(false);
+                    scope.style.removeProperty('--hero-height');
+                    return;
+                }
                 resetLayout(false);
 
                 const layoutRect = heroLayout.getBoundingClientRect();
