@@ -637,29 +637,53 @@
             max-height: none;
             cursor: zoom-out;
         }
-        html.is-mobile-layout .project-hero {
-            position: static;
-            clip-path: none;
-            --carousel-height: 220px;
+
+
+    
+        html.is-mobile-layout {
+            --mobile-collapse: 0;
+            --carousel-height: 180px;
         }
 
-        html.is-mobile-layout .hero-layout,
-        html.is-mobile-layout .hero-title,
-        html.is-mobile-layout .hero-carousel {
+        html.is-mobile-layout .project-hero {
+            position: sticky;
+            top: 0;
+            z-index: 5;
+            --hero-pad-y: 0.8rem;
+            --hero-pad-x: 1rem;
+            --hero-back-offset: max(15px, calc(var(--hero-subtitle-size) + 8px));
+        }
+
+        html.is-mobile-layout .hero-layout {
             transform: none;
             width: 100%;
         }
 
+        html.is-mobile-layout .hero-title {
+            padding-top: var(--hero-back-offset);
+            overflow: hidden;
+        }
+
+        html.is-mobile-layout .hero-title h1,
+        html.is-mobile-layout .hero-title .subtitle {
+            transform: translateY(calc(-1 * var(--mobile-title-shift, 0px)));
+            opacity: calc(1 - var(--mobile-collapse, 0));
+            will-change: transform, opacity;
+        }
+
         html.is-mobile-layout .hero-carousel {
             position: static;
-            left: auto;
-            top: auto;
-            z-index: auto;
             max-width: 100%;
+            width: 100%;
+        }
+
+        html.is-mobile-layout .hero-carousel h2 {
+            margin-top: 0.3rem;
         }
 
         html.is-mobile-layout .project-content {
             transform: none;
+            padding-top: 0.6rem;
         }
 
 
@@ -668,27 +692,41 @@
                 padding: 1.2rem 0.9rem 2rem;
             }
             .project-hero {
-                position: static;
-                clip-path: none;
-                --carousel-height: 220px;
+                position: sticky;
+                top: 0;
+                z-index: 5;
+                --hero-pad-y: 0.8rem;
+                --hero-pad-x: 1rem;
+                --hero-back-offset: max(15px, calc(var(--hero-subtitle-size) + 8px));
             }
-            .hero-layout,
-            .hero-title,
-            .hero-carousel {
+            .hero-layout {
                 transform: none;
                 width: 100%;
             }
+            .hero-title {
+                padding-top: var(--hero-back-offset);
+                overflow: hidden;
+            }
+            .hero-title h1,
+            .hero-title .subtitle {
+                transform: translateY(calc(-1 * var(--mobile-title-shift, 0px)));
+                opacity: calc(1 - var(--mobile-collapse, 0));
+                will-change: transform, opacity;
+            }
             .hero-carousel {
-                max-width: 100%;
                 position: static;
-                left: auto;
-                top: auto;
-                z-index: auto;
+                max-width: 100%;
+                width: 100%;
+            }
+            .hero-carousel h2 {
+                margin-top: 0.3rem;
             }
             .project-content {
                 transform: none;
+                padding-top: 0.6rem;
             }
         }
+
     </style>
 </head>
 <body>
@@ -863,6 +901,12 @@ She is the founder of O'Neil Risk Consulting & Algorithmic Auditing (ORCAA), an 
             let carouselStartMin = 0;
             let sizeMax = null;
             let sizeMin = null;
+            let mobileSizeMax = null;
+            let mobileRange = null;
+            let mobileClipMax = 0;
+            let mobileMaxHeight = 0;
+            let mobileMinHeight = 0;
+            let mobileMaxScroll = 1;
 
             const SIZE_VARS = {
                 title: '--hero-title-size',
@@ -985,6 +1029,80 @@ She is the founder of O'Neil Risk Consulting & Algorithmic Auditing (ORCAA), an 
                 scope.style.setProperty('--hero-carousel-start', `${carouselStart.toFixed(1)}px`);
             }
 
+            function computeMobileMetrics() {
+                resetLayout(false);
+                scope.style.removeProperty('--hero-height');
+
+                setSizeVarsFrom(SIZE_VAR_MAX);
+                scope.style.setProperty('--hero-pad-x', 'var(--hero-pad-x-min)');
+                scope.style.setProperty('--hero-pad-y', 'var(--hero-pad-y-max)');
+
+                const maxValues = readSizes();
+                const maxHeight = hero.getBoundingClientRect().height;
+
+                setSizeVarsFrom(SIZE_VAR_MIN);
+                scope.style.setProperty('--hero-pad-x', 'var(--hero-pad-x-min)');
+                scope.style.setProperty('--hero-pad-y', 'var(--hero-pad-y-min)');
+
+                const minValues = readSizes();
+
+                scope.style.setProperty('--hero-title-size', '0px');
+                scope.style.setProperty('--hero-subtitle-size', '0px');
+
+                const minHeight = hero.getBoundingClientRect().height;
+
+                mobileMinHeight = minHeight;
+
+                mobileRange = {
+                    max: { ...maxValues },
+                    min: { ...minValues, title: 0, subtitle: 0 },
+                };
+                mobileSizeMax = { title: maxValues.title, subtitle: maxValues.subtitle };
+
+                mobileMaxHeight = maxHeight;
+
+                rowHeight = mobileMinHeight;
+                mobileClipMax = Math.max(0, mobileMaxHeight - minHeight);
+                mobileMaxScroll = mobileClipMax || 1;
+
+                scope.style.setProperty('--hero-height', `${mobileMaxHeight.toFixed(1)}px`);
+                scope.style.setProperty('--hero-clip', '0px');
+
+                setSizeVarsPx(mobileRange.max);
+                document.documentElement.style.setProperty('--mobile-collapse', '0');
+                document.documentElement.style.setProperty('--mobile-title-shift', '0px');
+            }
+
+            function updateMobileCollapse(scrollY) {
+                if (!mobileRange) {
+                    computeMobileMetrics();
+                }
+                const clip = Math.min(mobileClipMax, Math.max(0, scrollY));
+                const progress = mobileClipMax > 0 ? clip / mobileClipMax : 0;
+                const max = mobileRange.max;
+                const min = mobileRange.min;
+                const gap = max.gap + (min.gap - max.gap) * progress;
+                const padY = max.padY + (min.padY - max.padY) * progress;
+                const carouselHeight = max.carousel + (min.carousel - max.carousel) * progress;
+                const titleSize = max.title * (1 - progress);
+                const subtitleSize = max.subtitle * (1 - progress);
+                const titleShift = Math.min(48, max.title * 0.9) * progress;
+
+                setSizeVarsPx({
+                    title: titleSize,
+                    subtitle: subtitleSize,
+                    padY,
+                    gap,
+                    carousel: carouselHeight,
+                });
+
+                document.documentElement.style.setProperty('--mobile-collapse', progress.toFixed(3));
+                document.documentElement.style.setProperty('--mobile-title-shift', `${titleShift.toFixed(1)}px`);
+                scope.style.setProperty('--hero-clip', `${clip.toFixed(1)}px`);
+                scope.style.setProperty('--hero-content-shift', '0px');
+                updateSectionOverlap(progress >= 1);
+            }
+
             function updateSectionOverlap(collapsed) {
                 if (!sections.length) return;
                 if (!collapsed) {
@@ -1014,8 +1132,8 @@ She is the founder of O'Neil Risk Consulting & Algorithmic Auditing (ORCAA), an 
                 const isNarrowLayout = mobileQuery.matches || layoutWidth <= 720;
                 document.documentElement.classList.toggle('is-mobile-layout', isNarrowLayout);
                 if (isNarrowLayout || layoutWidth == 0) {
-                    resetLayout(false);
-                    scope.style.removeProperty('--hero-height');
+                    computeMobileMetrics();
+                    updateMobileCollapse(window.scrollY);
                     return;
                 }
                 resetLayout(false);
@@ -1069,7 +1187,10 @@ She is the founder of O'Neil Risk Consulting & Algorithmic Auditing (ORCAA), an 
                 const isNarrowLayout = mobileQuery.matches || layoutWidth <= 720;
                 document.documentElement.classList.toggle('is-mobile-layout', isNarrowLayout);
                 if (isNarrowLayout || layoutWidth === 0 || !sizeMax || !sizeMin) {
-                    resetLayout(false);
+                    if (isNarrowLayout && !mobileRange) {
+                        computeMobileMetrics();
+                    }
+                    updateMobileCollapse(window.scrollY);
                     return;
                 }
 
