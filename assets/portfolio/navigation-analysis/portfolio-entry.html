@@ -58,6 +58,23 @@
             --hero-pad-x-min: 1rem;
             --hero-gap-max: 1rem;
             --hero-gap-min: 0.6rem;
+            --carousel-max-mobile: 200px;
+            --carousel-min-mobile: 120px;
+            --hero-title-max-mobile: 2.7rem;
+            --hero-title-min-mobile: 1.8rem;
+            --hero-subtitle-max-mobile: 1.2rem;
+            --hero-subtitle-min-mobile: 1.05rem;
+            --hero-pad-y-max-mobile: 0.1rem;
+            --hero-pad-y-min-mobile: 0.8rem;
+            --hero-pad-x-max-mobile: 1.2rem;
+            --hero-pad-x-min-mobile: 1rem;
+            --hero-gap-max-mobile: 0.1rem;
+            --hero-gap-min-mobile: 0.1rem;
+            --hero-row-height-mobile: 0px;
+            --hero-back-offset-mobile: max(1px, calc(var(--hero-subtitle-max-mobile)));
+            --hero-collapse-multiplier: 1.25;
+            --hero-collapse-multiplier-mobile: 1.15;
+            --hero-carousel-offset-mobile: 0px;
             --hero-title-size: var(--hero-title-max);
             --hero-subtitle-size: var(--hero-subtitle-max);
             --hero-pad-y: var(--hero-pad-y-max);
@@ -643,15 +660,30 @@
         html.is-mobile-layout {
             --mobile-collapse: 0;
             --carousel-height: 180px;
+            --hero-carousel-offset: var(--hero-carousel-offset-mobile);
+            --carousel-max: var(--carousel-max-mobile);
+            --carousel-min: var(--carousel-min-mobile);
+            --hero-title-max: var(--hero-title-max-mobile);
+            --hero-title-min: var(--hero-title-min-mobile);
+            --hero-subtitle-max: var(--hero-subtitle-max-mobile);
+            --hero-subtitle-min: var(--hero-subtitle-min-mobile);
+            --hero-pad-y-max: var(--hero-pad-y-max-mobile);
+            --hero-pad-y-min: var(--hero-pad-y-min-mobile);
+            --hero-pad-x-max: var(--hero-pad-x-max-mobile);
+            --hero-pad-x-min: var(--hero-pad-x-min-mobile);
+            --hero-gap-max: var(--hero-gap-max-mobile);
+            --hero-gap-min: var(--hero-gap-min-mobile);
+            --hero-row-height: var(--hero-row-height-mobile);
+            --hero-back-offset: var(--hero-back-offset-mobile, max(15px, calc(var(--hero-subtitle-size) + 8px)));
         }
 
         html.is-mobile-layout .project-hero {
             position: sticky;
             top: 0;
             z-index: 5;
-            --hero-pad-y: 0.8rem;
-            --hero-pad-x: 1rem;
-            --hero-back-offset: max(15px, calc(var(--hero-subtitle-size) + 8px));
+            --hero-pad-y: var(--hero-pad-y-min);
+            --hero-pad-x: var(--hero-pad-x-min);
+            --hero-back-offset: var(--hero-back-offset-mobile, max(15px, calc(var(--hero-subtitle-size) + 8px)));
         }
 
         html.is-mobile-layout .hero-layout {
@@ -675,10 +707,15 @@
             position: static;
             max-width: 100%;
             width: 100%;
+            transform: translateY(var(--hero-carousel-offset, 0px));
         }
 
         html.is-mobile-layout .hero-carousel h2 {
             margin-top: 0.3rem;
+            margin-bottom: 0.2rem;
+            max-height: calc(26px * (1 - var(--mobile-collapse, 0)));
+            opacity: calc(1 - var(--mobile-collapse, 0));
+            overflow: hidden;
         }
 
         html.is-mobile-layout .project-content {
@@ -695,9 +732,9 @@
                 position: sticky;
                 top: 0;
                 z-index: 5;
-                --hero-pad-y: 0.8rem;
-                --hero-pad-x: 1rem;
-                --hero-back-offset: max(15px, calc(var(--hero-subtitle-size) + 8px));
+                --hero-pad-y: var(--hero-pad-y-min);
+                --hero-pad-x: var(--hero-pad-x-min);
+                --hero-back-offset: var(--hero-back-offset-mobile, max(15px, calc(var(--hero-subtitle-size) + 8px)));
             }
             .hero-layout {
                 transform: none;
@@ -717,9 +754,14 @@
                 position: static;
                 max-width: 100%;
                 width: 100%;
+                transform: translateY(var(--hero-carousel-offset, 0px));
             }
             .hero-carousel h2 {
                 margin-top: 0.3rem;
+                margin-bottom: 0.2rem;
+                max-height: calc(26px * (1 - var(--mobile-collapse, 0)));
+                opacity: calc(1 - var(--mobile-collapse, 0));
+                overflow: hidden;
             }
             .project-content {
                 transform: none;
@@ -963,6 +1005,8 @@
             let mobileMaxHeight = 0;
             let mobileMinHeight = 0;
             let mobileMaxScroll = 1;
+            let collapseMultiplier = 1;
+            let mobileCollapseMultiplier = 1;
 
             const SIZE_VARS = {
                 title: '--hero-title-size',
@@ -1089,6 +1133,12 @@
                 resetLayout(false);
                 scope.style.removeProperty('--hero-height');
 
+                {
+                    const scopeStyles = window.getComputedStyle(scope);
+                    const raw = Number.parseFloat(scopeStyles.getPropertyValue('--hero-collapse-multiplier-mobile') || scopeStyles.getPropertyValue('--hero-collapse-multiplier') || '1');
+                    mobileCollapseMultiplier = Number.isFinite(raw) && raw > 0 ? raw : 1;
+                }
+
                 setSizeVarsFrom(SIZE_VAR_MAX);
                 scope.style.setProperty('--hero-pad-x', 'var(--hero-pad-x-min)');
                 scope.style.setProperty('--hero-pad-y', 'var(--hero-pad-y-max)');
@@ -1119,7 +1169,7 @@
 
                 rowHeight = mobileMinHeight;
                 mobileClipMax = Math.max(0, mobileMaxHeight - minHeight);
-                mobileMaxScroll = mobileClipMax || 1;
+                mobileMaxScroll = Math.max(1, Math.round(mobileClipMax));
 
                 scope.style.setProperty('--hero-height', `${mobileMaxHeight.toFixed(1)}px`);
                 scope.style.setProperty('--hero-clip', '0px');
@@ -1133,8 +1183,9 @@
                 if (!mobileRange) {
                     computeMobileMetrics();
                 }
-                const clip = Math.min(mobileClipMax, Math.max(0, scrollY));
-                const progress = mobileClipMax > 0 ? clip / mobileClipMax : 0;
+                const scrollDistance = Math.max(1, mobileClipMax);
+                const progress = Math.min(1, Math.max(0, scrollY / scrollDistance));
+                const clip = Math.min(mobileClipMax, progress * mobileClipMax);
                 const max = mobileRange.max;
                 const min = mobileRange.min;
                 const gap = max.gap + (min.gap - max.gap) * progress;
@@ -1185,6 +1236,11 @@
             function computeMetrics() {
                 const layoutRect = heroLayout.getBoundingClientRect();
                 layoutWidth = layoutRect.width;
+                {
+                    const scopeStyles = window.getComputedStyle(scope);
+                    const raw = Number.parseFloat(scopeStyles.getPropertyValue('--hero-collapse-multiplier') || '1');
+                    collapseMultiplier = Number.isFinite(raw) && raw > 0 ? raw : 1;
+                }
                 const isNarrowLayout = mobileQuery.matches || layoutWidth <= 720;
                 document.documentElement.classList.toggle('is-mobile-layout', isNarrowLayout);
                 if (isNarrowLayout || layoutWidth == 0) {
@@ -1271,7 +1327,7 @@
                 const titleWidthFinal = availableWidth * 0.4;
                 const carouselWidthFinal = availableWidth * 0.6;
                 const carouselStart = carouselStartMax + (carouselStartMin - carouselStartMax) * layout;
-                const clip = Math.min(clipMax, scrollY);
+                const clip = Math.min(clipMax, progress * clipMax);
                 const collapsed = progress >= 1;
                 const contentShift = 0;
 
