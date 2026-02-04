@@ -58,6 +58,8 @@
             --hero-pad-x-min: 1rem;
             --hero-gap-max: 1rem;
             --hero-gap-min: 0.6rem;
+            --hero-pad-bottom-extra: 0.2rem;
+            --hero-pad-bottom-extra-mobile: 2rem;
             --carousel-max-mobile: 200px;
             --carousel-min-mobile: 120px;
             --hero-title-max-mobile: 2.7rem;
@@ -274,7 +276,7 @@
             top: 0;
             z-index: 2;
             background: var(--hero-bg);
-            padding: var(--hero-pad-y) var(--hero-pad-x);
+            padding: var(--hero-pad-y) var(--hero-pad-x) calc(var(--hero-pad-y) + var(--hero-pad-bottom-extra)) var(--hero-pad-x);
             height: var(--hero-height, auto);
             border-radius: var(--hero-radius);
             box-shadow: var(--hero-shadow);
@@ -661,6 +663,7 @@
             --mobile-collapse: 0;
             --carousel-height: 180px;
             --hero-carousel-offset: var(--hero-carousel-offset-mobile);
+            --hero-carousel-y: var(--hero-carousel-offset, 0px);
             --carousel-max: var(--carousel-max-mobile);
             --carousel-min: var(--carousel-min-mobile);
             --hero-title-max: var(--hero-title-max-mobile);
@@ -671,6 +674,7 @@
             --hero-pad-y-min: var(--hero-pad-y-min-mobile);
             --hero-pad-x-max: var(--hero-pad-x-max-mobile);
             --hero-pad-x-min: var(--hero-pad-x-min-mobile);
+            --hero-pad-bottom-extra: var(--hero-pad-bottom-extra-mobile);
             --hero-gap-max: var(--hero-gap-max-mobile);
             --hero-gap-min: var(--hero-gap-min-mobile);
             --hero-row-height: var(--hero-row-height-mobile);
@@ -694,6 +698,7 @@
         html.is-mobile-layout .hero-title {
             padding-top: var(--hero-back-offset);
             overflow: hidden;
+            height: var(--hero-title-block-height, auto);
         }
 
         html.is-mobile-layout .hero-title h1,
@@ -704,10 +709,11 @@
         }
 
         html.is-mobile-layout .hero-carousel {
-            position: static;
+            position: absolute;
+            left: 0;
+            top: 0;
             max-width: 100%;
             width: 100%;
-            transform: translateY(var(--hero-carousel-offset, 0px));
         }
 
         html.is-mobile-layout .hero-carousel h2 {
@@ -743,6 +749,7 @@
             .hero-title {
                 padding-top: var(--hero-back-offset);
                 overflow: hidden;
+                height: var(--hero-title-block-height, auto);
             }
             .hero-title h1,
             .hero-title .subtitle {
@@ -751,10 +758,11 @@
                 will-change: transform, opacity;
             }
             .hero-carousel {
-                position: static;
+                position: absolute;
+                left: 0;
+                top: 0;
                 max-width: 100%;
                 width: 100%;
-                transform: translateY(var(--hero-carousel-offset, 0px));
             }
             .hero-carousel h2 {
                 margin-top: 0.3rem;
@@ -990,6 +998,10 @@
             let mobileMaxScroll = 1;
             let collapseMultiplier = 1;
             let mobileCollapseMultiplier = 1;
+            let mobileTitleBlockMax = 0;
+            let mobileTitleBlockMin = 0;
+            let mobileCarouselStartMax = 0;
+            let mobileCarouselStartMin = 0;
 
             const SIZE_VARS = {
                 title: '--hero-title-size',
@@ -1037,10 +1049,13 @@
                 const subtitleStyles = window.getComputedStyle(heroSubtitle);
                 const carouselStyles = window.getComputedStyle(carouselFrame);
 
+                const padTop = Number.parseFloat(heroStyles.paddingTop || '0') || 0;
+                const padBottom = Number.parseFloat(heroStyles.paddingBottom || '0') || 0;
                 return {
                     title: Number.parseFloat(headingStyles.fontSize || '0') || 0,
                     subtitle: Number.parseFloat(subtitleStyles.fontSize || '0') || 0,
-                    padY: Number.parseFloat(heroStyles.paddingTop || '0') || 0,
+                    padY: padTop,
+                    padBottomExtra: Math.max(0, padBottom - padTop),
                     gap: Number.parseFloat(layoutStyles.rowGap || layoutStyles.gap || '0') || 0,
                     carousel: Number.parseFloat(carouselStyles.height || '0') || 0,
                 };
@@ -1076,6 +1091,9 @@
                 Object.keys(SIZE_VARS).forEach((key) => {
                     scaled[key] = Math.max(0, (base[key] || 0) * scale);
                 });
+                if (Number.isFinite(base.padBottomExtra)) {
+                    scaled.padBottomExtra = base.padBottomExtra;
+                }
                 return scaled;
             }
 
@@ -1098,6 +1116,7 @@
                     section.style.removeProperty('--section-clip-top');
                 });
                 scope.style.removeProperty('--hero-height');
+                scope.style.setProperty('--hero-title-block-height', 'auto');
             }
 
             function applyFinalLayout(gap, carouselStart) {
@@ -1127,7 +1146,10 @@
                 scope.style.setProperty('--hero-pad-y', 'var(--hero-pad-y-max)');
 
                 const maxValues = readSizes();
-                const maxHeight = hero.getBoundingClientRect().height;
+                mobileTitleBlockMax = heroTitle.getBoundingClientRect().height;
+                mobileCarouselStartMax = mobileTitleBlockMax + maxValues.gap;
+                const maxPadBottom = maxValues.padY + (maxValues.padBottomExtra || 0);
+                const maxHeight = maxValues.padY + mobileCarouselStartMax + maxValues.carousel + maxPadBottom;
 
                 setSizeVarsFrom(SIZE_VAR_MIN);
                 scope.style.setProperty('--hero-pad-x', 'var(--hero-pad-x-min)');
@@ -1138,7 +1160,10 @@
                 scope.style.setProperty('--hero-title-size', '0px');
                 scope.style.setProperty('--hero-subtitle-size', '0px');
 
-                const minHeight = hero.getBoundingClientRect().height;
+                mobileTitleBlockMin = heroTitle.getBoundingClientRect().height;
+                mobileCarouselStartMin = mobileTitleBlockMin + minValues.gap;
+                const minPadBottom = minValues.padY + (minValues.padBottomExtra || 0);
+                const minHeight = minValues.padY + mobileCarouselStartMin + minValues.carousel + minPadBottom;
 
                 mobileMinHeight = minHeight;
 
@@ -1189,6 +1214,10 @@
                 document.documentElement.style.setProperty('--mobile-collapse', progress.toFixed(3));
                 document.documentElement.style.setProperty('--mobile-title-shift', `${titleShift.toFixed(1)}px`);
                 scope.style.setProperty('--hero-clip', `${clip.toFixed(1)}px`);
+                const titleBlockHeight = mobileTitleBlockMax + (mobileTitleBlockMin - mobileTitleBlockMax) * progress;
+                const carouselStart = mobileCarouselStartMax + (mobileCarouselStartMin - mobileCarouselStartMax) * progress;
+                scope.style.setProperty('--hero-title-block-height', `${titleBlockHeight.toFixed(1)}px`);
+                scope.style.setProperty('--hero-carousel-start', `${carouselStart.toFixed(1)}px`);
                 scope.style.setProperty('--hero-content-shift', '0px');
                 updateSectionOverlap(progress >= 1);
             }
@@ -1239,12 +1268,13 @@
                 const titleHeightStackMax = heroTitle.getBoundingClientRect().height;
                 const carouselHeightStackMax = heroCarousel.getBoundingClientRect().height;
                 carouselStartMax = titleHeightStackMax + gapMax;
-                stackHeight = sizeMax.padY + carouselStartMax + carouselHeightStackMax + sizeMax.padY;
+                const padBottomMax = sizeMax.padY + (sizeMax.padBottomExtra || 0);
+                stackHeight = sizeMax.padY + carouselStartMax + carouselHeightStackMax + padBottomMax;
 
                 applyFinalLayout(gapMax, carouselStartMax);
                 const titleHeightFinalMax = heroTitle.getBoundingClientRect().height;
                 const carouselHeightFinalMax = heroCarousel.getBoundingClientRect().height;
-                const rowHeightMax = Math.max(titleHeightFinalMax, carouselHeightFinalMax) + sizeMax.padY * 2;
+                const rowHeightMax = Math.max(titleHeightFinalMax, carouselHeightFinalMax) + sizeMax.padY + padBottomMax;
 
                 const forcedRowHeight = getForcedRowHeight();
                 if (forcedRowHeight > 0) {
@@ -1267,7 +1297,8 @@
                 applyFinalLayout(gapMin, carouselStartMin);
                 const titleHeightFinalMin = heroTitle.getBoundingClientRect().height;
                 const carouselHeightFinalMin = heroCarousel.getBoundingClientRect().height;
-                const rowHeightMin = Math.max(titleHeightFinalMin, carouselHeightFinalMin) + sizeMin.padY * 2;
+                const padBottomMin = sizeMin.padY + (sizeMin.padBottomExtra || 0);
+                const rowHeightMin = Math.max(titleHeightFinalMin, carouselHeightFinalMin) + sizeMin.padY + padBottomMin;
 
                 rowHeight = forcedRowHeight > 0 ? forcedRowHeight : rowHeightMin;
                 clipMax = Math.max(0, Math.round(stackHeight - rowHeight));
