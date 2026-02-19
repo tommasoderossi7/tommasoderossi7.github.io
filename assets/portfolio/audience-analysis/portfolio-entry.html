@@ -530,6 +530,192 @@
             font-weight: 600;
         }
 
+        .section-kicker {
+            margin-bottom: 0.65rem;
+            color: var(--text-secondary);
+            font-size: 0.74rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .features-accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .feature-accordion__item {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: rgba(17, 24, 39, 0.02);
+            overflow: hidden;
+        }
+
+        html[data-theme="dark"] .feature-accordion__item {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .feature-accordion__summary {
+            list-style: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            width: 100%;
+            padding: 0.72rem 2rem 0.72rem 0.82rem;
+            position: relative;
+            color: var(--text-primary);
+        }
+
+        .feature-accordion__summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .feature-accordion__summary::marker {
+            content: '';
+        }
+
+        .feature-accordion__summary::after {
+            content: '';
+            position: absolute;
+            right: 0.9rem;
+            top: 50%;
+            width: 0.5rem;
+            height: 0.5rem;
+            margin-top: -0.28rem;
+            border-right: 2px solid var(--text-secondary);
+            border-bottom: 2px solid var(--text-secondary);
+            transform: rotate(45deg);
+            transition: transform 0.2s ease;
+        }
+
+        .feature-accordion__item[open] .feature-accordion__summary::after {
+            transform: rotate(-135deg) translate(-1px, -1px);
+        }
+
+        .feature-accordion__summary:focus-visible {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 2px;
+            border-radius: 10px;
+        }
+
+        .feature-accordion__what-tag {
+            flex: 0 0 auto;
+            font-size: 0.67rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.08rem 0.38rem;
+        }
+
+        .feature-accordion__what {
+            font-weight: 600;
+            line-height: 1.45;
+            color: var(--text-primary);
+        }
+
+        .feature-accordion__panel {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            border-top: 1px solid transparent;
+            padding: 0 0.82rem;
+            transition: max-height 0.24s ease, opacity 0.2s ease, padding 0.2s ease, border-color 0.2s ease;
+        }
+
+        .feature-accordion__item[open] .feature-accordion__panel {
+            max-height: 420px;
+            opacity: 1;
+            border-top-color: var(--border);
+            padding: 0 0.82rem 0.78rem;
+        }
+
+        .feature-accordion__panel p {
+            margin: 0.62rem 0 0;
+            font-weight: 300;
+            line-height: 1.75;
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 640px) {
+            .feature-accordion__summary {
+                padding-left: 0.72rem;
+                padding-right: 1.8rem;
+            }
+
+            .feature-accordion__what {
+                font-size: 0.95rem;
+            }
+        }
+
+
+
+        .process-timeline {
+            list-style: none;
+            margin: 0;
+            padding: 0.15rem 0 0 0;
+        }
+
+        .process-step {
+            position: relative;
+            margin-bottom: 0.78rem;
+            padding-left: 1.45rem;
+        }
+
+        .process-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .process-step::before {
+            content: '';
+            position: absolute;
+            left: 0.22rem;
+            top: 0.5rem;
+            width: 0.48rem;
+            height: 0.48rem;
+            border-radius: 50%;
+            background: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.08);
+        }
+
+        .process-step::after {
+            content: '';
+            position: absolute;
+            left: 0.44rem;
+            top: 0.98rem;
+            bottom: -0.64rem;
+            width: 1px;
+            background: var(--border);
+        }
+
+        html[data-theme="dark"] .process-step::before {
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.12);
+        }
+
+        .process-step:last-child::after {
+            display: none;
+        }
+
+        .process-step__title {
+            display: block;
+            margin-bottom: 0.08rem;
+            font-weight: 600;
+            line-height: 1.45;
+            color: var(--text-primary);
+        }
+
+        .process-step__body {
+            font-weight: 300;
+            line-height: 1.75;
+            color: var(--text-primary);
+        }
+
+
+
         .lightbox {
             position: fixed;
             inset: 0;
@@ -826,82 +1012,115 @@
                 <section class="project-section">
                     <h2>Request</h2>
                     <p>
-                    Build a data-driven foundation to design marketing campaigns for a major Italian fruit producer by extracting
-                    <strong>actionable leverage points</strong> from their audience and their competitors’ audiences. The goal was to understand
-                    <strong>what people associate with the product/brand</strong>, how interest evolves over time, and which topics and stakeholders
-                    can be activated to increase reach and campaign effectiveness—then package the insights in an <strong>interactive dashboard</strong>
-                    usable by marketing teams.
+                    The goal was to give a major Italian fruit producer a data-backed base for campaign planning.
+                    We needed to understand <strong>what audiences associate with the brand</strong>, how interest changes over time,
+                    and where competitor audiences overlap or diverge so marketing could focus on leverage points that actually move reach and performance.
                     </p>
                 </section>
 
                 <section class="project-section">
                     <h2>My Role</h2>
                     <p>
-                    I was the <strong>end-to-end owner</strong> of the analytical workstream. I aligned on objectives with the client, defined the analytical
-                    framework (what “leverage” means in measurable terms), and translated campaign questions into a set of KPIs, segmentations, and
-                    dashboard views that could directly drive creative and targeting decisions.
+                    I owned the analytical workstream from start to finish. I aligned goals with the client,
+                    defined how to measure "leverage" in practical KPI terms, and mapped campaign questions to dashboard views.
                     </p>
                     <p>
-                    I designed and implemented the <strong>data pipeline</strong> (collection, normalization, enrichment), built the NLP logic for topic discovery
-                    and classification, engineered the audience and competitor comparison metrics (e.g., overlap and differentiation), and delivered the final
-                    <strong>live dashboard</strong> enabling topic exploration, trend analysis, and identification of high-impact accounts/content for activation.
+                    I built the data pipeline (collection, normalization, enrichment), implemented NLP logic for topic discovery and classification,
+                    engineered audience and competitor comparison metrics, and delivered the live dashboard used by the marketing team.
                     </p>
                 </section>
 
                 <section class="project-section">
                     <h2>Features</h2>
-                    <ul>
-                    <li>
-                        <strong>Topic clustering for content pillars:</strong> automatically groups conversations/queries into interpretable themes (e.g., product talk,
-                        territory/origin, wellness, varieties) to define campaign angles and editorial pillars.
-                    </li>
-                    <li>
-                        <strong>Trend and seasonality tracking:</strong> time-series views of topic volume/interest to identify peaks, emerging narratives, and the best
-                        moments to launch or reinforce campaign messages.
-                    </li>
-                    <li>
-                        <strong>Audience vs competitor comparison:</strong> overlap-style analysis to quantify how much audience is shared vs unique, supporting differentiation
-                        strategy and competitor-aware messaging.
-                    </li>
-                    <li>
-                        <strong>Public demand and intent analysis:</strong> breaks down queries into brand vs product focus and classifies intent (informational vs commercial),
-                        clarifying whether the audience needs education, reassurance, recipes/uses, or conversion-oriented messaging.
-                    </li>
-                    <li>
-                        <strong>Influencer / key-account surfacing:</strong> identifies and exports high-impact accounts based on engagement signals (e.g., retweets) and topic
-                        relevance for seeding, partnerships, or paid amplification.
-                    </li>
-                    <li>
-                        <strong>Creative and keyword “suggester”:</strong> a searchable view of recurring terms and associations to accelerate creative ideation, copy lines,
-                        and keyword/SEO planning.
-                    </li>
-                    </ul>
+                    <p class="section-kicker">What Was Built</p>
+                    <div class="features-accordion" aria-label="Features overview">
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Topic clustering for content pillars</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to turn unstructured conversations into clear content pillars that the marketing team could execute.</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Trend and seasonality tracking</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to time campaigns around real peaks and emerging narratives, instead of static assumptions.</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Audience vs competitor comparison</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to quantify shared versus unique audience space, so differentiation strategy was grounded in evidence.</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Public demand and intent analysis</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to separate informational and commercial intent, so messaging matched what the audience needed at each stage.</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Influencer / key-account surfacing</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to surface high-impact accounts for amplification, partnerships, and targeted activation.</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Creative and keyword “suggester”</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to speed up ideation with real recurring language from the audience, improving copy and keyword planning.</p>
+                            </div>
+                        </details>
+                    </div>
                 </section>
 
                 <section class="project-section">
                     <h2>Methodology</h2>
-                    <ul>
-                    <li>
-                        <strong>Multi-source data ingestion:</strong> collected audience and competitor signals from social listening sources (posts, engagement metrics, authors)
-                        and complementary demand data (queries/keywords and related terms), then standardized entities, timestamps, and text fields in an ETL workspace.
-                    </li>
-                    <li>
-                        <strong>NLP preprocessing and enrichment:</strong> cleaned and normalized text, extracted key terms/tags, and enriched records with topic labels and
-                        campaign-relevant metadata (brand vs product, sentiment-/concern-like patterns where applicable, etc.).
-                    </li>
-                    <li>
-                        <strong>Clustering + classification layer:</strong> applied semantic clustering to build stable topic groups and trained lightweight classifiers for
-                        intent segmentation (informational vs commercial) and brand/product attribution.
-                    </li>
-                    <li>
-                        <strong>Audience analytics:</strong> computed competitor comparisons (overlap and uniqueness), ranked accounts by topic relevance and engagement,
-                        and produced time-series metrics to detect peaks and recurring patterns.
-                    </li>
-                    <li>
-                        <strong>Decision-ready visualization:</strong> published the full output into an interactive dashboard with filters (topic, date range, text, engagement),
-                        drilldowns to underlying posts/accounts, and exportable lists for activation and campaign planning.
-                    </li>
-                    </ul>
+                    <p class="section-kicker">Execution Timeline</p>
+                    <ol class="process-timeline" aria-label="Methodology timeline">
+                        <li class="process-step">
+                            <span class="process-step__title">Multi-source data ingestion</span>
+                            <div class="process-step__body">collected audience and competitor signals from social listening sources (posts, engagement metrics, authors)
+                        and complementary demand data (queries/keywords and related terms), then standardized entities, timestamps, and text fields in an ETL workspace.</div>
+                        </li>
+                        <li class="process-step">
+                            <span class="process-step__title">NLP preprocessing and enrichment</span>
+                            <div class="process-step__body">cleaned and normalized text, extracted key terms/tags, and enriched records with topic labels and
+                        campaign-relevant metadata (brand vs product, sentiment-/concern-like patterns where applicable, etc.).</div>
+                        </li>
+                        <li class="process-step">
+                            <span class="process-step__title">Clustering + classification layer</span>
+                            <div class="process-step__body">applied semantic clustering to build stable topic groups and trained lightweight classifiers for
+                        intent segmentation (informational vs commercial) and brand/product attribution.</div>
+                        </li>
+                        <li class="process-step">
+                            <span class="process-step__title">Audience analytics</span>
+                            <div class="process-step__body">computed competitor comparisons (overlap and uniqueness), ranked accounts by topic relevance and engagement,
+                        and produced time-series metrics to detect peaks and recurring patterns.</div>
+                        </li>
+                        <li class="process-step">
+                            <span class="process-step__title">Decision-ready visualization</span>
+                            <div class="process-step__body">published the full output into an interactive dashboard with filters (topic, date range, text, engagement),
+                        drilldowns to underlying posts/accounts, and exportable lists for activation and campaign planning.</div>
+                        </li>
+                    </ol>
                 </section>
             </main>
         </div>
@@ -1792,6 +2011,28 @@
                 if (hero && hero.contains(e.target)) return;
                 if (e.target.closest('.project-section')) return;
                 requestClose();
+            });
+        })();
+
+
+        (() => {
+            const accordions = Array.from(document.querySelectorAll('.features-accordion'));
+            if (!accordions.length) return;
+
+            accordions.forEach((accordion) => {
+                const items = Array.from(accordion.querySelectorAll('.feature-accordion__item'));
+                if (!items.length) return;
+
+                items.forEach((item) => {
+                    item.addEventListener('toggle', () => {
+                        if (!item.open) return;
+                        items.forEach((other) => {
+                            if (other !== item && other.open) {
+                                other.open = false;
+                            }
+                        });
+                    });
+                });
             });
         })();
 

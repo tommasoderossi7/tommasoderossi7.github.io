@@ -530,6 +530,192 @@
             font-weight: 600;
         }
 
+        .section-kicker {
+            margin-bottom: 0.65rem;
+            color: var(--text-secondary);
+            font-size: 0.74rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .features-accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .feature-accordion__item {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: rgba(17, 24, 39, 0.02);
+            overflow: hidden;
+        }
+
+        html[data-theme="dark"] .feature-accordion__item {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .feature-accordion__summary {
+            list-style: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            width: 100%;
+            padding: 0.72rem 2rem 0.72rem 0.82rem;
+            position: relative;
+            color: var(--text-primary);
+        }
+
+        .feature-accordion__summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .feature-accordion__summary::marker {
+            content: '';
+        }
+
+        .feature-accordion__summary::after {
+            content: '';
+            position: absolute;
+            right: 0.9rem;
+            top: 50%;
+            width: 0.5rem;
+            height: 0.5rem;
+            margin-top: -0.28rem;
+            border-right: 2px solid var(--text-secondary);
+            border-bottom: 2px solid var(--text-secondary);
+            transform: rotate(45deg);
+            transition: transform 0.2s ease;
+        }
+
+        .feature-accordion__item[open] .feature-accordion__summary::after {
+            transform: rotate(-135deg) translate(-1px, -1px);
+        }
+
+        .feature-accordion__summary:focus-visible {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 2px;
+            border-radius: 10px;
+        }
+
+        .feature-accordion__what-tag {
+            flex: 0 0 auto;
+            font-size: 0.67rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.08rem 0.38rem;
+        }
+
+        .feature-accordion__what {
+            font-weight: 600;
+            line-height: 1.45;
+            color: var(--text-primary);
+        }
+
+        .feature-accordion__panel {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            border-top: 1px solid transparent;
+            padding: 0 0.82rem;
+            transition: max-height 0.24s ease, opacity 0.2s ease, padding 0.2s ease, border-color 0.2s ease;
+        }
+
+        .feature-accordion__item[open] .feature-accordion__panel {
+            max-height: 420px;
+            opacity: 1;
+            border-top-color: var(--border);
+            padding: 0 0.82rem 0.78rem;
+        }
+
+        .feature-accordion__panel p {
+            margin: 0.62rem 0 0;
+            font-weight: 300;
+            line-height: 1.75;
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 640px) {
+            .feature-accordion__summary {
+                padding-left: 0.72rem;
+                padding-right: 1.8rem;
+            }
+
+            .feature-accordion__what {
+                font-size: 0.95rem;
+            }
+        }
+
+
+
+        .process-timeline {
+            list-style: none;
+            margin: 0;
+            padding: 0.15rem 0 0 0;
+        }
+
+        .process-step {
+            position: relative;
+            margin-bottom: 0.78rem;
+            padding-left: 1.45rem;
+        }
+
+        .process-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .process-step::before {
+            content: '';
+            position: absolute;
+            left: 0.22rem;
+            top: 0.5rem;
+            width: 0.48rem;
+            height: 0.48rem;
+            border-radius: 50%;
+            background: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.08);
+        }
+
+        .process-step::after {
+            content: '';
+            position: absolute;
+            left: 0.44rem;
+            top: 0.98rem;
+            bottom: -0.64rem;
+            width: 1px;
+            background: var(--border);
+        }
+
+        html[data-theme="dark"] .process-step::before {
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.12);
+        }
+
+        .process-step:last-child::after {
+            display: none;
+        }
+
+        .process-step__title {
+            display: block;
+            margin-bottom: 0.08rem;
+            font-weight: 600;
+            line-height: 1.45;
+            color: var(--text-primary);
+        }
+
+        .process-step__body {
+            font-weight: 300;
+            line-height: 1.75;
+            color: var(--text-primary);
+        }
+
+
+
         .lightbox {
             position: fixed;
             inset: 0;
@@ -822,100 +1008,143 @@
                 <section class="project-section">
                     <h2>Request</h2>
                     <p>
-                    An Italian producer of <strong>AR/VR retail experiences</strong> asked our team to build an analytics system to understand how users behave inside a
-                    virtual 3D clothing store (“miniverso”), where <strong>avatar store clerks</strong> could hold <strong>multi-turn natural-language conversations</strong>
-                    and recommend products. The client needed a single, operations-friendly dashboard to answer questions like:
-                    <em>Which rooms are most visited?</em> <em>Which objects drive engagement?</em> <em>Where do users spend time?</em> <em>What conversations happen during
-                    visits?</em> and <em>How do views translate into purchases?</em>
+                    An Italian producer of <strong>AR/VR retail experiences</strong> asked us to analyze behavior inside a virtual 3D clothing store,
+                    where <strong>avatar clerks</strong> could run <strong>multi-turn conversations</strong> and recommend products.
+                    They needed one dashboard that could quickly answer: where users spend time, what they touch, what they ask, and what leads to purchase.
                     </p>
                     <p>
-                    The tool had to support a “funnel-style” view from high-level KPIs (visitors, visits, time spent, purchases) down to deep dives by
-                    <strong>room, product, activity type, visitor, visit session</strong> and time window, all based on <strong>real interaction logs</strong> captured in
-                    the VR environment.
+                    The product had to cover both executive KPIs (visitors, visits, time, purchases) and deep dives by <strong>room, product, activity,
+                    visitor session</strong>, and time window, using <strong>real VR interaction logs</strong>.
                     </p>
                 </section>
 
                 <section class="project-section">
                     <h2>My Role</h2>
                     <p>
-                    I acted as <strong>end-to-end owner</strong> of the analytics layer and dashboard delivery. I translated the product/UX goals (engagement + conversion +
-                    conversational support) into a measurable KPI framework, defined the event schema needed to track VR activity (movement, object interactions, product
-                    views, purchases, dialogue turns), and designed the drilldown experience to move quickly from “overview” to “root cause”.
+                    I owned the analytics and dashboard delivery end to end. I translated product goals into a KPI framework,
+                    defined the VR event schema (movement, object interactions, product views, purchases, dialogue turns), and designed the drilldown flow.
                     </p>
                     <p>
-                    I implemented the full pipeline: sessionization (visitor/visit definition), feature engineering for engagement and conversion metrics, and the
-                    <strong>interactive dashboard</strong> including spatial heatmaps, time-based trends, conversion ratios (view → buy), and conversational analytics
-                    (keywords, question volume, question/answer tables) to improve both the VR experience design and the avatar selling behavior.
+                    I implemented sessionization, feature engineering, and the final interactive dashboard with spatial heatmaps, time trends,
+                    view-to-buy conversion metrics, and conversation analytics to improve both experience design and avatar sales behavior.
                     </p>
                 </section>
 
                 <section class="project-section">
                     <h2>Features</h2>
-                    <ul>
-                    <li>
-                        <strong>Executive KPI overview:</strong> headline metrics (e.g., total visitors, total visits, total time spent in the miniverse, total purchases) to
-                        provide a fast “business pulse” for the VR experience.
-                    </li>
-                    <li>
-                        <strong>Room-level engagement analysis:</strong> time spent per room with breakdowns by interaction/activity type, highlighting which areas act as
-                        “hotspots” and which rooms underperform.
-                    </li>
-                    <li>
-                        <strong>Activity-type analytics:</strong> distribution of time across behaviors (movement, product interactions, videos, avatars, images, 3D objects),
-                        plus average duration per activity to quantify what is truly engaging vs. “background navigation”.
-                    </li>
-                    <li>
-                        <strong>Conversion and effectiveness metrics:</strong> <em>products purchased vs. products viewed</em> by room and by product, with percentages to
-                        identify rooms/products that convert better and support merchandising decisions (placement, signage, avatar prompts).
-                    </li>
-                    <li>
-                        <strong>Spatial behavior deep dives:</strong> per-room <strong>movement heatmaps</strong> and path traces to detect attention zones, dead areas,
-                        navigation friction, and layout issues inside the 3D store.
-                    </li>
-                    <li>
-                        <strong>Temporal monitoring:</strong> trends over time for visits, activity duration, and purchase/view ratios to evaluate changes after content or
-                        dialogue/prompt updates.
-                    </li>
-                    <li>
-                        <strong>Conversation analytics:</strong> questions volume over time, <strong>word cloud</strong> of frequent terms, and a Q/A table (visitor question
-                        ↔ avatar response) to spot recurring intents, missing knowledge, and opportunities to improve scripts, prompts, and product recommendations.
-                    </li>
-                    <li>
-                        <strong>Interactive filtering and drilldowns:</strong> slicers for miniverse, visitor, visit session, room, activity type, interaction object, and
-                        time interval to move from a macro overview to a specific session in a few clicks.
-                    </li>
-                    </ul>
+                    <p class="section-kicker">What Was Built</p>
+                    <div class="features-accordion" aria-label="Features overview">
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Executive KPI overview</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to give stakeholders an immediate health check of adoption, engagement, and purchasing in one view.</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Room-level engagement analysis</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to reveal which rooms attract attention and which ones lose it, so layout and content priorities were evidence-based.</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Activity-type analytics</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to separate meaningful interactions from passive navigation, so engagement quality could be measured correctly.</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Conversion and effectiveness metrics</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to connect product views to purchases by room and product, so merchandising and placement decisions could be optimized.</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Spatial behavior deep dives</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to surface dead zones and navigation friction in the 3D space, guiding concrete UX and store-design fixes.</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Temporal monitoring</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to verify whether content or dialogue updates improved behavior over time, not only in single snapshots.</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Conversation analytics</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to capture recurring user intents and weak answers, so avatar scripts and recommendation logic could be improved.</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Interactive filtering and drilldowns</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to move from a macro overview to a single visitor session in a few clicks during investigation.</p>
+                            </div>
+                        </details>
+                    </div>
                 </section>
 
                 <section class="project-section">
                     <h2>Methodology</h2>
-                    <ul>
-                    <li>
-                        <strong>Event modeling for VR telemetry:</strong> defined a consistent schema for interaction logs (movement coordinates, room context, object IDs,
-                        product views, purchases, conversation turns) to enable reliable aggregation and cross-analysis.
-                    </li>
-                    <li>
-                        <strong>Data preprocessing and sessionization:</strong> cleaned and aligned event timestamps, grouped events into coherent visits, and derived
-                        durations/engagement measures (time in room, time per activity, time per object) robust to gaps and noisy telemetry.
-                    </li>
-                    <li>
-                        <strong>Engagement KPI engineering:</strong> computed room and object engagement metrics (total/average time, frequency of interactions, return visits)
-                        and built activity taxonomies to interpret VR behavior beyond raw event counts.
-                    </li>
-                    <li>
-                        <strong>Conversion analytics design:</strong> linked product-view events to purchase events to produce view-to-buy ratios at room and product level,
-                        enabling optimization of both store layout and avatar recommendation strategies.
-                    </li>
-                    <li>
-                        <strong>Conversation mining:</strong> extracted conversational signals (question counts over time, frequent terms/keywords, Q/A logs) to evaluate user
-                        needs and measure how well the avatar supports discovery and purchase decisions.
-                    </li>
-                    <li>
-                        <strong>Dashboard delivery:</strong> implemented a multi-page, drilldown-friendly interface combining KPI cards, room/product breakdowns, temporal trends,
+                    <p class="section-kicker">Execution Timeline</p>
+                    <ol class="process-timeline" aria-label="Methodology timeline">
+                        <li class="process-step">
+                            <span class="process-step__title">Event modeling for VR telemetry</span>
+                            <div class="process-step__body">defined a consistent schema for interaction logs (movement coordinates, room context, object IDs,
+                        product views, purchases, conversation turns) to enable reliable aggregation and cross-analysis.</div>
+                        </li>
+                        <li class="process-step">
+                            <span class="process-step__title">Data preprocessing and sessionization</span>
+                            <div class="process-step__body">cleaned and aligned event timestamps, grouped events into coherent visits, and derived
+                        durations/engagement measures (time in room, time per activity, time per object) robust to gaps and noisy telemetry.</div>
+                        </li>
+                        <li class="process-step">
+                            <span class="process-step__title">Engagement KPI engineering</span>
+                            <div class="process-step__body">computed room and object engagement metrics (total/average time, frequency of interactions, return visits)
+                        and built activity taxonomies to interpret VR behavior beyond raw event counts.</div>
+                        </li>
+                        <li class="process-step">
+                            <span class="process-step__title">Conversion analytics design</span>
+                            <div class="process-step__body">linked product-view events to purchase events to produce view-to-buy ratios at room and product level,
+                        enabling optimization of both store layout and avatar recommendation strategies.</div>
+                        </li>
+                        <li class="process-step">
+                            <span class="process-step__title">Conversation mining</span>
+                            <div class="process-step__body">extracted conversational signals (question counts over time, frequent terms/keywords, Q/A logs) to evaluate user
+                        needs and measure how well the avatar supports discovery and purchase decisions.</div>
+                        </li>
+                        <li class="process-step">
+                            <span class="process-step__title">Dashboard delivery</span>
+                            <div class="process-step__body">implemented a multi-page, drilldown-friendly interface combining KPI cards, room/product breakdowns, temporal trends,
                         spatial heatmaps, and conversation panels—built to support both <em>experience designers</em> and <em>business stakeholders</em> in iterative VR retail
-                        optimization.
-                    </li>
-                    </ul>
+                        optimization.</div>
+                        </li>
+                    </ol>
                 </section>
             </main>
         </div>
@@ -1806,6 +2035,28 @@
                 if (hero && hero.contains(e.target)) return;
                 if (e.target.closest('.project-section')) return;
                 requestClose();
+            });
+        })();
+
+
+        (() => {
+            const accordions = Array.from(document.querySelectorAll('.features-accordion'));
+            if (!accordions.length) return;
+
+            accordions.forEach((accordion) => {
+                const items = Array.from(accordion.querySelectorAll('.feature-accordion__item'));
+                if (!items.length) return;
+
+                items.forEach((item) => {
+                    item.addEventListener('toggle', () => {
+                        if (!item.open) return;
+                        items.forEach((other) => {
+                            if (other !== item && other.open) {
+                                other.open = false;
+                            }
+                        });
+                    });
+                });
             });
         })();
 

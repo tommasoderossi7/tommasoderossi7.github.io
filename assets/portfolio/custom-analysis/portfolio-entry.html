@@ -530,6 +530,192 @@
             font-weight: 600;
         }
 
+        .section-kicker {
+            margin-bottom: 0.65rem;
+            color: var(--text-secondary);
+            font-size: 0.74rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .features-accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .feature-accordion__item {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: rgba(17, 24, 39, 0.02);
+            overflow: hidden;
+        }
+
+        html[data-theme="dark"] .feature-accordion__item {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .feature-accordion__summary {
+            list-style: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            width: 100%;
+            padding: 0.72rem 2rem 0.72rem 0.82rem;
+            position: relative;
+            color: var(--text-primary);
+        }
+
+        .feature-accordion__summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .feature-accordion__summary::marker {
+            content: '';
+        }
+
+        .feature-accordion__summary::after {
+            content: '';
+            position: absolute;
+            right: 0.9rem;
+            top: 50%;
+            width: 0.5rem;
+            height: 0.5rem;
+            margin-top: -0.28rem;
+            border-right: 2px solid var(--text-secondary);
+            border-bottom: 2px solid var(--text-secondary);
+            transform: rotate(45deg);
+            transition: transform 0.2s ease;
+        }
+
+        .feature-accordion__item[open] .feature-accordion__summary::after {
+            transform: rotate(-135deg) translate(-1px, -1px);
+        }
+
+        .feature-accordion__summary:focus-visible {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 2px;
+            border-radius: 10px;
+        }
+
+        .feature-accordion__what-tag {
+            flex: 0 0 auto;
+            font-size: 0.67rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.08rem 0.38rem;
+        }
+
+        .feature-accordion__what {
+            font-weight: 600;
+            line-height: 1.45;
+            color: var(--text-primary);
+        }
+
+        .feature-accordion__panel {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            border-top: 1px solid transparent;
+            padding: 0 0.82rem;
+            transition: max-height 0.24s ease, opacity 0.2s ease, padding 0.2s ease, border-color 0.2s ease;
+        }
+
+        .feature-accordion__item[open] .feature-accordion__panel {
+            max-height: 420px;
+            opacity: 1;
+            border-top-color: var(--border);
+            padding: 0 0.82rem 0.78rem;
+        }
+
+        .feature-accordion__panel p {
+            margin: 0.62rem 0 0;
+            font-weight: 300;
+            line-height: 1.75;
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 640px) {
+            .feature-accordion__summary {
+                padding-left: 0.72rem;
+                padding-right: 1.8rem;
+            }
+
+            .feature-accordion__what {
+                font-size: 0.95rem;
+            }
+        }
+
+
+
+        .process-timeline {
+            list-style: none;
+            margin: 0;
+            padding: 0.15rem 0 0 0;
+        }
+
+        .process-step {
+            position: relative;
+            margin-bottom: 0.78rem;
+            padding-left: 1.45rem;
+        }
+
+        .process-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .process-step::before {
+            content: '';
+            position: absolute;
+            left: 0.22rem;
+            top: 0.5rem;
+            width: 0.48rem;
+            height: 0.48rem;
+            border-radius: 50%;
+            background: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.08);
+        }
+
+        .process-step::after {
+            content: '';
+            position: absolute;
+            left: 0.44rem;
+            top: 0.98rem;
+            bottom: -0.64rem;
+            width: 1px;
+            background: var(--border);
+        }
+
+        html[data-theme="dark"] .process-step::before {
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.12);
+        }
+
+        .process-step:last-child::after {
+            display: none;
+        }
+
+        .process-step__title {
+            display: block;
+            margin-bottom: 0.08rem;
+            font-weight: 600;
+            line-height: 1.45;
+            color: var(--text-primary);
+        }
+
+        .process-step__body {
+            font-weight: 300;
+            line-height: 1.75;
+            color: var(--text-primary);
+        }
+
+
+
         .lightbox {
             position: fixed;
             inset: 0;
@@ -806,78 +992,105 @@
                 <section class="project-section">
                     <h2>Request</h2>
                     <p>
-                    Develop a method to <strong>massively analyze a national real-estate portfolio</strong> and produce a
-                    <strong>property value estimation</strong> in the context of the (then) upcoming <strong>Winter Olympics</strong>.
-                    The objective was to combine heterogeneous public and proprietary sources to rank and classify assets,
-                    enabling fast, evidence-based investment and planning decisions.
+                    We needed a way to analyze a large national real-estate portfolio and estimate <strong>property value</strong>
+                    in the context of the upcoming <strong>Winter Olympics</strong>.
+                    The core challenge was combining heterogeneous public and proprietary sources into a ranking that stakeholders could trust for investment planning.
                     </p>
                 </section>
 
                 <section class="project-section">
                     <h2>My Role</h2>
                     <p>
-                    I worked on the project from end to end on the analytics side: I contributed to requirement gathering,
-                    definition of the <strong>analytical framework</strong>, and translation of business goals into a measurable
-                    KPI system.
+                    I worked end to end on the analytics side: requirements, framework definition, and translation of business goals into measurable KPIs.
                     </p>
                     <p>
-                    I selected and validated the data sources, performed the <strong>data modeling and aggregations</strong> (including
-                    integrating GeoJSON land-registry layers with ISTAT tables), designed the <strong>weight-based ranking algorithm</strong>
-                    and KPI logic, and delivered the final outputs through an <strong>interactive dashboard</strong> tailored to portfolio exploration
-                    and property-level drilldowns.
+                    I selected and validated data sources, built the data model and aggregations (including GeoJSON land-registry layers with ISTAT tables),
+                    designed the weight-based ranking logic, and delivered the interactive dashboard for portfolio and property-level drilldowns.
                     </p>
                 </section>
 
                 <section class="project-section">
                     <h2>Features</h2>
-                    <ul>
-                    <li>
-                        <strong>Multi-source data integration:</strong> connected independent, complex datasets (land registry + ISTAT) into a single
-                        analytical model usable at portfolio scale.
-                    </li>
-                    <li>
-                        <strong>Weighted scoring and classification:</strong> converted raw indicators into a transparent ranking algorithm by selecting
-                        relevant factors, assigning weights, and producing comparable property scores.
-                    </li>
-                    <li>
-                        <strong>Tabular + geospatial analytics:</strong> crossed conventional tables with geospatial layers (GeoJSON) to enrich each asset
-                        with location-driven attributes and context.
-                    </li>
-                    <li>
-                        <strong>KPI compression of statistical data:</strong> reduced a large ISTAT feature space into a small set of decision-ready metrics,
-                        preserving signal while removing redundancy and noise.
-                    </li>
-                    <li>
-                        <strong>Interactive dashboard exploration:</strong> portfolio-level monitoring with drilldowns to asset detail pages for inspection,
-                        filtering, and scenario comparison.
-                    </li>
-                    </ul>
+                    <p class="section-kicker">What Was Built</p>
+                    <div class="features-accordion" aria-label="Features overview">
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Multi-source data integration</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to merge fragmented sources into one analytical model, enabling portfolio-level decisions instead of isolated analyses.</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Weighted scoring and classification</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to turn many raw indicators into a transparent ranking that stakeholders could audit and trust.</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Tabular + geospatial analytics</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to enrich each asset with spatial context, improving valuation quality beyond tabular attributes alone.</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">KPI compression of statistical data</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to compress a high-dimensional ISTAT feature space into a smaller KPI set that stayed decision-useful.</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Interactive dashboard exploration</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to make the model usable day to day through filtering, drilldowns, and scenario comparisons.</p>
+                            </div>
+                        </details>
+                    </div>
                 </section>
 
                 <section class="project-section">
                     <h2>Methodology</h2>
-                    <ul>
-                    <li>
-                        <strong>ETL workspace modeling:</strong> loaded static land-registry GeoJSONs and ISTAT tables into an ETL environment; cleaned,
-                        standardized keys, and built a unified data model for aggregation and analysis.
-                    </li>
-                    <li>
-                        <strong>Geospatial enrichment pipeline:</strong> engineered joins between properties and territorial statistics (e.g., municipality/area mappings),
-                        handling geometry constraints and edge cases typical of cadastral datasets.
-                    </li>
-                    <li>
-                        <strong>Metric design from ISTAT to KPIs:</strong> mapped the full ISTAT information space into a limited KPI set by defining what each metric
-                        should represent, selecting proxies, and validating that KPIs were interpretable and actionable.
-                    </li>
-                    <li>
-                        <strong>Scoring algorithm construction:</strong> implemented a factor-weight model to compute rankings and classes; tested sensitivity of weights,
-                        ensured stability across regions, and documented the logic for stakeholder review.
-                    </li>
-                    <li>
-                        <strong>Visualization and delivery:</strong> published polished datasets and scores into an interactive dashboard with filters, ranking views,
-                        and property drilldowns to support decision-making.
-                    </li>
-                    </ul>
+                    <p class="section-kicker">Execution Timeline</p>
+                    <ol class="process-timeline" aria-label="Methodology timeline">
+                        <li class="process-step">
+                            <span class="process-step__title">ETL workspace modeling</span>
+                            <div class="process-step__body">loaded static land-registry GeoJSONs and ISTAT tables into an ETL environment; cleaned,
+                        standardized keys, and built a unified data model for aggregation and analysis.</div>
+                        </li>
+                        <li class="process-step">
+                            <span class="process-step__title">Geospatial enrichment pipeline</span>
+                            <div class="process-step__body">engineered joins between properties and territorial statistics (e.g., municipality/area mappings),
+                        handling geometry constraints and edge cases typical of cadastral datasets.</div>
+                        </li>
+                        <li class="process-step">
+                            <span class="process-step__title">Metric design from ISTAT to KPIs</span>
+                            <div class="process-step__body">mapped the full ISTAT information space into a limited KPI set by defining what each metric
+                        should represent, selecting proxies, and validating that KPIs were interpretable and actionable.</div>
+                        </li>
+                        <li class="process-step">
+                            <span class="process-step__title">Scoring algorithm construction</span>
+                            <div class="process-step__body">implemented a factor-weight model to compute rankings and classes; tested sensitivity of weights,
+                        ensured stability across regions, and documented the logic for stakeholder review.</div>
+                        </li>
+                        <li class="process-step">
+                            <span class="process-step__title">Visualization and delivery</span>
+                            <div class="process-step__body">published polished datasets and scores into an interactive dashboard with filters, ranking views,
+                        and property drilldowns to support decision-making.</div>
+                        </li>
+                    </ol>
                 </section>
             </main>
 
@@ -1769,6 +1982,28 @@
                 if (hero && hero.contains(e.target)) return;
                 if (e.target.closest('.project-section')) return;
                 requestClose();
+            });
+        })();
+
+
+        (() => {
+            const accordions = Array.from(document.querySelectorAll('.features-accordion'));
+            if (!accordions.length) return;
+
+            accordions.forEach((accordion) => {
+                const items = Array.from(accordion.querySelectorAll('.feature-accordion__item'));
+                if (!items.length) return;
+
+                items.forEach((item) => {
+                    item.addEventListener('toggle', () => {
+                        if (!item.open) return;
+                        items.forEach((other) => {
+                            if (other !== item && other.open) {
+                                other.open = false;
+                            }
+                        });
+                    });
+                });
             });
         })();
 

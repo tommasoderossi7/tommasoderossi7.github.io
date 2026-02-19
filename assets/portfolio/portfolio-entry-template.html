@@ -530,6 +530,192 @@
             font-weight: 600;
         }
 
+        .section-kicker {
+            margin-bottom: 0.65rem;
+            color: var(--text-secondary);
+            font-size: 0.74rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .features-accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .feature-accordion__item {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: rgba(17, 24, 39, 0.02);
+            overflow: hidden;
+        }
+
+        html[data-theme="dark"] .feature-accordion__item {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .feature-accordion__summary {
+            list-style: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            width: 100%;
+            padding: 0.72rem 2rem 0.72rem 0.82rem;
+            position: relative;
+            color: var(--text-primary);
+        }
+
+        .feature-accordion__summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .feature-accordion__summary::marker {
+            content: '';
+        }
+
+        .feature-accordion__summary::after {
+            content: '';
+            position: absolute;
+            right: 0.9rem;
+            top: 50%;
+            width: 0.5rem;
+            height: 0.5rem;
+            margin-top: -0.28rem;
+            border-right: 2px solid var(--text-secondary);
+            border-bottom: 2px solid var(--text-secondary);
+            transform: rotate(45deg);
+            transition: transform 0.2s ease;
+        }
+
+        .feature-accordion__item[open] .feature-accordion__summary::after {
+            transform: rotate(-135deg) translate(-1px, -1px);
+        }
+
+        .feature-accordion__summary:focus-visible {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 2px;
+            border-radius: 10px;
+        }
+
+        .feature-accordion__what-tag {
+            flex: 0 0 auto;
+            font-size: 0.67rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.08rem 0.38rem;
+        }
+
+        .feature-accordion__what {
+            font-weight: 600;
+            line-height: 1.45;
+            color: var(--text-primary);
+        }
+
+        .feature-accordion__panel {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            border-top: 1px solid transparent;
+            padding: 0 0.82rem;
+            transition: max-height 0.24s ease, opacity 0.2s ease, padding 0.2s ease, border-color 0.2s ease;
+        }
+
+        .feature-accordion__item[open] .feature-accordion__panel {
+            max-height: 420px;
+            opacity: 1;
+            border-top-color: var(--border);
+            padding: 0 0.82rem 0.78rem;
+        }
+
+        .feature-accordion__panel p {
+            margin: 0.62rem 0 0;
+            font-weight: 300;
+            line-height: 1.75;
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 640px) {
+            .feature-accordion__summary {
+                padding-left: 0.72rem;
+                padding-right: 1.8rem;
+            }
+
+            .feature-accordion__what {
+                font-size: 0.95rem;
+            }
+        }
+
+
+
+        .process-timeline {
+            list-style: none;
+            margin: 0;
+            padding: 0.15rem 0 0 0;
+        }
+
+        .process-step {
+            position: relative;
+            margin-bottom: 0.78rem;
+            padding-left: 1.45rem;
+        }
+
+        .process-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .process-step::before {
+            content: '';
+            position: absolute;
+            left: 0.22rem;
+            top: 0.5rem;
+            width: 0.48rem;
+            height: 0.48rem;
+            border-radius: 50%;
+            background: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.08);
+        }
+
+        .process-step::after {
+            content: '';
+            position: absolute;
+            left: 0.44rem;
+            top: 0.98rem;
+            bottom: -0.64rem;
+            width: 1px;
+            background: var(--border);
+        }
+
+        html[data-theme="dark"] .process-step::before {
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.12);
+        }
+
+        .process-step:last-child::after {
+            display: none;
+        }
+
+        .process-step__title {
+            display: block;
+            margin-bottom: 0.08rem;
+            font-weight: 600;
+            line-height: 1.45;
+            color: var(--text-primary);
+        }
+
+        .process-step__body {
+            font-weight: 300;
+            line-height: 1.75;
+            color: var(--text-primary);
+        }
+
+
+
         .lightbox {
             position: fixed;
             inset: 0;
@@ -813,36 +999,75 @@
             <main class="project-content">
                 <section class="project-section">
                     <h2>Request</h2>
-                    <p>Design a production-ready system that surfaces the most likely maintenance actions for bottling line failures, using past service notes and sensor logs.O'Neil attended UC Berkeley as an undergraduate,[1] received a Ph.D. in mathematics from Harvard University in 1999,[2][3] and afterward held positions in the mathematics departments of MIT and Barnard College.[4] She left academia in 2007, and worked for four years in the finance industry.[5] She worked as an analyst at D. E. Shaw & Co.[6] After becoming disenchanted with the world of finance, O'Neil became involved with the Occupy Wall Street movement,[7][1] participating in its Alternative Banking Group.[8]
-
-O'Neil operates the blog mathbabe.org and is a contributor to Bloomberg View.[9][10][11]
-
-Her first book, Doing Data Science, was written with Rachel Schutt and published in 2013.[10] In 2016, her second book, Weapons of Math Destruction was published, long-listed for the National Book Award for Nonfiction[12][13] and became a New York Times best-seller.[4] A third book, The Shame Machine: Who Profits in the New Age of Humiliation, was published March 2022.
-
-She is the founder of O'Neil Risk Consulting & Algorithmic Auditing (ORCAA), an algorithmic auditing company.[3][14]</p>
+                    <p>
+                    [Write the business problem in plain language. Keep the real constraint visible: what had to be decided, fixed, or shipped.]
+                    </p>
+                    <p>
+                    [Keep substance unchanged: include scope, data context, and the concrete outcomes expected by stakeholders.]
+                    </p>
                 </section>
 
                 <section class="project-section">
                     <h2>My Role</h2>
-                    <p>Owned the ML pipeline end-to-end: data preparation, embedding strategy, retrieval evaluation, and packaging the workflow for repeatable runs.</p>
+                    <p>
+                    [State clearly what you owned end to end and what you co-owned. Avoid generic wording and keep it factual.]
+                    </p>
+                    <p>
+                    [List the main implementation blocks you handled: data, modeling, dashboard, delivery loop, and final handoff.]
+                    </p>
                 </section>
 
                 <section class="project-section">
                     <h2>Features</h2>
-                    <ul>
-                        <li>Vector search over maintenance knowledge with explainable similarity signals.</li>
-                        <li>Interactive runbooks that highlight the top recommended actions.</li>
-                        <li>Offline evaluation harness and reproducible model snapshots.</li>
-                    </ul>
+                    <p class="section-kicker">What Was Built</p>
+                    <div class="features-accordion" aria-label="Features overview">
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">[Feature title]</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> [Explain why this feature was included to answer the request in concrete terms.]</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">[Feature title]</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> [Connect the feature to a concrete project objective.]</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">[Feature title]</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> [Describe the decision value this feature provided.]</p>
+                            </div>
+                        </details>
+                    </div>
                 </section>
 
                 <section class="project-section">
                     <h2>Methodology</h2>
-                    <ul>
-                        <li>Cleaned and structured maintenance logs into a queryable knowledge base.</li>
-                        <li>Benchmarked embeddings and clustering against expert feedback loops.</li>
-                        <li>Shipped the system as a containerized pipeline with monitoring hooks.</li>
-                    </ul>
+                    <p class="section-kicker">Execution Timeline</p>
+                    <ol class="process-timeline" aria-label="Methodology timeline">
+                        <li class="process-step">
+                            <span class="process-step__title">Step 1</span>
+                            <div class="process-step__body">[How data was collected, cleaned, and validated.]</div>
+                        </li>
+                        <li class="process-step">
+                            <span class="process-step__title">Step 2</span>
+                            <div class="process-step__body">[How analysis/modeling was implemented.]</div>
+                        </li>
+                        <li class="process-step">
+                            <span class="process-step__title">Step 3</span>
+                            <div class="process-step__body">[How results were reviewed, iterated, and delivered.]</div>
+                        </li>
+                    </ol>
                 </section>
             </main>
         </div>
@@ -1735,6 +1960,28 @@ She is the founder of O'Neil Risk Consulting & Algorithmic Auditing (ORCAA), an 
                 if (hero && hero.contains(e.target)) return;
                 if (e.target.closest('.project-section')) return;
                 requestClose();
+            });
+        })();
+
+
+        (() => {
+            const accordions = Array.from(document.querySelectorAll('.features-accordion'));
+            if (!accordions.length) return;
+
+            accordions.forEach((accordion) => {
+                const items = Array.from(accordion.querySelectorAll('.feature-accordion__item'));
+                if (!items.length) return;
+
+                items.forEach((item) => {
+                    item.addEventListener('toggle', () => {
+                        if (!item.open) return;
+                        items.forEach((other) => {
+                            if (other !== item && other.open) {
+                                other.open = false;
+                            }
+                        });
+                    });
+                });
             });
         })();
 

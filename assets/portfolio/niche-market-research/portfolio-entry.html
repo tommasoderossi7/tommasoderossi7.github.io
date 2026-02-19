@@ -530,6 +530,192 @@
             font-weight: 600;
         }
 
+        .section-kicker {
+            margin-bottom: 0.65rem;
+            color: var(--text-secondary);
+            font-size: 0.74rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .features-accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .feature-accordion__item {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: rgba(17, 24, 39, 0.02);
+            overflow: hidden;
+        }
+
+        html[data-theme="dark"] .feature-accordion__item {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .feature-accordion__summary {
+            list-style: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            width: 100%;
+            padding: 0.72rem 2rem 0.72rem 0.82rem;
+            position: relative;
+            color: var(--text-primary);
+        }
+
+        .feature-accordion__summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .feature-accordion__summary::marker {
+            content: '';
+        }
+
+        .feature-accordion__summary::after {
+            content: '';
+            position: absolute;
+            right: 0.9rem;
+            top: 50%;
+            width: 0.5rem;
+            height: 0.5rem;
+            margin-top: -0.28rem;
+            border-right: 2px solid var(--text-secondary);
+            border-bottom: 2px solid var(--text-secondary);
+            transform: rotate(45deg);
+            transition: transform 0.2s ease;
+        }
+
+        .feature-accordion__item[open] .feature-accordion__summary::after {
+            transform: rotate(-135deg) translate(-1px, -1px);
+        }
+
+        .feature-accordion__summary:focus-visible {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 2px;
+            border-radius: 10px;
+        }
+
+        .feature-accordion__what-tag {
+            flex: 0 0 auto;
+            font-size: 0.67rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.08rem 0.38rem;
+        }
+
+        .feature-accordion__what {
+            font-weight: 600;
+            line-height: 1.45;
+            color: var(--text-primary);
+        }
+
+        .feature-accordion__panel {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            border-top: 1px solid transparent;
+            padding: 0 0.82rem;
+            transition: max-height 0.24s ease, opacity 0.2s ease, padding 0.2s ease, border-color 0.2s ease;
+        }
+
+        .feature-accordion__item[open] .feature-accordion__panel {
+            max-height: 420px;
+            opacity: 1;
+            border-top-color: var(--border);
+            padding: 0 0.82rem 0.78rem;
+        }
+
+        .feature-accordion__panel p {
+            margin: 0.62rem 0 0;
+            font-weight: 300;
+            line-height: 1.75;
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 640px) {
+            .feature-accordion__summary {
+                padding-left: 0.72rem;
+                padding-right: 1.8rem;
+            }
+
+            .feature-accordion__what {
+                font-size: 0.95rem;
+            }
+        }
+
+
+
+        .process-timeline {
+            list-style: none;
+            margin: 0;
+            padding: 0.15rem 0 0 0;
+        }
+
+        .process-step {
+            position: relative;
+            margin-bottom: 0.78rem;
+            padding-left: 1.45rem;
+        }
+
+        .process-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .process-step::before {
+            content: '';
+            position: absolute;
+            left: 0.22rem;
+            top: 0.5rem;
+            width: 0.48rem;
+            height: 0.48rem;
+            border-radius: 50%;
+            background: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.08);
+        }
+
+        .process-step::after {
+            content: '';
+            position: absolute;
+            left: 0.44rem;
+            top: 0.98rem;
+            bottom: -0.64rem;
+            width: 1px;
+            background: var(--border);
+        }
+
+        html[data-theme="dark"] .process-step::before {
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.12);
+        }
+
+        .process-step:last-child::after {
+            display: none;
+        }
+
+        .process-step__title {
+            display: block;
+            margin-bottom: 0.08rem;
+            font-weight: 600;
+            line-height: 1.45;
+            color: var(--text-primary);
+        }
+
+        .process-step__body {
+            font-weight: 300;
+            line-height: 1.75;
+            color: var(--text-primary);
+        }
+
+
+
         .lightbox {
             position: fixed;
             inset: 0;
@@ -826,71 +1012,104 @@
                 <section class="project-section">
                     <h2>Request</h2>
                     <p>
-                    Help a major cured-meat producer evaluate TikTok at the start of its growth phase and identify <strong>leverage points</strong> for entering the
-                    platform. The business question was: how can we use this new channel effectively for our product? The project translated this into a
-                    data-driven research effort to uncover <strong>viral usage patterns</strong>, audience signals, and messaging angles that could inform a high-impact
-                    content and media strategy.
+                    A major cured-meat producer wanted to evaluate TikTok early and find realistic entry points for the platform.
+                    The question was straightforward: what should we publish, for whom, and why.
+                    We used platform data to identify <strong>viral usage patterns</strong>, audience signals, and messaging angles with practical campaign value.
                     </p>
                 </section>
 
                 <section class="project-section">
                     <h2>My Role</h2>
                     <p>
-                    I owned the project delivery from brief to final output. I received the brief from the agency, defined the research approach, and structured how
-                    we would interrogate TikTok’s APIs to turn platform signals into actionable insights.
+                    I owned delivery from brief to final handoff. I defined the research plan and how to interrogate TikTok APIs in a way that produced usable answers.
                     </p>
                     <p>
-                    I defined the <strong>data pipeline</strong> and analytical logic, implemented the classification/clustering workflows, and produced the final
-                    <strong>interactive dashboard</strong> so stakeholders could explore associations, audience segments, and recommended angles for content and activation.
+                    I built the data pipeline and analysis logic, implemented clustering/classification workflows,
+                    and delivered the interactive dashboard so stakeholders could explore associations, segments, and recommended content angles.
                     </p>
                 </section>
 
                 <section class="project-section">
                     <h2>Features</h2>
-                    <ul>
-                    <li>
-                        <strong>Product association discovery:</strong> identified meaningful links between the target product and “accessory” products commonly co-occurring
-                        in TikTok content (pairings, recipes, contexts of consumption).
-                    </li>
-                    <li>
-                        <strong>Viral use-case mining:</strong> surfaced and ranked the most viral end uses of the product by analyzing patterns across videos and metadata.
-                    </li>
-                    <li>
-                        <strong>Semantic clustering of messaging:</strong> clustered content into themes to extract USPs, connotations, and recurring narratives that drove engagement.
-                    </li>
-                    <li>
-                        <strong>Audience context enrichment:</strong> connected content themes with <strong>demographic</strong> and basic <strong>psychographic</strong> signals to
-                        understand who engaged with which angles and why.
-                    </li>
-                    <li>
-                        <strong>Exploration-ready outputs:</strong> delivered a dashboard that supported filtering by theme, use case, audience signals, and performance metrics.
-                    </li>
-                    </ul>
+                    <p class="section-kicker">What Was Built</p>
+                    <div class="features-accordion" aria-label="Features overview">
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Product association discovery</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to identify product pairings and contexts that naturally matched audience behavior on TikTok.</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Viral use-case mining</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to rank the use cases that truly drove viral traction, guiding early content bets.</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Semantic clustering of messaging</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to extract recurring narratives and USPs associated with stronger engagement.</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Audience context enrichment</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to connect content themes with who engaged, making targeting and creative choices more precise.</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Exploration-ready outputs</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to let stakeholders explore findings directly with filters instead of relying on a static report.</p>
+                            </div>
+                        </details>
+                    </div>
                 </section>
 
                 <section class="project-section">
                     <h2>Methodology</h2>
-                    <ul>
-                    <li>
-                        <strong>API-first data collection design:</strong> explored TikTok’s early, feature-rich APIs to capture a wide range of qualitative and performance fields
-                        (content descriptors, engagement signals, and available user attributes).
-                    </li>
-                    <li>
-                        <strong>Feature engineering for qualitative fields:</strong> transformed text and categorical signals into structured variables usable for modeling
-                        (associations, combinations, end uses, thematic markers).
-                    </li>
-                    <li>
-                        <strong>Classification and clustering:</strong> built classifiers for content use cases and associations, and applied semantic clustering to identify stable
-                        narrative groups and USP/connotation themes.
-                    </li>
-                    <li>
-                        <strong>Audience signal modeling:</strong> leveraged API user fields to derive a lightweight psychographic view and linked it to content performance by theme.
-                    </li>
-                    <li>
-                        <strong>Delivery through visualization:</strong> aggregated and published results in an interactive dashboard designed for strategic planning and creative brief
-                        development.
-                    </li>
-                    </ul>
+                    <p class="section-kicker">Execution Timeline</p>
+                    <ol class="process-timeline" aria-label="Methodology timeline">
+                        <li class="process-step">
+                            <span class="process-step__title">API-first data collection design</span>
+                            <div class="process-step__body">explored TikTok’s early, feature-rich APIs to capture a wide range of qualitative and performance fields
+                        (content descriptors, engagement signals, and available user attributes).</div>
+                        </li>
+                        <li class="process-step">
+                            <span class="process-step__title">Feature engineering for qualitative fields</span>
+                            <div class="process-step__body">transformed text and categorical signals into structured variables usable for modeling
+                        (associations, combinations, end uses, thematic markers).</div>
+                        </li>
+                        <li class="process-step">
+                            <span class="process-step__title">Classification and clustering</span>
+                            <div class="process-step__body">built classifiers for content use cases and associations, and applied semantic clustering to identify stable
+                        narrative groups and USP/connotation themes.</div>
+                        </li>
+                        <li class="process-step">
+                            <span class="process-step__title">Audience signal modeling</span>
+                            <div class="process-step__body">leveraged API user fields to derive a lightweight psychographic view and linked it to content performance by theme.</div>
+                        </li>
+                        <li class="process-step">
+                            <span class="process-step__title">Delivery through visualization</span>
+                            <div class="process-step__body">aggregated and published results in an interactive dashboard designed for strategic planning and creative brief
+                        development.</div>
+                        </li>
+                    </ol>
                 </section>
             </main>
         </div>
@@ -1781,6 +2000,28 @@
                 if (hero && hero.contains(e.target)) return;
                 if (e.target.closest('.project-section')) return;
                 requestClose();
+            });
+        })();
+
+
+        (() => {
+            const accordions = Array.from(document.querySelectorAll('.features-accordion'));
+            if (!accordions.length) return;
+
+            accordions.forEach((accordion) => {
+                const items = Array.from(accordion.querySelectorAll('.feature-accordion__item'));
+                if (!items.length) return;
+
+                items.forEach((item) => {
+                    item.addEventListener('toggle', () => {
+                        if (!item.open) return;
+                        items.forEach((other) => {
+                            if (other !== item && other.open) {
+                                other.open = false;
+                            }
+                        });
+                    });
+                });
             });
         })();
 

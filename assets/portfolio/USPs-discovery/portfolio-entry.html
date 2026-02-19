@@ -530,6 +530,192 @@
             font-weight: 600;
         }
 
+        .section-kicker {
+            margin-bottom: 0.65rem;
+            color: var(--text-secondary);
+            font-size: 0.74rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .features-accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .feature-accordion__item {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: rgba(17, 24, 39, 0.02);
+            overflow: hidden;
+        }
+
+        html[data-theme="dark"] .feature-accordion__item {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .feature-accordion__summary {
+            list-style: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            width: 100%;
+            padding: 0.72rem 2rem 0.72rem 0.82rem;
+            position: relative;
+            color: var(--text-primary);
+        }
+
+        .feature-accordion__summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .feature-accordion__summary::marker {
+            content: '';
+        }
+
+        .feature-accordion__summary::after {
+            content: '';
+            position: absolute;
+            right: 0.9rem;
+            top: 50%;
+            width: 0.5rem;
+            height: 0.5rem;
+            margin-top: -0.28rem;
+            border-right: 2px solid var(--text-secondary);
+            border-bottom: 2px solid var(--text-secondary);
+            transform: rotate(45deg);
+            transition: transform 0.2s ease;
+        }
+
+        .feature-accordion__item[open] .feature-accordion__summary::after {
+            transform: rotate(-135deg) translate(-1px, -1px);
+        }
+
+        .feature-accordion__summary:focus-visible {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 2px;
+            border-radius: 10px;
+        }
+
+        .feature-accordion__what-tag {
+            flex: 0 0 auto;
+            font-size: 0.67rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.08rem 0.38rem;
+        }
+
+        .feature-accordion__what {
+            font-weight: 600;
+            line-height: 1.45;
+            color: var(--text-primary);
+        }
+
+        .feature-accordion__panel {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            border-top: 1px solid transparent;
+            padding: 0 0.82rem;
+            transition: max-height 0.24s ease, opacity 0.2s ease, padding 0.2s ease, border-color 0.2s ease;
+        }
+
+        .feature-accordion__item[open] .feature-accordion__panel {
+            max-height: 420px;
+            opacity: 1;
+            border-top-color: var(--border);
+            padding: 0 0.82rem 0.78rem;
+        }
+
+        .feature-accordion__panel p {
+            margin: 0.62rem 0 0;
+            font-weight: 300;
+            line-height: 1.75;
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 640px) {
+            .feature-accordion__summary {
+                padding-left: 0.72rem;
+                padding-right: 1.8rem;
+            }
+
+            .feature-accordion__what {
+                font-size: 0.95rem;
+            }
+        }
+
+
+
+        .process-timeline {
+            list-style: none;
+            margin: 0;
+            padding: 0.15rem 0 0 0;
+        }
+
+        .process-step {
+            position: relative;
+            margin-bottom: 0.78rem;
+            padding-left: 1.45rem;
+        }
+
+        .process-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .process-step::before {
+            content: '';
+            position: absolute;
+            left: 0.22rem;
+            top: 0.5rem;
+            width: 0.48rem;
+            height: 0.48rem;
+            border-radius: 50%;
+            background: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.08);
+        }
+
+        .process-step::after {
+            content: '';
+            position: absolute;
+            left: 0.44rem;
+            top: 0.98rem;
+            bottom: -0.64rem;
+            width: 1px;
+            background: var(--border);
+        }
+
+        html[data-theme="dark"] .process-step::before {
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.12);
+        }
+
+        .process-step:last-child::after {
+            display: none;
+        }
+
+        .process-step__title {
+            display: block;
+            margin-bottom: 0.08rem;
+            font-weight: 600;
+            line-height: 1.45;
+            color: var(--text-primary);
+        }
+
+        .process-step__body {
+            font-weight: 300;
+            line-height: 1.75;
+            color: var(--text-primary);
+        }
+
+
+
         .lightbox {
             position: fixed;
             inset: 0;
@@ -814,76 +1000,111 @@
                 <section class="project-section">
                     <h2>Request</h2>
                     <p>
-                    Design a data-driven strategy to identify the <strong>most effective USP</strong> for a B2B client with ~1300 potential customers,
-                    after a campaign underperformed. The goal was to understand the target audience’s <strong>real interests and messaging triggers</strong>
-                    by reconstructing their social “bubble” and ranking which value propositions would resonate most—so the next campaign could be
-                    optimized with evidence rather than intuition.
+                    After a campaign underperformed, we had around <strong>1,300 B2B targets</strong> and one practical question: which USP should lead the next push.
+                    We rebuilt each account's social bubble and measured which messages aligned with <strong>real interests and response triggers</strong>, so the next campaign could be based on evidence instead of guesswork.
                     </p>
                 </section>
 
                 <section class="project-section">
                     <h2>My Role</h2>
                     <p>
-                    I co-designed the analytical approach and <strong>implemented the work end-to-end from major social media APIs interaction to dashboard delivery.</strong> The
-                    analytical approach was defined with a focus on how to map customer interests to messaging features and how to provide actionable insights for
-                    marketing teams.
+                    I co-designed the analytical setup and delivered the work end to end, from social API data collection to the final dashboard.
                     </p>
                     <p>
-                    I worked on data collection, source selection and data processing, co-designed the USP taxonomy and KPI logic, trained/validated the models, delivered
-                    an interactive dashboard and contributed to the writing of a strategic report translating findings into concrete campaign recommendations.
+                    I handled source selection and processing, co-defined the USP taxonomy and KPI logic, trained and validated models,
+                    and helped convert findings into clear campaign recommendations for the strategy report.
                     </p>
                 </section>
 
                 <section class="project-section">
                     <h2>Features</h2>
-                    <ul>
-                    <li>
-                        <strong>Qualitative-to-quantitative marketing intelligence:</strong> converted content themes and positioning signals into measurable KPIs via
-                        classification and clustering.
-                    </li>
-                    <li>
-                        <strong>Automated identity matching:</strong> scripted the linkage between customer records and their public social media profiles (starting from LinkedIn),
-                        enabling scalable data collection.
-                    </li>
-                    <li>
-                        <strong>Audience focus mapping:</strong> identified and ranked what each potential customer cared about most (topics, pain points, and product angles).
-                    </li>
-                    <li>
-                        <strong>Influence and relevance ranking:</strong> surfaced key players within the target audience’s network and ranked them by their impact on the “bubble.”
-                    </li>
-                    <li>
-                        <strong>Timeline and behavior reconstruction:</strong> used platform APIs to infer meaningful changes in social presence (e.g., aesthetic/profile updates)
-                        to extract creative insights for ad design.
-                    </li>
-                    <li>
-                        <strong>USP effectiveness ranking:</strong> produced a prioritized list of value propositions, supported by model outputs and performance indicators,
-                        to guide the next campaign.
-                    </li>
-                    </ul>
+                    <p class="section-kicker">What Was Built</p>
+                    <div class="features-accordion" aria-label="Features overview">
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Qualitative-to-quantitative marketing intelligence</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to turn qualitative messaging signals into measurable KPIs, so USP choices could be compared objectively.</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Automated identity matching</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to link CRM targets to real social profiles at scale; without this step, the audience analysis could not run reliably.</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Audience focus mapping</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to see what each target segment actually cares about, so messaging could be tailored instead of generic.</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Influence and relevance ranking</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to identify the voices that shape each audience bubble, so outreach and seeding focused on high-impact nodes.</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Timeline and behavior reconstruction</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to reconstruct profile and content changes over time and extract concrete creative cues for the next campaign.</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">USP effectiveness ranking</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to produce a ranked USP shortlist backed by data, giving the team a clear decision path for the next campaign.</p>
+                            </div>
+                        </details>
+                    </div>
                 </section>
 
                 <section class="project-section">
                     <h2>Methodology</h2>
-                    <ul>
-                    <li>
-                        <strong>Customer-to-social graph building:</strong> a custom script matched each target account to LinkedIn and then resolved additional primary social profiles.
-                    </li>
-                    <li>
-                        <strong>Bubble reconstruction via APIs:</strong> collected performance and engagement signals for each customer’s network/following to approximate their content
-                        exposure and interests over time.
-                    </li>
-                    <li>
-                        <strong>USP taxonomy and labeling strategy:</strong> mapped product sheets into a structured set of candidate USPs, grouped into consistent categories for classification.
-                    </li>
-                    <li>
-                        <strong>Model training and evaluation:</strong> trained classifiers and clustering components to associate audience segments and themes with specific USPs; validated
-                        rankings using performance metrics and sanity checks with stakeholders.
-                    </li>
-                    <li>
-                        <strong>Decision-ready delivery:</strong> aggregated results into a dashboard that ranked USPs by predicted effectiveness and highlighted customer-level preferences,
-                        plus a written report translating analytics into actionable messaging and targeting guidance.
-                    </li>
-                    </ul>
+                    <p class="section-kicker">Execution Timeline</p>
+                    <ol class="process-timeline" aria-label="Methodology timeline">
+                        <li class="process-step">
+                            <span class="process-step__title">Customer-to-social graph building</span>
+                            <div class="process-step__body">a custom script matched each target account to LinkedIn and then resolved additional primary social profiles.</div>
+                        </li>
+                        <li class="process-step">
+                            <span class="process-step__title">Bubble reconstruction via APIs</span>
+                            <div class="process-step__body">collected performance and engagement signals for each customer’s network/following to approximate their content
+                        exposure and interests over time.</div>
+                        </li>
+                        <li class="process-step">
+                            <span class="process-step__title">USP taxonomy and labeling strategy</span>
+                            <div class="process-step__body">mapped product sheets into a structured set of candidate USPs, grouped into consistent categories for classification.</div>
+                        </li>
+                        <li class="process-step">
+                            <span class="process-step__title">Model training and evaluation</span>
+                            <div class="process-step__body">trained classifiers and clustering components to associate audience segments and themes with specific USPs; validated
+                        rankings using performance metrics and sanity checks with stakeholders.</div>
+                        </li>
+                        <li class="process-step">
+                            <span class="process-step__title">Decision-ready delivery</span>
+                            <div class="process-step__body">aggregated results into a dashboard that ranked USPs by predicted effectiveness and highlighted customer-level preferences,
+                        plus a written report translating analytics into actionable messaging and targeting guidance.</div>
+                        </li>
+                    </ol>
                 </section>
             </main>
         </div>
@@ -1774,6 +1995,28 @@
                 if (hero && hero.contains(e.target)) return;
                 if (e.target.closest('.project-section')) return;
                 requestClose();
+            });
+        })();
+
+
+        (() => {
+            const accordions = Array.from(document.querySelectorAll('.features-accordion'));
+            if (!accordions.length) return;
+
+            accordions.forEach((accordion) => {
+                const items = Array.from(accordion.querySelectorAll('.feature-accordion__item'));
+                if (!items.length) return;
+
+                items.forEach((item) => {
+                    item.addEventListener('toggle', () => {
+                        if (!item.open) return;
+                        items.forEach((other) => {
+                            if (other !== item && other.open) {
+                                other.open = false;
+                            }
+                        });
+                    });
+                });
             });
         })();
 

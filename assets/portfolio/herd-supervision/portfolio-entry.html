@@ -530,6 +530,192 @@
             font-weight: 600;
         }
 
+        .section-kicker {
+            margin-bottom: 0.65rem;
+            color: var(--text-secondary);
+            font-size: 0.74rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .features-accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .feature-accordion__item {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: rgba(17, 24, 39, 0.02);
+            overflow: hidden;
+        }
+
+        html[data-theme="dark"] .feature-accordion__item {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .feature-accordion__summary {
+            list-style: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            width: 100%;
+            padding: 0.72rem 2rem 0.72rem 0.82rem;
+            position: relative;
+            color: var(--text-primary);
+        }
+
+        .feature-accordion__summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .feature-accordion__summary::marker {
+            content: '';
+        }
+
+        .feature-accordion__summary::after {
+            content: '';
+            position: absolute;
+            right: 0.9rem;
+            top: 50%;
+            width: 0.5rem;
+            height: 0.5rem;
+            margin-top: -0.28rem;
+            border-right: 2px solid var(--text-secondary);
+            border-bottom: 2px solid var(--text-secondary);
+            transform: rotate(45deg);
+            transition: transform 0.2s ease;
+        }
+
+        .feature-accordion__item[open] .feature-accordion__summary::after {
+            transform: rotate(-135deg) translate(-1px, -1px);
+        }
+
+        .feature-accordion__summary:focus-visible {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 2px;
+            border-radius: 10px;
+        }
+
+        .feature-accordion__what-tag {
+            flex: 0 0 auto;
+            font-size: 0.67rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.08rem 0.38rem;
+        }
+
+        .feature-accordion__what {
+            font-weight: 600;
+            line-height: 1.45;
+            color: var(--text-primary);
+        }
+
+        .feature-accordion__panel {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            border-top: 1px solid transparent;
+            padding: 0 0.82rem;
+            transition: max-height 0.24s ease, opacity 0.2s ease, padding 0.2s ease, border-color 0.2s ease;
+        }
+
+        .feature-accordion__item[open] .feature-accordion__panel {
+            max-height: 420px;
+            opacity: 1;
+            border-top-color: var(--border);
+            padding: 0 0.82rem 0.78rem;
+        }
+
+        .feature-accordion__panel p {
+            margin: 0.62rem 0 0;
+            font-weight: 300;
+            line-height: 1.75;
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 640px) {
+            .feature-accordion__summary {
+                padding-left: 0.72rem;
+                padding-right: 1.8rem;
+            }
+
+            .feature-accordion__what {
+                font-size: 0.95rem;
+            }
+        }
+
+
+
+        .process-timeline {
+            list-style: none;
+            margin: 0;
+            padding: 0.15rem 0 0 0;
+        }
+
+        .process-step {
+            position: relative;
+            margin-bottom: 0.78rem;
+            padding-left: 1.45rem;
+        }
+
+        .process-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .process-step::before {
+            content: '';
+            position: absolute;
+            left: 0.22rem;
+            top: 0.5rem;
+            width: 0.48rem;
+            height: 0.48rem;
+            border-radius: 50%;
+            background: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.08);
+        }
+
+        .process-step::after {
+            content: '';
+            position: absolute;
+            left: 0.44rem;
+            top: 0.98rem;
+            bottom: -0.64rem;
+            width: 1px;
+            background: var(--border);
+        }
+
+        html[data-theme="dark"] .process-step::before {
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.12);
+        }
+
+        .process-step:last-child::after {
+            display: none;
+        }
+
+        .process-step__title {
+            display: block;
+            margin-bottom: 0.08rem;
+            font-weight: 600;
+            line-height: 1.45;
+            color: var(--text-primary);
+        }
+
+        .process-step__body {
+            font-weight: 300;
+            line-height: 1.75;
+            color: var(--text-primary);
+        }
+
+
+
         .lightbox {
             position: fixed;
             inset: 0;
@@ -822,81 +1008,115 @@
                 <section class="project-section">
                     <h2>Request</h2>
                     <p>
-                    An Italian poultry producer operating multiple chicken coops asked us to build an aesthetically polished but technically rigorous system to
-                    monitor flock conditions and predict short-term trends using <strong>real IoT sensor data</strong> collected on-site. The tool needed to provide
-                    a clear operational view of coop “health” (environmental stability, production and mortality signals) and support proactive decisions through
-                    <strong>forecasting</strong> and early-warning indicators.
+                    A poultry producer managing multiple coops needed a clear system to monitor flock conditions and anticipate short-term issues,
+                    using <strong>real IoT sensor data</strong> from the field.
+                    The tool had to combine day-to-day monitoring with <strong>forecasting</strong> and early warnings.
                     </p>
                 </section>
 
                 <section class="project-section">
                     <h2>My Role</h2>
                     <p>
-                    I acted as <strong>end-to-end owner</strong> for the analytics and dashboard delivery: I translated farm-management needs into a measurable KPI
-                    framework (environment, production, welfare risk), defined the data model required for high-frequency sensor streams, and drove the design
-                    of the monitoring and forecasting views.
+                    I owned analytics and dashboard delivery end to end. I translated farm operations needs into KPI definitions,
+                    designed the high-frequency data model, and structured the monitoring and forecasting views.
                     </p>
                     <p>
-                    I implemented the full workflow from IoT data ingestion and cleaning (time alignment, missing data handling, outlier control) to feature
-                    engineering and <strong>predictive models</strong> (egg production and mortality forecasts). I then delivered the final <strong>interactive
-                    dashboard</strong> with trend analysis, threshold-based monitoring, and drilldowns to support daily supervision across coops.
+                    I implemented ingestion and cleaning (time alignment, missing data handling, outlier control), built predictive models for egg production and mortality,
+                    and delivered the final dashboard for trend tracking and coop-level drilldowns.
                     </p>
                 </section>
 
                 <section class="project-section">
                     <h2>Features</h2>
-                    <ul>
-                    <li>
-                        <strong>Live environmental monitoring:</strong> multi-sensor tracking (e.g., temperature, humidity, CO<sub>2</sub>, NH<sub>3</sub>) with
-                        time-series views to evaluate stability, detect drift, and spot abnormal patterns.
-                    </li>
-                    <li>
-                        <strong>Operational KPI summaries:</strong> min/max values, dispersion metrics, and “over time” variability indicators to quickly assess whether
-                        conditions stayed within expected operating ranges.
-                    </li>
-                    <li>
-                        <strong>Production analytics:</strong> daily egg production monitoring with historical context and trend visualization to identify changes in
-                        productivity.
-                    </li>
-                    <li>
-                        <strong>Short-horizon forecasting:</strong> forward-looking estimates (e.g., 6–12 day horizons) for total egg production and mortality, with
-                        uncertainty bands to support planning and risk management.
-                    </li>
-                    <li>
-                        <strong>Welfare and risk monitoring:</strong> mortality tracking with thresholds and distribution views to surface spikes and support rapid
-                        investigation of potential causes (environmental stressors, operational issues).
-                    </li>
-                    <li>
-                        <strong>Drilldowns and time filtering:</strong> interactive controls for selecting time windows and slicing views, enabling operators to move
-                        from “overview” to root-cause exploration quickly.
-                    </li>
-                    </ul>
+                    <p class="section-kicker">What Was Built</p>
+                    <div class="features-accordion" aria-label="Features overview">
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Live environmental monitoring</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to monitor coop conditions continuously and catch instability before it became operational risk.</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Operational KPI summaries</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to provide quick checks on whether conditions stayed within expected ranges over time.</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Production analytics</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to spot productivity shifts early and relate them to environmental patterns.</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Short-horizon forecasting</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to support short-term planning with forward estimates and uncertainty, not only historical data.</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Welfare and risk monitoring</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to flag mortality risk promptly and speed up root-cause investigation.</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">Drilldowns and time filtering</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> We included this to let operators move from summary to specific windows and signals during interventions.</p>
+                            </div>
+                        </details>
+                    </div>
                 </section>
 
                 <section class="project-section">
                     <h2>Methodology</h2>
-                    <ul>
-                    <li>
-                        <strong>IoT data ingestion and normalization:</strong> collected high-frequency telemetry from on-field devices, standardized timestamps and units,
-                        and aligned heterogeneous sensor streams into a single analytical timeline per coop.
-                    </li>
-                    <li>
-                        <strong>Data quality and preprocessing:</strong> handled missing readings, sensor gaps, and outliers; applied smoothing/aggregation where needed
-                        (e.g., hourly/daily summaries) while preserving signals relevant to operations.
-                    </li>
-                    <li>
-                        <strong>KPI and stability metrics engineering:</strong> designed measures for range compliance (min/max), dispersion over time, and discrepancy indicators
-                        to quantify “how stable” a coop environment was, not just average values.
-                    </li>
-                    <li>
-                        <strong>Forecasting and validation:</strong> trained time-series models for egg production and mortality, performed backtesting on historical windows,
-                        and exposed forecasts with confidence intervals to communicate uncertainty clearly.
-                    </li>
-                    <li>
-                        <strong>Dashboard delivery:</strong> built a multi-panel, operations-friendly interface combining real-time monitoring, historical trends, and forecasts
-                        (with update timestamps) to support daily decision-making by farm managers and technicians.
-                    </li>
-                    </ul>
+                    <p class="section-kicker">Execution Timeline</p>
+                    <ol class="process-timeline" aria-label="Methodology timeline">
+                        <li class="process-step">
+                            <span class="process-step__title">IoT data ingestion and normalization</span>
+                            <div class="process-step__body">collected high-frequency telemetry from on-field devices, standardized timestamps and units,
+                        and aligned heterogeneous sensor streams into a single analytical timeline per coop.</div>
+                        </li>
+                        <li class="process-step">
+                            <span class="process-step__title">Data quality and preprocessing</span>
+                            <div class="process-step__body">handled missing readings, sensor gaps, and outliers; applied smoothing/aggregation where needed
+                        (e.g., hourly/daily summaries) while preserving signals relevant to operations.</div>
+                        </li>
+                        <li class="process-step">
+                            <span class="process-step__title">KPI and stability metrics engineering</span>
+                            <div class="process-step__body">designed measures for range compliance (min/max), dispersion over time, and discrepancy indicators
+                        to quantify “how stable” a coop environment was, not just average values.</div>
+                        </li>
+                        <li class="process-step">
+                            <span class="process-step__title">Forecasting and validation</span>
+                            <div class="process-step__body">trained time-series models for egg production and mortality, performed backtesting on historical windows,
+                        and exposed forecasts with confidence intervals to communicate uncertainty clearly.</div>
+                        </li>
+                        <li class="process-step">
+                            <span class="process-step__title">Dashboard delivery</span>
+                            <div class="process-step__body">built a multi-panel, operations-friendly interface combining real-time monitoring, historical trends, and forecasts
+                        (with update timestamps) to support daily decision-making by farm managers and technicians.</div>
+                        </li>
+                    </ol>
                 </section>
             </main>
         </div>
@@ -1787,6 +2007,28 @@
                 if (hero && hero.contains(e.target)) return;
                 if (e.target.closest('.project-section')) return;
                 requestClose();
+            });
+        })();
+
+
+        (() => {
+            const accordions = Array.from(document.querySelectorAll('.features-accordion'));
+            if (!accordions.length) return;
+
+            accordions.forEach((accordion) => {
+                const items = Array.from(accordion.querySelectorAll('.feature-accordion__item'));
+                if (!items.length) return;
+
+                items.forEach((item) => {
+                    item.addEventListener('toggle', () => {
+                        if (!item.open) return;
+                        items.forEach((other) => {
+                            if (other !== item && other.open) {
+                                other.open = false;
+                            }
+                        });
+                    });
+                });
             });
         })();
 
