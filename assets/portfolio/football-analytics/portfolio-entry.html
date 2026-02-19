@@ -502,7 +502,7 @@
 
         .project-section h2 {
             font-size: 1.1rem;
-            font-weight: 300;
+            font-weight: 600;
             margin-bottom: 0.4rem;
         }
 
@@ -1008,12 +1008,12 @@
                 <section class="project-section">
                     <h2>My Role</h2>
                     <p>
-                    I led the build end to end as technical owner, from requirements and architecture to a working prototype.
+                    I led the build end to end as technical owner, from requirements and architecture to a working prototype based on millions of data points.
                     I ran weekly feedback loops with scouts and translated their criteria into measurable data and ML requirements.
                     </p>
                     <p>
-                    I implemented preprocessing, enrichment, normalization, player scoring, periodic retraining, value estimation, and position classification,
-                    then shipped everything in a multi-page interactive dashboard (with chatbot support) for filtering and player comparison.
+                    I implemented preprocessing, enrichment, normalization, players' performance scoring, value estimation, and position in the field classification with periodic retraining of the involved models,
+                    then shipped everything in a multi-page interactive dashboard (with chatbot support) for filtering and players comparison.
                     </p>
                 </section>
 
@@ -1024,10 +1024,19 @@
                         <details class="feature-accordion__item">
                             <summary class="feature-accordion__summary">
                                 <span class="feature-accordion__what-tag">What</span>
-                                <span class="feature-accordion__what">Automated scouting indicators from match events</span>
+                                <span class="feature-accordion__what">Automated experts-driven qualitative parameters computation</span>
                             </summary>
                             <div class="feature-accordion__panel">
-                                <p><strong>Why:</strong> We included this to automate core scouting signals from raw events, reducing manual interpretation time.</p>
+                                <p><strong>Why:</strong> To automatically obtain core scouting qualitative indicators from raw match events following guidelines provided by domain experts, reducing manual interpretation time and ensuring consistency.</p>
+                            </div>
+                        </details>
+                        <details class="feature-accordion__item">
+                            <summary class="feature-accordion__summary">
+                                <span class="feature-accordion__what-tag">What</span>
+                                <span class="feature-accordion__what">White-box performance score computation</span>
+                            </summary>
+                            <div class="feature-accordion__panel">
+                                <p><strong>Why:</strong> To keep the scoring method auditable and interpretable.</p>
                             </div>
                         </details>
                         <details class="feature-accordion__item">
@@ -1036,16 +1045,7 @@
                                 <span class="feature-accordion__what">Player comparison at scale</span>
                             </summary>
                             <div class="feature-accordion__panel">
-                                <p><strong>Why:</strong> We included this to make player comparisons fair across matches and contexts, improving shortlist quality.</p>
-                            </div>
-                        </details>
-                        <details class="feature-accordion__item">
-                            <summary class="feature-accordion__summary">
-                                <span class="feature-accordion__what-tag">What</span>
-                                <span class="feature-accordion__what">End-to-end scoring pipeline</span>
-                            </summary>
-                            <div class="feature-accordion__panel">
-                                <p><strong>Why:</strong> We included this to keep scoring current through repeatable inference and retraining as new matches and criteria arrived.</p>
+                                <p><strong>Why:</strong> To allow the direct evaluation of alternatives on multiple dimensions to enhance decision-making.</p>
                             </div>
                         </details>
                         <details class="feature-accordion__item">
@@ -1054,25 +1054,25 @@
                                 <span class="feature-accordion__what">Player valuation + role intelligence</span>
                             </summary>
                             <div class="feature-accordion__panel">
-                                <p><strong>Why:</strong> We included this to support recruitment decisions with valuation and role fit, not performance alone.</p>
+                                <p><strong>Why:</strong> To support recruitment decisions with valuation and role fit, not performance alone.</p>
                             </div>
                         </details>
                         <details class="feature-accordion__item">
                             <summary class="feature-accordion__summary">
                                 <span class="feature-accordion__what-tag">What</span>
-                                <span class="feature-accordion__what">Interactive, production-ready dashboard</span>
+                                <span class="feature-accordion__what">Interactive dashboard</span>
                             </summary>
                             <div class="feature-accordion__panel">
-                                <p><strong>Why:</strong> We included this to deliver insights in an interface scouts could navigate quickly from overview to detail.</p>
+                                <p><strong>Why:</strong> To deliver insights in an interface scouts could navigate quickly from overview to detail.</p>
                             </div>
                         </details>
                         <details class="feature-accordion__item">
                             <summary class="feature-accordion__summary">
                                 <span class="feature-accordion__what-tag">What</span>
-                                <span class="feature-accordion__what">Scalable by design</span>
+                                <span class="feature-accordion__what">Scalability by design</span>
                             </summary>
                             <div class="feature-accordion__panel">
-                                <p><strong>Why:</strong> We included this to keep the system extendable across competitions, seasons, and new indicators without major rewrites.</p>
+                                <p><strong>Why:</strong> To keep the system extendable across competitions, seasons, and new indicators without major rewrites thanks to its modularity.</p>
                             </div>
                         </details>
                     </div>
