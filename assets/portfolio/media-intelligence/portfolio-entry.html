@@ -1216,6 +1216,10 @@
             let mobileTitleBlockMin = 0;
             let mobileCarouselStartMax = 0;
             let mobileCarouselStartMin = 0;
+            let targetScrollY = window.scrollY;
+            let renderedScrollY = window.scrollY;
+            let lastTickTs = 0;
+            const SCROLL_SMOOTHING_MS = 28;
 
             const SIZE_VARS = {
                 title: '--hero-title-size',
@@ -1338,11 +1342,11 @@
                 const titleWidth = availableWidth * 0.4;
                 const carouselWidth = availableWidth * 0.6;
                 const carouselX = titleWidth + gap;
-                scope.style.setProperty('--hero-title-width', `${titleWidth.toFixed(1)}px`);
-                scope.style.setProperty('--hero-carousel-width', `${carouselWidth.toFixed(1)}px`);
-                scope.style.setProperty('--hero-carousel-x', `${carouselX.toFixed(1)}px`);
-                scope.style.setProperty('--hero-carousel-y', `${(-carouselStart).toFixed(1)}px`);
-                scope.style.setProperty('--hero-carousel-start', `${carouselStart.toFixed(1)}px`);
+                scope.style.setProperty('--hero-title-width', `${titleWidth.toFixed(2)}px`);
+                scope.style.setProperty('--hero-carousel-width', `${carouselWidth.toFixed(2)}px`);
+                scope.style.setProperty('--hero-carousel-x', `${carouselX.toFixed(2)}px`);
+                scope.style.setProperty('--hero-carousel-y', `${(-carouselStart).toFixed(2)}px`);
+                scope.style.setProperty('--hero-carousel-start', `${carouselStart.toFixed(2)}px`);
             }
 
             function computeMobileMetrics() {
@@ -1391,9 +1395,9 @@
 
                 rowHeight = mobileMinHeight;
                 mobileClipMax = Math.max(0, mobileMaxHeight - minHeight);
-                mobileMaxScroll = Math.max(1, Math.round(mobileClipMax));
+                mobileMaxScroll = Math.max(1, mobileClipMax);
 
-                scope.style.setProperty('--hero-height', `${mobileMaxHeight.toFixed(1)}px`);
+                scope.style.setProperty('--hero-height', `${mobileMaxHeight.toFixed(2)}px`);
                 scope.style.setProperty('--hero-clip', '0px');
 
                 setSizeVarsPx(mobileRange.max);
@@ -1405,7 +1409,7 @@
                 if (!mobileRange) {
                     computeMobileMetrics();
                 }
-                const scrollDistance = Math.max(1, mobileClipMax);
+                const scrollDistance = Math.max(1, mobileMaxScroll);
                 const progress = Math.min(1, Math.max(0, scrollY / scrollDistance));
                 const clip = Math.min(mobileClipMax, progress * mobileClipMax);
                 const max = mobileRange.max;
@@ -1426,12 +1430,12 @@
                 });
 
                 document.documentElement.style.setProperty('--mobile-collapse', progress.toFixed(3));
-                document.documentElement.style.setProperty('--mobile-title-shift', `${titleShift.toFixed(1)}px`);
-                scope.style.setProperty('--hero-clip', `${clip.toFixed(1)}px`);
+                document.documentElement.style.setProperty('--mobile-title-shift', `${titleShift.toFixed(2)}px`);
+                scope.style.setProperty('--hero-clip', `${clip.toFixed(2)}px`);
                 const titleBlockHeight = mobileTitleBlockMax + (mobileTitleBlockMin - mobileTitleBlockMax) * progress;
                 const carouselStart = mobileCarouselStartMax + (mobileCarouselStartMin - mobileCarouselStartMax) * progress;
-                scope.style.setProperty('--hero-title-block-height', `${titleBlockHeight.toFixed(1)}px`);
-                scope.style.setProperty('--hero-carousel-start', `${carouselStart.toFixed(1)}px`);
+                scope.style.setProperty('--hero-title-block-height', `${titleBlockHeight.toFixed(2)}px`);
+                scope.style.setProperty('--hero-carousel-start', `${carouselStart.toFixed(2)}px`);
                 scope.style.setProperty('--hero-content-shift', '0px');
                 updateSectionOverlap(progress >= 1);
             }
@@ -1455,7 +1459,7 @@
                     const clipTop = Math.min(overlap, rect.height);
                     const isUnder = overlap > 0 && rect.bottom > heroRect.top;
                     section.classList.toggle('is-under-hero', isUnder);
-                    section.style.setProperty('--section-clip-top', `${clipTop.toFixed(1)}px`);
+                    section.style.setProperty('--section-clip-top', `${clipTop.toFixed(2)}px`);
                 });
             }
 
@@ -1515,26 +1519,24 @@
                 const rowHeightMin = Math.max(titleHeightFinalMin, carouselHeightFinalMin) + sizeMin.padY + padBottomMin;
 
                 rowHeight = forcedRowHeight > 0 ? forcedRowHeight : rowHeightMin;
-                clipMax = Math.max(0, Math.round(stackHeight - rowHeight));
-                maxScroll = Math.max(1, Math.round(clipMax));
+                clipMax = Math.max(0, stackHeight - rowHeight);
+                maxScroll = Math.max(1, clipMax);
 
                 resetLayout(false);
-                scope.style.setProperty('--hero-height', `${stackHeight.toFixed(1)}px`);
+                scope.style.setProperty('--hero-height', `${stackHeight.toFixed(2)}px`);
             }
 
-            function updateProgress() {
-                rafId = null;
+            function updateProgress(scrollY) {
                 const isNarrowLayout = mobileQuery.matches || layoutWidth <= 720;
                 document.documentElement.classList.toggle('is-mobile-layout', isNarrowLayout);
                 if (isNarrowLayout || layoutWidth === 0 || !sizeMax || !sizeMin) {
                     if (isNarrowLayout && !mobileRange) {
                         computeMobileMetrics();
                     }
-                    updateMobileCollapse(window.scrollY);
+                    updateMobileCollapse(scrollY);
                     return;
                 }
 
-                const scrollY = window.scrollY;
                 const progress = Math.min(1, Math.max(0, scrollY / maxScroll));
                 const layout = progress * progress * (3 - 2 * progress);
                 const gap = sizeMax.gap + (sizeMin.gap - sizeMax.gap) * layout;
@@ -1560,36 +1562,80 @@
                 const contentShift = 0;
 
                 scope.style.setProperty('--hero-scale', '1');
-                scope.style.setProperty('--hero-clip', `${clip.toFixed(1)}px`);
-                scope.style.setProperty('--hero-content-shift', `${contentShift.toFixed(1)}px`);
+                scope.style.setProperty('--hero-clip', `${clip.toFixed(2)}px`);
+                scope.style.setProperty('--hero-content-shift', `${contentShift.toFixed(2)}px`);
                 updateSectionOverlap(collapsed);
-                scope.style.setProperty('--hero-title-width', `${(layoutWidth + (titleWidthFinal - layoutWidth) * layout).toFixed(1)}px`);
-                scope.style.setProperty('--hero-carousel-width', `${(layoutWidth + (carouselWidthFinal - layoutWidth) * layout).toFixed(1)}px`);
-                scope.style.setProperty('--hero-carousel-start', `${carouselStart.toFixed(1)}px`);
-                scope.style.setProperty('--hero-carousel-x', `${((titleWidthFinal + gap) * layout).toFixed(1)}px`);
-                scope.style.setProperty('--hero-carousel-y', `${(-carouselStart * layout).toFixed(1)}px`);
+                scope.style.setProperty('--hero-title-width', `${(layoutWidth + (titleWidthFinal - layoutWidth) * layout).toFixed(2)}px`);
+                scope.style.setProperty('--hero-carousel-width', `${(layoutWidth + (carouselWidthFinal - layoutWidth) * layout).toFixed(2)}px`);
+                scope.style.setProperty('--hero-carousel-start', `${carouselStart.toFixed(2)}px`);
+                scope.style.setProperty('--hero-carousel-x', `${((titleWidthFinal + gap) * layout).toFixed(2)}px`);
+                scope.style.setProperty('--hero-carousel-y', `${(-carouselStart * layout).toFixed(2)}px`);
+            }
+
+            function tickScroll(now) {
+                const dt = lastTickTs ? Math.min(64, now - lastTickTs) : 16;
+                lastTickTs = now;
+                const alpha = 1 - Math.exp(-dt / SCROLL_SMOOTHING_MS);
+                renderedScrollY += (targetScrollY - renderedScrollY) * alpha;
+
+                if (Math.abs(targetScrollY - renderedScrollY) < 0.1) {
+                    renderedScrollY = targetScrollY;
+                }
+
+                updateProgress(renderedScrollY);
+
+                if (Math.abs(targetScrollY - renderedScrollY) >= 0.1) {
+                    rafId = window.requestAnimationFrame(tickScroll);
+                } else {
+                    rafId = null;
+                    lastTickTs = 0;
+                }
             }
 
             function onScroll() {
+                targetScrollY = window.scrollY;
                 if (rafId) return;
-                rafId = window.requestAnimationFrame(updateProgress);
+                rafId = window.requestAnimationFrame(tickScroll);
             }
 
             window.addEventListener('scroll', onScroll, { passive: true });
             window.addEventListener('resize', () => {
                 computeMetrics();
-                updateProgress();
+                targetScrollY = window.scrollY;
+                renderedScrollY = targetScrollY;
+                if (rafId) {
+                    window.cancelAnimationFrame(rafId);
+                    rafId = null;
+                }
+                lastTickTs = 0;
+                updateProgress(renderedScrollY);
             });
             mobileQuery.addEventListener?.('change', () => {
                 computeMetrics();
-                updateProgress();
+                targetScrollY = window.scrollY;
+                renderedScrollY = targetScrollY;
+                if (rafId) {
+                    window.cancelAnimationFrame(rafId);
+                    rafId = null;
+                }
+                lastTickTs = 0;
+                updateProgress(renderedScrollY);
             });
             computeMetrics();
-            updateProgress();
+            targetScrollY = window.scrollY;
+            renderedScrollY = targetScrollY;
+            updateProgress(renderedScrollY);
             if (document.fonts && document.fonts.ready) {
                 document.fonts.ready.then(() => {
                     computeMetrics();
-                    updateProgress();
+                    targetScrollY = window.scrollY;
+                    renderedScrollY = targetScrollY;
+                    if (rafId) {
+                        window.cancelAnimationFrame(rafId);
+                        rafId = null;
+                    }
+                    lastTickTs = 0;
+                    updateProgress(renderedScrollY);
                 });
             }
         })();
